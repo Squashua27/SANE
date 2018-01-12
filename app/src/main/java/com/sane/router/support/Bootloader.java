@@ -24,7 +24,9 @@ public class Bootloader extends Observable
     //instantiates other Router classes, adds them as observers, and notifies them to operate
     private void bootRouter(Activity parentActivity)
     {
-        //do the stuff
+        //instantiate ParentActivity class? No?
+        ParentActivity.setParentActivity(parentActivity);
+        //
     }
 
     //runs testing for debugging and quality control
