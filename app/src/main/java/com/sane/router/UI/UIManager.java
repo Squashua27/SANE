@@ -24,3 +24,4 @@ public class UIManager extends Observable//<-- Should be observer, but won't com
 
     }
 }
+
