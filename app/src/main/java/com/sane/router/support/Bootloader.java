@@ -14,7 +14,7 @@ public class Bootloader extends Observable
 {
     //METHODS
 
-    //constructor, calls "bootRouter" (and test for testing purposes)
+    //constructor, calls "bootRouter" (and test)
     public Bootloader(Activity parentActivity)
     {
         bootRouter(parentActivity);
@@ -24,9 +24,8 @@ public class Bootloader extends Observable
     //instantiates other Router classes, adds them as observers, and notifies them to operate
     private void bootRouter(Activity parentActivity)
     {
-        //instantiate ParentActivity class? No?
+        //instantiate ParentActivity class?
         ParentActivity.setParentActivity(parentActivity);
-        //
     }
 
     //runs testing for debugging and quality control

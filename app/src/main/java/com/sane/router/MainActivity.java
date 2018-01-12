@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.sane.router.support.Bootloader;
 
-// Comment test
+//The_main_Activity____________________
 public class MainActivity extends AppCompatActivity
 {
     @Override

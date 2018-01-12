@@ -6,17 +6,17 @@ import android.app.Activity;
  * Created by Joshua Johnston on 1/12/2018.
  */
 
-//
+//Parent_activity_reference_manager____________________
 public class ParentActivity
 {
-    private static Activity parentActivity;
+    private static Activity parentActivity; //the reference to the parent activity
 
-    public static Activity getParentActivity()
+    public static Activity getParentActivity() //Typical get method
     {
         return parentActivity;
     }
 
-    public static void setParentActivity(Activity newParentActivity)
+    public static void setParentActivity(Activity newParentActivity) //Typical set method
     {
         parentActivity = newParentActivity;
     }
