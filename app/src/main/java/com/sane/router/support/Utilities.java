@@ -6,12 +6,12 @@ package com.sane.router.support;
 
 public class Utilities
 {
-    //
+    //pads zeros to the beginning of string to return a string of length byteCount
     static public String padHexString(String string, int byteCount)
     {
         while (string.length() < byteCount*2)
         {
-            String.format("%01d", string);
+            String.format("%01d", string); //pads a zero
         }
         return string;
     }

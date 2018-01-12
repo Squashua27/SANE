@@ -9,7 +9,7 @@ import java.util.Observer;
  * Created by Joshua Johnston on 1/11/2018.
  */
 
-//Creates classes, notifies classes when to begin operations
+//creates classes, notifies classes when to begin operations
 public class Bootloader extends Observable
 {
     //METHODS
