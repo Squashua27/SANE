@@ -27,7 +27,7 @@ public class Constants
         Log.i(Constants.LOG_TAG, "IP Address is "+IP_ADDRESS); // this will show up in the log file
     }
 
-    /*
+    /*Corbin_Young's_IP_Address_Getting_Method____________________
      * getLocalIPAddress - this function goes through the network interfaces,
      * looking for one that has a valid IP address.
      * Care must be taken to avoid a loopback address and IPv6 Addresses.
