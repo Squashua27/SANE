@@ -6,8 +6,6 @@ import android.widget.Toast;
 
 import com.sane.router.support.ParentActivity;
 
-import org.w3c.dom.Comment;
-
 import java.util.Observable;
 import java.util.Observer;
 
