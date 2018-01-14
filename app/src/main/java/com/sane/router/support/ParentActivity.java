@@ -11,12 +11,12 @@ public class ParentActivity
 {
     private static Activity parentActivity; //the reference to the parent activity
 
-    public static Activity getParentActivity() //Typical get method
+    public static Activity getParentActivity() //typical get method
     {
         return parentActivity;
     }
 
-    public static void setParentActivity(Activity newParentActivity) //Typical set method
+    public static void setParentActivity(Activity newParentActivity) //typical set method
     {
         parentActivity = newParentActivity;
     }

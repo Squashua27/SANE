@@ -18,6 +18,7 @@ public class Bootloader extends Observable
     public Bootloader(Activity parentActivity)
     {
         bootRouter(parentActivity);
+        notifyObservers();
         test();
     }
 
