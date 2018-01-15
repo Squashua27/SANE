@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.sane.router.support.BootLoader;
 import com.sane.router.support.ParentActivity;
 
 import java.util.Observable;
@@ -30,22 +31,19 @@ public class UIManager implements Observer
     //Methods____________________
     public void displayMessage(String message)//displays message
     {
-        int duration = Toast.LENGTH_LONG;
-        Toast toast = Toast.makeText(context, message, duration);
-        toast.show();
+        displayMessage(message, Toast.LENGTH_LONG);
     }
 
     public void displayMessage(String message, int duration)//displays message for duration
     {
-        Toast toast = Toast.makeText(context, message, duration);
-        toast.show();
+        Toast.makeText(context, message, duration).show();
     }
 
     private void setUpWidgets(){}//place holder, will be used to access on-screen widgets
 
     public void update(Observable observable, Object object)//necessary method of Observer
     {
-        if(observable.hasChanged())
+        if(observable instanceof BootLoader)
         {
             parentActivity = ParentActivity.getParentActivity();
             context = parentActivity.getBaseContext();
