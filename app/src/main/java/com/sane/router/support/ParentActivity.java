@@ -3,20 +3,31 @@ package com.sane.router.support;
 import android.app.Activity;
 
 /**
- * Created by Joshua Johnston on 1/12/2018.
+ * This class manages reference to the parent activity.  Without this reference
+ * to the parent activity, other classes cannot perform context-dependent operations.
+ *
+ * @author Joshua Johnston
  */
-
-//Parent_activity_reference_manager____________________
 public class ParentActivity
 {
     private static Activity parentActivity; //the reference to the parent activity
 
-    public static Activity getParentActivity() //typical get method
+    /**
+     * typical get method, returns parentActivity
+     *
+     * @return parentActivity - reference to the parent activity
+     */
+    public static Activity getParentActivity()
     {
         return parentActivity;
     }
 
-    public static void setParentActivity(Activity newParentActivity) //typical set method
+    /**
+     * typical set method, sets parentActivity
+     *
+     * @param newParentActivity - new reference to current parent activity
+     */
+    public static void setParentActivity(Activity newParentActivity)
     {
         parentActivity = newParentActivity;
     }

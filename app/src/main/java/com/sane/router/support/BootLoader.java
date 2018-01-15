@@ -8,34 +8,31 @@ import com.sane.router.networks.Constants;
 import java.util.Observable;
 
 /**
- *
+ * creates classes, notifies classes when to begin operations
  *
  * @author Joshua Johnston
  */
-//creates classes, notifies classes when to begin operations
 public class BootLoader extends Observable
 {
-    //METHODS
-
+    //METHODS____________________
     /**
      * constructor, calls "bootRouter"
      *
-     * @param parentActivity -
+     * @param parentActivity - activity reference allowing context-dependent operations
      */
     public BootLoader(Activity parentActivity)
     {
-        bootRouter(parentActivity);
+        bootRouter(parentActivity); //boots the router
     }
 
     /**
      * instantiates other Router classes, adds them as observers, and notifies them to operate
      *
-     * @param parentActivity -
+     * @param parentActivity - activity reference allowing context-dependent operations
      */
     private void bootRouter(Activity parentActivity)
     {
         //Instantiate_Router_Classes____________________
-        //instantiate ParentActivity class?
         ParentActivity.setParentActivity(parentActivity);
         UIManager uiManager = UIManager.getInstance();
 
@@ -43,7 +40,7 @@ public class BootLoader extends Observable
         addObserver(uiManager);
 
         //Misc_Router_Setup____________________
-        //
+        //(place holder)
 
         //Notify_Observers____________________
         setChanged();//notify Java of change
@@ -53,7 +50,9 @@ public class BootLoader extends Observable
         uiManager.displayMessage(Constants.ROUTER_NAME + " is up and running!");
     }
 
-    //runs testing for debugging and quality control
+    /**
+     * runs testing for debugging and quality control
+     */
     private void test()
     {
         //run tests

@@ -5,13 +5,18 @@ import android.os.Bundle;
 
 import com.sane.router.support.BootLoader;
 
-//The_main_Activity____________________
+/**
+ * the main activity
+ *
+ * @author Joshua Johnston
+ */
 public class MainActivity extends AppCompatActivity
 {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        new BootLoader(this);
+        new BootLoader(this); //loads classes to begin router operation
     }
 }

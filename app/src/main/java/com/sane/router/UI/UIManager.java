@@ -11,39 +11,67 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * Created by Joshua Johnston on 1/12/2018.
+ * manages User Interface and delegates tasks to lower level UI classes, observes BootLoader class
+ *
+ * @author Joshua Johnston
  */
-
-//Manages_User_Interface_&_Delegates_Tasks_to_Lower_Level_UI_Classes____________________
 public class UIManager implements Observer
 {
-    private Activity parentActivity;
+    private Activity parentActivity;//activity reference allowing context-dependent operations
 
-    private Context context;
+    private Context context;//holds context for context-dependent operations
 
     //Singleton_Implementation____________________
-    private static final UIManager ourInstance = new UIManager();//creates single instance
+    private static final UIManager uiManager = new UIManager();//creates single instance
 
-    private UIManager(){/*constructor stuff*/}//constructor, currently empty
+    /**
+     * constructor, currently empty
+     */
+    private UIManager(){/*constructor stuff*/}
 
-    public static UIManager getInstance() {return ourInstance;}//typical get method
+    /**
+     * typical get method
+     *
+     * @return ourInstance - the single instance of UIManager
+     */
+    public static UIManager getInstance() {return uiManager;}//typical get method
 
     //Methods____________________
+    /**
+     * displays a message
+     *
+     * @param message - the message to be displayed, as a string
+     */
     public void displayMessage(String message)//displays message
     {
         displayMessage(message, Toast.LENGTH_LONG);
     }
 
-    public void displayMessage(String message, int duration)//displays message for duration
+    /**
+     * displays a message for a duration
+     *
+     * @param message the message to be displayed, as a string
+     * @param duration duration of message to be displayed, int
+     */
+    public void displayMessage(String message, int duration)
     {
         Toast.makeText(context, message, duration).show();
     }
 
+    /**
+     * allows use of widgets, currently a place holder
+     */
     private void setUpWidgets(){}//place holder, will be used to access on-screen widgets
 
+    /**
+     * necessary method of Observer class, sets up UI operations after notified to do so
+     *
+     * @param observable - the observable object
+     * @param object - the argument passed by the notifyObservers() method
+     */
     public void update(Observable observable, Object object)//necessary method of Observer
     {
-        if(observable instanceof BootLoader)
+        if(observable instanceof BootLoader)//if update() called from BootLoader class
         {
             parentActivity = ParentActivity.getParentActivity();
             context = parentActivity.getBaseContext();
@@ -51,4 +79,3 @@ public class UIManager implements Observer
         }
     }
 }
-//____________________
