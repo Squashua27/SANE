@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Router</string>
     <string name="router_name">Joshua Johnston\'s Router</string>
+    <string name="sniffer_layout_title">Frame List</string>
 </resources>
