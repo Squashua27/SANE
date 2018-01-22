@@ -37,7 +37,7 @@ public class BootLoader extends Observable
         UIManager uiManager = UIManager.getInstance();
 
         //Create_Observer_List____________________
-        addObserver(uiManager);
+        addObserver(UIManager.getInstance());
 
         //Misc_Router_Setup____________________
         //(place holder)
