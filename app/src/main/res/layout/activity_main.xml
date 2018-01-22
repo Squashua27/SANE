@@ -64,6 +64,15 @@
                 android:text="@string/adjacency_table_title"
                 android:textSize="14sp"
                 android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/adjacencyTable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorAccentLight"
+                android:layout_below="@+id/adjacencyTableTitle"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -86,6 +95,15 @@
                 android:text="@string/ARP_table_title"
                 android:textSize="14sp"
                 android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/ARPTable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorAccentLight"
+                android:layout_below="@+id/ARPTableTitle"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -108,6 +126,15 @@
                 android:text="@string/routing_table_title"
                 android:textSize="14sp"
                 android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/routingTable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorAccentLight"
+                android:layout_below="@+id/routingTableTitle"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -130,6 +157,15 @@
                 android:text="@string/forwarding_table_title"
                 android:textSize="14sp"
                 android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/forwardingTable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorAccentLight"
+                android:layout_below="@+id/forwardingTableTitle"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp" />
         </RelativeLayout>
     </RelativeLayout>
 
