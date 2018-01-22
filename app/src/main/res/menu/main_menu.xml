@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/showIPAddress"
+        android:orderInCategory="110"
+        android:title="@string/IP_menu_item"
+        app:showAsAction="always" />
+</menu>
