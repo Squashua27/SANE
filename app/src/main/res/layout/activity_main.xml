@@ -67,6 +67,34 @@
             android:layout_below="@+id/snifferLayoutTitle"
             android:layout_marginTop="7dp"
             android:background="@color/colorAccentLight" />
+
+        <TextView
+            android:id="@+id/protocolDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/packetList"
+            android:layout_marginTop="7dp"
+            android:background="@color/colorAccentLight"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="protocol description here"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/hexDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/protocolDescription"
+            android:layout_marginTop="7dp"
+            android:background="@color/colorAccentLight"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="hex and ASCI dump here"
+            android:textSize="14sp" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
