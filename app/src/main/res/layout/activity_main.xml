@@ -29,7 +29,109 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0" >
+
+        <TextView
+            android:id="@+id/TableUITitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorAccentLight"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="@string/table_UI_title"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:id="@+id/AdjacencyTableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="153dp"
+            android:layout_below="@+id/TableUITitle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="7dp">
+
+            <TextView
+                android:id="@+id/adjacencyTableTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorAccentLight"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="@string/adjacency_table_title"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/ARPTableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="153dp"
+            android:layout_below="@+id/AdjacencyTableLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="7dp">
+
+            <TextView
+                android:id="@+id/ARPTableTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorAccentLight"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="@string/ARP_table_title"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RoutingTableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="153dp"
+            android:layout_below="@+id/ARPTableLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="7dp">
+
+            <TextView
+                android:id="@+id/routingTableTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorAccentLight"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="@string/routing_table_title"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/ForwardingTableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="153dp"
+            android:layout_below="@+id/RoutingTableLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="7dp">
+
+            <TextView
+                android:id="@+id/forwardingTableTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorAccentLight"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="@string/forwarding_table_title"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/SnifferLayout"
@@ -46,7 +148,7 @@
         app:layout_constraintVertical_bias="0.485">
 
         <TextView
-            android:id="@+id/snifferLayoutTitle"
+            android:id="@+id/snifferUITitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -54,7 +156,7 @@
             android:background="@color/colorAccentLight"
             android:gravity="center"
             android:padding="2dp"
-            android:text="@string/sniffer_layout_title"
+            android:text="@string/sniffer_UI_title"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -64,7 +166,7 @@
             android:layout_height="270dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/snifferLayoutTitle"
+            android:layout_below="@+id/snifferUITitle"
             android:layout_marginTop="7dp"
             android:background="@color/colorAccentLight" />
 

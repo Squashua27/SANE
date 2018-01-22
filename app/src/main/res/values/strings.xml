@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Router</string>
     <string name="router_name">Joshua Johnston\'s Router</string>
-    <string name="sniffer_layout_title">Frame List</string>
+    <string name="sniffer_UI_title">Frame List</string>
+    <string name="table_UI_title">Internal Tables</string>
+    <string name="adjacency_table_title">Adjacency Table</string>
+    <string name="ARP_table_title">ARP Table</string>
+    <string name="routing_table_title">Routing Table</string>
+    <string name="forwarding_table_title">Forwarding Table</string>
 </resources>
