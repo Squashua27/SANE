@@ -19,7 +19,6 @@ import com.sane.router.support.Utilities;
  */
 public class MainActivity extends AppCompatActivity
 {
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -28,6 +27,11 @@ public class MainActivity extends AppCompatActivity
         new BootLoader(this); //loads classes to begin router operation
     }
 
+    /**
+     * override of the standard Java method
+     *
+     * @param menu - the created options menu
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -36,6 +40,11 @@ public class MainActivity extends AppCompatActivity
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * override of the standard Java method
+     *
+     * @param item - the menu item selected
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
