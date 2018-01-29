@@ -1,6 +1,7 @@
 package com.sane.router.networks.datagramFields;
 
 import com.sane.router.networks.Constants;
+import com.sane.router.networks.datagram.Datagram;
 import com.sane.router.networks.headerFields.HeaderField;
 import com.sane.router.support.ParentActivity;
 import com.sane.router.support.Utilities;
@@ -20,7 +21,7 @@ public class DatagramPayloadField implements HeaderField
     /**
      * A typical constructor, with a twist: this datagram field takes another datagram
      *
-     * @param pkt - the datagram payload to be transmitted
+     * @param pkt - the datagram payload
      */
     DatagramPayloadField(Datagram pkt)
     {
@@ -40,23 +41,23 @@ public class DatagramPayloadField implements HeaderField
     @Override
     public String toString()//necessary to interface, not useful here
     {
-        return "adsf";
+        return packet.toString();
     }
     public String toTransmissionString()//what the address field looks like in transit
     {
-        return "dsaf";
+        return packet.toTransmissionString();
     }
     public String toHexString()//the hex address field, pre-padding
     {
-        return "dfsa";
+        return packet.toHexString();
     }
     public String explainSelf()//the LL2P Address Field explains itself
     {
-        return "fdsa";
+        return packet.toProtocolExplanationString();
     }
     public String toASCIIString()//necessary interface function, not useful here
     {
-        return "fsd";
+        return packet.toSummaryString();
     }
 }
 
