@@ -34,6 +34,16 @@ public class Constants
     public static final int LL2P_TYPE_FIELD_LENGTH = 2;
     public static final int LL2P_CRC_FIELD_LENGTH = 2;
 
+    public static final int LL2P_TYPE_LL3P = 32769; //0x8001
+    public static final int LL2P_TYPE_RESERVED = 32770; //0x8002
+    public static final int LL2P_TYPE_LRP = 32771; //0x8003
+    public static final int LL2P_TYPE_ECHO_REQUEST = 32772; //0x8004
+    public static final int LL2P_TYPE_ECHO_REPLY = 32773; //0x8005
+    public static final int LL2P_TYPE_ARP_REQUEST = 32774; //0x8006
+    public static final int LL2P_TYPE_ARP_REPLY = 32775; //0x8007
+    public static final int LL2P_TYPE_TEXT = 32776; //0x8008
+
+
     /**
      * the following code snippet by Corbin Young,
      * an improvement upon the previous year's IP getting method
