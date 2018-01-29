@@ -5,7 +5,7 @@ import com.sane.router.networks.headerFields.HeaderField;
 import com.sane.router.support.Utilities;
 
 /**
- * Interface providing translation of header fields to various text formats
+ * The Address field of the LL2P packet
  *
  * @author Joshua Johnston
  */

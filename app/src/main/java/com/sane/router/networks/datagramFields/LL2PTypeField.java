@@ -5,7 +5,9 @@ import com.sane.router.networks.headerFields.HeaderField;
 import com.sane.router.support.Utilities;
 
 /**
- * Created by Joshua Johnston on 1/28/2018.
+ * The Type Field of the LL2P packet
+ *
+ * @author Joshua Johnston
  */
 
 public class LL2PTypeField implements HeaderField
