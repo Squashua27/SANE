@@ -9,7 +9,7 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 /**
- * contains universal constants
+ * Contains universal constants
  *
  * @author Joshua Johnston
  */

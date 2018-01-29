@@ -16,6 +16,11 @@ public class CRC implements HeaderField
     private String CRCValue; //fake string value of the address
 
     //Methods
+    /**
+     * A typical constructor
+     *
+     * @param typeValueString - a string representing the constructed CRC field
+     */
     public CRC(String typeValueString)
     {
         CRCValue = typeValueString.substring(0, 2* Constants.LL2P_CRC_FIELD_LENGTH);
