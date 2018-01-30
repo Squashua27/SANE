@@ -45,6 +45,15 @@ public class Constants
     public static final int LL2P_TYPE_ARP_REPLY = 32775; //0x8007
     public static final int LL2P_TYPE_TEXT = 32776; //0x8008
 
+    //Arbitrary (but consistent) integer values to refer to fields
+    public static final int LL2P_DEST_ADDRESS_FIELD = 0;
+    public static final int LL2P_SOURCE_ADDRESS_FIELD = 1;
+    public static final int LL2P_TYPE_FIELD = 2;
+    public static final int LL2P_PAYLOAD_FIELD = 3;
+    public static final int CRC_FIELD = 4;
+
+    public static final int RECORD = 0;
+    public static final int ADJACENCY_RECORD = 1;
 
     /**
      * the following code snippet by Corbin Young,
