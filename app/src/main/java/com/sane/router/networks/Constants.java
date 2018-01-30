@@ -15,14 +15,16 @@ import java.util.Enumeration;
  */
 public class Constants
 {
-    //IP address stored here in dotted decimal notation
+    //IP address in dotted decimal notation
     public static final String IP_ADDRESS;
     //used in debugging messages or messages sent to the log file.
     public static final String ROUTER_NAME = "The Promised LAN";
     public static final String LOG_TAG = "The Promised LAN: ";
 
-    //Datagram values (values in bytes)
-    //LL2P Frame values
+    //Datagram Constants (lengths and offsets in bytes)
+    //LL2P (Lab Layer 2 Protocol) Constants
+    public static final String LL2P_ADDRESS = "B1A5ED";
+
     public static final int LL2P_DEST_ADDRESS_OFFSET = 0;
     public static final int LL2P_SOURCE_ADDRESS_OFFSET = 3;
     public static final int LL2P_TYPE_FIELD_OFFSET = 6;

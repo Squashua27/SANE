@@ -23,10 +23,21 @@ public class DatagramPayloadField implements HeaderField
      *
      * @param pkt - the datagram payload
      */
-    DatagramPayloadField(Datagram pkt)
+    public DatagramPayloadField(Datagram pkt)
     {
         packet = pkt;
     }
+    //Methods
+    /**
+     * A typical constructor, for creating a TEXT type LL2P frame ONLY
+     *
+     * @param pkt - the datagram payload (use for text type LL2P frame ONLY)
+     */
+    //public DatagramPayloadField(String pkt)
+    //{
+    //
+    //    packet = pkt;
+    //}
     /**
      * returns the datagram object
      *
