@@ -39,7 +39,7 @@ public class LL2PFrame implements Datagram
         destinationAddress = new LL2PAddressField("CAFCAF", false);
         sourceAddress = new LL2PAddressField(Constants.LL2P_ADDRESS, false);
         type = new LL2PTypeField(Constants.LL2P_TYPE_TEXT);
-        makePayloadField();//payload = new DatagramPayloadField("Datagram payload");
+        payload = new DatagramPayloadField("Datagram payload");
         crc = new CRC(type.toTransmissionString());
     }
     /**
@@ -56,15 +56,15 @@ public class LL2PFrame implements Datagram
 
         sourceAddress = new LL2PAddressField(frame.substring
                 (2*Constants.LL2P_SOURCE_ADDRESS_OFFSET,
-                2*Constants.LL2P_SOURCE_ADDRESS_OFFSET + 2*Constants.LL2P_ADDRESS_LENGTH),
+                2*Constants.LL2P_SOURCE_ADDRESS_OFFSET + 2*Constants.LL2P_ADDRESS_LENGTH-1),
                 true);
 
         type = new LL2PTypeField(frame.substring
                 (2*Constants.LL2P_TYPE_FIELD_OFFSET,
-                2*Constants.LL2P_TYPE_FIELD_OFFSET + 2*Constants.LL2P_TYPE_FIELD_LENGTH));
+                2*Constants.LL2P_TYPE_FIELD_OFFSET + 2*Constants.LL2P_TYPE_FIELD_LENGTH-1));
 
-        //payload = new LL2PFrame(frame.substring(2*Constants.LL2P_PAYLOAD_OFFSET,
-        //        frame.length() - 2*Constants.LL2P_CRC_FIELD_LENGTH));
+        payload = new DatagramPayloadField(frame.substring(2*Constants.LL2P_PAYLOAD_OFFSET,
+                frame.length() - 2*Constants.LL2P_CRC_FIELD_LENGTH-1));
 
         crc = new CRC(frame.substring
                 (frame.length() - 2*Constants.LL2P_SOURCE_ADDRESS_OFFSET));

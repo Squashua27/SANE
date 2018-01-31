@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.sane.router.UI.UIManager;
 import com.sane.router.networks.Constants;
+import com.sane.router.networks.datagram.LL2PFrame;
 
 import java.util.Observable;
 
@@ -48,14 +49,19 @@ public class BootLoader extends Observable
 
         //Output____________________
         uiManager.displayMessage(Constants.ROUTER_NAME + " is up and running!");
+
+        //Testing____________________
+        test();
     }
 
     /**
-     * runs testing for debugging and quality control
+     * Runs testing for debugging and quality control
      */
     private void test()
     {
-        //run tests
+        LL2PFrame packet = new LL2PFrame("B1A5EDF1A5C08008(text datagram)aCRC");
+
+        UIManager.getInstance().displayMessage(packet.toProtocolExplanationString());
     }
 }
 

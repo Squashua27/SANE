@@ -31,11 +31,10 @@ public class Constants
     public static final int LL2P_PAYLOAD_OFFSET = 8;
 
     public static final int LL2P_ADDRESS_LENGTH = 3;
-    public static final int LL2P_DEST_ADDRESS_LENGTH = 3;
-    public static final int LL2P_SOURCE_ADDRESS_LENGTH = 3;
     public static final int LL2P_TYPE_FIELD_LENGTH = 2;
     public static final int LL2P_CRC_FIELD_LENGTH = 2;
 
+    //LL2P Types
     public static final int LL2P_TYPE_LL3P = 32769; //0x8001
     public static final int LL2P_TYPE_RESERVED = 32770; //0x8002
     public static final int LL2P_TYPE_LRP = 32771; //0x8003
@@ -44,6 +43,15 @@ public class Constants
     public static final int LL2P_TYPE_ARP_REQUEST = 32774; //0x8006
     public static final int LL2P_TYPE_ARP_REPLY = 32775; //0x8007
     public static final int LL2P_TYPE_TEXT = 32776; //0x8008
+
+    public static final String LL2P_TYPE_LL3P_HEX = "8001";
+    public static final String LL2P_TYPE_RESERVED_HEX = "8002";
+    public static final String LL2P_TYPE_LRP_HEX = "8003";
+    public static final String LL2P_TYPE_ECHO_REQUEST_HEX = "8004";
+    public static final String LL2P_TYPE_ECHO_REPLY_HEX = "8005";
+    public static final String LL2P_TYPE_ARP_REQUEST_HEX = "8006";
+    public static final String LL2P_TYPE_ARP_REPLY_HEX = "8007";
+    public static final String LL2P_TYPE_TEXT_HEX = "8008";
 
     //Arbitrary (but consistent) integer values to refer to fields
     public static final int LL2P_DEST_ADDRESS_FIELD = 0;
