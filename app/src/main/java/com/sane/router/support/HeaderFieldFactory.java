@@ -1,7 +1,8 @@
 package com.sane.router.support;
 
+import android.util.Log;
+
 import com.sane.router.networks.Constants;
-import com.sane.router.networks.datagram.Datagram;
 import com.sane.router.networks.datagramFields.CRC;
 import com.sane.router.networks.datagramFields.DatagramPayloadField;
 import com.sane.router.networks.datagramFields.LL2PAddressField;
@@ -33,14 +34,17 @@ public class HeaderFieldFactory implements Factory<HeaderField, String>
     public <U extends HeaderField> U getItem(int type, String data)
     {
         if (type == Constants.LL2P_DEST_ADDRESS_FIELD)
-            return new LL2PAddressField(data, false);
+            return (U) new LL2PAddressField(data, false);
         else if (type == Constants.LL2P_SOURCE_ADDRESS_FIELD)
-            return new LL2PAddressField(data, true);
+            return (U) new LL2PAddressField(data, true);
         else if (type == Constants.LL2P_TYPE_FIELD)
-            return new LL2PTypeField(data);
+            return (U) new LL2PTypeField(data);
         else if (type == Constants.LL2P_PAYLOAD_FIELD)
-            return new DatagramPayloadField(data);
-        else //(type == Constants.CRC_FIELD)
-            return CRC(data);
+            return (U) new DatagramPayloadField(data);
+        else if (type == Constants.CRC_FIELD)
+            return (U) new CRC(data);
+        else
+            Log.e(Constants.LOG_TAG, "Error creating HeaderField");
+        return null;
     }
 }

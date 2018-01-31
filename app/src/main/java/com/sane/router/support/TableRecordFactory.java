@@ -12,7 +12,7 @@ import java.net.InetAddress;
  *
  * @author Joshua Johnston
  */
-public class TableRecordFactory implements Factory
+public class TableRecordFactory implements Factory<TableRecord, String>
 {
     private static final TableRecordFactory ourInstance = new TableRecordFactory();
     public static TableRecordFactory getInstance() {
@@ -31,8 +31,10 @@ public class TableRecordFactory implements Factory
     public <U extends TableRecord> U getItem(int type, String data)
     {
         if (type == Constants.RECORD)
-            return new Record();
+            return (U) new Record();
         else //if (type == Constants.ADJACENCY_RECORD)
-            return new AdjacencyRecord(Integer.valueOf(data), Constants.IP_ADDRESS);
+            //return new AdjacencyRecord(Integer.valueOf(data), Constants.IP_ADDRESS);
+            return (U) new AdjacencyRecord(data);
     }
+
 }

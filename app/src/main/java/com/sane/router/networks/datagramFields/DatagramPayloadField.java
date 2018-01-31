@@ -2,6 +2,7 @@ package com.sane.router.networks.datagramFields;
 
 import com.sane.router.networks.Constants;
 import com.sane.router.networks.datagram.Datagram;
+import com.sane.router.networks.datagram.TextDatagram;
 import com.sane.router.networks.headerFields.HeaderField;
 import com.sane.router.support.ParentActivity;
 import com.sane.router.support.Utilities;
@@ -29,15 +30,14 @@ public class DatagramPayloadField implements HeaderField
     }
     //Methods
     /**
-     * A typical constructor, for creating a TEXT type LL2P frame ONLY
+     * A typical constructor, for creating a TEXT type datagram
      *
-     * @param pkt - the datagram payload (use for text type LL2P frame ONLY)
+     * @param text - the datagram payload
      */
-    //public DatagramPayloadField(String pkt)
-    //{
-    //
-    //    packet = pkt;
-    //}
+    public DatagramPayloadField(String text)
+    {
+        packet = new TextDatagram(text);
+    }
     /**
      * returns the datagram object
      *
