@@ -4,6 +4,7 @@ import com.sane.router.networks.datagramFields.CRC;
 import com.sane.router.networks.datagramFields.DatagramPayloadField;
 import com.sane.router.networks.datagramFields.LL2PAddressField;
 import com.sane.router.networks.datagramFields.LL2PTypeField;
+import com.sane.router.support.HeaderFieldFactory;
 
 /**
  * The Lab Layer 2 Protocol frame Class
@@ -30,45 +31,56 @@ public class LL2PFrame implements Datagram
 
     //Methods
     /**
-     * A constructor with no arguments, for testing
+     * Default constructor with no arguments, for testing
      *
      * @return LL2PFrame frame - a frame of the LL2P
      */
     public LL2PFrame()
     {
-        destinationAddress = new LL2PAddressField("CAFCAF", false);
-        sourceAddress = new LL2PAddressField(Constants.LL2P_ADDRESS, false);
-        type = new LL2PTypeField(Constants.LL2P_TYPE_TEXT);
-        payload = new DatagramPayloadField("Datagram payload");
-        crc = new CRC(type.toTransmissionString());
+        makeFrame("F1A5C0B1A5ED8008(text datagram)aCRC");
     }
     /**
-     * The constructor, generally used to make an LL2PFrame
+     * The constructor generally used to make an LL2PFrame
      *
      * @return LL2PFrame frame - a frame of the LL2P
      */
     public LL2PFrame(String frame)
     {
-        destinationAddress = new LL2PAddressField(frame.substring
-                (2*Constants.LL2P_DEST_ADDRESS_OFFSET,
-                2*Constants.LL2P_DEST_ADDRESS_OFFSET + 2*Constants.LL2P_ADDRESS_LENGTH),
-                false);
+        makeFrame(frame);
+    }
 
-        sourceAddress = new LL2PAddressField(frame.substring
-                (2*Constants.LL2P_SOURCE_ADDRESS_OFFSET,
-                2*Constants.LL2P_SOURCE_ADDRESS_OFFSET + 2*Constants.LL2P_ADDRESS_LENGTH-1),
-                true);
+    /**
+     * Method of the constructor, general and default
+     *
+     * @param frame - a frame of the LL2P
+     */
+    private void makeFrame(String frame)
+    {
+        destinationAddress = HeaderFieldFactory.getInstance().getItem
+                (Constants.LL2P_DEST_ADDRESS_FIELD,
+                frame.substring(2*Constants.LL2P_DEST_ADDRESS_OFFSET,
+                2*Constants.LL2P_DEST_ADDRESS_OFFSET + 2*Constants.LL2P_ADDRESS_LENGTH));
 
-        type = new LL2PTypeField(frame.substring
-                (2*Constants.LL2P_TYPE_FIELD_OFFSET,
+        sourceAddress = HeaderFieldFactory.getInstance().getItem
+                (Constants.LL2P_SOURCE_ADDRESS_FIELD,
+                frame.substring(2*Constants.LL2P_SOURCE_ADDRESS_OFFSET,
+                2*Constants.LL2P_SOURCE_ADDRESS_OFFSET + 2*Constants.LL2P_ADDRESS_LENGTH));
+
+        type = HeaderFieldFactory.getInstance().getItem
+                (Constants.LL2P_TYPE_FIELD,
+                frame.substring(2*Constants.LL2P_TYPE_FIELD_OFFSET,
                 2*Constants.LL2P_TYPE_FIELD_OFFSET + 2*Constants.LL2P_TYPE_FIELD_LENGTH));
 
-        payload = new DatagramPayloadField(frame.substring(2*Constants.LL2P_PAYLOAD_OFFSET,
-                frame.length() - 2*Constants.LL2P_CRC_FIELD_LENGTH-1));
+        payload = HeaderFieldFactory.getInstance().getItem
+                (Constants.LL2P_PAYLOAD_FIELD,
+                frame.substring(2*Constants.LL2P_PAYLOAD_OFFSET,
+                frame.length() - 2*Constants.LL2P_CRC_FIELD_LENGTH));
 
-        crc = new CRC(frame.substring
-                (frame.length() - 2*Constants.LL2P_SOURCE_ADDRESS_OFFSET));
+        crc = HeaderFieldFactory.getInstance().getItem
+                (Constants.CRC_FIELD,
+                frame.substring(frame.length() - 2*Constants.LL2P_CRC_FIELD_LENGTH));
     }
+
     /**
      * Makes a datagram payload field
      *

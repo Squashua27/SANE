@@ -53,6 +53,8 @@ public class LL2PAddressField implements HeaderField
         explanation = "";
         if(isSourceAddress)
             explanation = "Source ";
+        else
+            explanation = "Destination ";
         explanation += "LL2P Address: 0x" + toTransmissionString();
     }
 

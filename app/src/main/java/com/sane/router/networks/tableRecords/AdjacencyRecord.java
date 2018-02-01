@@ -3,6 +3,7 @@ package com.sane.router.networks.tableRecords;
 import com.sane.router.networks.Constants;
 import com.sane.router.networks.datagramFields.LL2PTypeField;
 import com.sane.router.support.IPAddressGetter;
+import com.sane.router.support.TableRecordFactory;
 import com.sane.router.support.Utilities;
 
 import java.net.InetAddress;
@@ -28,10 +29,11 @@ public class AdjacencyRecord extends Record
     public AdjacencyRecord(String LL2PandIPAddress)
     {
         super();  //a call to the superclass' constructor
-        LL2PAddress = Integer.valueOf(LL2PandIPAddress.substring
-                (0, 2*Constants.LL2P_ADDRESS_LENGTH-1)); //initialize with given LL2P Address
-        IPAddressGetter ipAddressGetter = IPAddressGetter.getInstance();
-        IPAddress = ipAddressGetter.getInetAddress
+
+        LL2PAddress = Integer.parseInt(LL2PandIPAddress.substring
+                (0, 2*Constants.LL2P_ADDRESS_LENGTH),16);
+
+        IPAddress = IPAddressGetter.getInstance().getInetAddress
                 (LL2PandIPAddress.substring(2*Constants.LL2P_ADDRESS_LENGTH));
     }
     public int getLL2PAddress() //Standard getter
@@ -56,9 +58,9 @@ public class AdjacencyRecord extends Record
      */
     @Override public String toString()
     {
-        return "LL2P Address: 0x" + Utilities.padHexString(Integer.toHexString(LL2PAddress),
-                + 2*Constants.LL2P_ADDRESS_LENGTH)
-                + "; IP Address: " + IPAddress.toString();
+        return "\nLL2P Address: 0x" + Utilities.padHexString(Integer.toHexString(LL2PAddress),
+                Constants.LL2P_ADDRESS_LENGTH)
+                + "\nIP Address: " + IPAddress.toString();
     }
 
     //Interface Implementation

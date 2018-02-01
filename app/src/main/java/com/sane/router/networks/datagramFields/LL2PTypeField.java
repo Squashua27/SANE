@@ -4,6 +4,8 @@ import com.sane.router.networks.Constants;
 import com.sane.router.networks.headerFields.HeaderField;
 import com.sane.router.support.Utilities;
 
+import java.nio.ByteBuffer;
+
 /**
  * The Type Field of the LL2P packet
  *
@@ -29,11 +31,11 @@ public class LL2PTypeField implements HeaderField
     /**
      * A typical constructor
      *
-     * @param typeValueString - a string representing constructed LL2PTypeField
+     * @param string - a string representing constructed LL2PTypeField
      */
-    public LL2PTypeField(String typeValueString)
+    public LL2PTypeField(String string)
     {
-        type = Integer.valueOf(typeValueString);
+        type = Integer.parseInt(string, 16);
     }
     /**
      * Sets an explanation descriptive of this class

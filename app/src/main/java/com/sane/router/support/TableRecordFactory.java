@@ -1,5 +1,7 @@
 package com.sane.router.support;
 
+import android.util.Log;
+
 import com.sane.router.networks.Constants;
 import com.sane.router.networks.tableRecords.AdjacencyRecord;
 import com.sane.router.networks.tableRecords.Record;
@@ -32,9 +34,11 @@ public class TableRecordFactory implements Factory<TableRecord, String>
     {
         if (type == Constants.RECORD)
             return (U) new Record();
-        else //if (type == Constants.ADJACENCY_RECORD)
-            //return new AdjacencyRecord(Integer.valueOf(data), Constants.IP_ADDRESS);
+        else if (type == Constants.ADJACENCY_RECORD)
             return (U) new AdjacencyRecord(data);
+        else
+        Log.e(Constants.LOG_TAG, "Error creating TableRecord");
+        return null;
     }
 
 }

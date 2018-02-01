@@ -6,6 +6,8 @@ import android.util.Log;
 import com.sane.router.UI.UIManager;
 import com.sane.router.networks.Constants;
 import com.sane.router.networks.datagram.LL2PFrame;
+import com.sane.router.networks.tableRecords.AdjacencyRecord;
+import com.sane.router.networks.tableRecords.TableRecord;
 
 import java.util.Observable;
 
@@ -60,10 +62,18 @@ public class BootLoader extends Observable
      */
     private void test()
     {
-        LL2PFrame packet = new LL2PFrame("B1A5EDF1A5C08008(text datagram)aCRC");
+        //Test: Create an LL2P frame, tests Classes and Header Factory
+        LL2PFrame packet = new LL2PFrame("F1A5C0B1A5ED8008(text datagram)aCRC");
+        Log.i(Constants.LOG_TAG," \n \n"+packet.toProtocolExplanationString()+" \n \n");
 
-        UIManager.getInstance().displayMessage(packet.toProtocolExplanationString(),999);
-        Log.i(Constants.LOG_TAG, packet.toProtocolExplanationString());
+        //Test: Create an adjacency record, tests Classes and Table Record Factory
+        String addressString = Constants.LL2P_ADDRESS + Constants.IP_ADDRESS;
+
+        AdjacencyRecord record = TableRecordFactory.getInstance().getItem
+                (Constants.ADJACENCY_RECORD, addressString);
+
+        Log.i(Constants.LOG_TAG, record.toString());
+        Log.i(Constants.LOG_TAG, " \n" + record.toString() + " \n \n");
     }
 }
 
