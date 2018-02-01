@@ -36,7 +36,7 @@ public class LL2PAddressField implements HeaderField
      */
     public LL2PAddressField(String newAddress, boolean isSource)//constructor
     {
-        address = Integer.parseInt(newAddress);
+        address = Integer.parseInt(newAddress,16);
         isSourceAddress = isSource;
     }
     /**

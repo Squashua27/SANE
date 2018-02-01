@@ -61,7 +61,7 @@ public class LL2PFrame implements Datagram
 
         type = new LL2PTypeField(frame.substring
                 (2*Constants.LL2P_TYPE_FIELD_OFFSET,
-                2*Constants.LL2P_TYPE_FIELD_OFFSET + 2*Constants.LL2P_TYPE_FIELD_LENGTH-1));
+                2*Constants.LL2P_TYPE_FIELD_OFFSET + 2*Constants.LL2P_TYPE_FIELD_LENGTH));
 
         payload = new DatagramPayloadField(frame.substring(2*Constants.LL2P_PAYLOAD_OFFSET,
                 frame.length() - 2*Constants.LL2P_CRC_FIELD_LENGTH-1));

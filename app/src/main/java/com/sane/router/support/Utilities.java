@@ -20,7 +20,7 @@ public class Utilities
     {
         while (string.length() < byteCount*2)//while string is not of expected return length
         {
-            String.format("%01d", string); //pads a zero
+            string = "0" + string;//pads a zero
         }
         return string;// return zero-padded string
     }

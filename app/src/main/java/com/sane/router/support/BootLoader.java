@@ -1,6 +1,7 @@
 package com.sane.router.support;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.sane.router.UI.UIManager;
 import com.sane.router.networks.Constants;
@@ -61,7 +62,8 @@ public class BootLoader extends Observable
     {
         LL2PFrame packet = new LL2PFrame("B1A5EDF1A5C08008(text datagram)aCRC");
 
-        UIManager.getInstance().displayMessage(packet.toProtocolExplanationString());
+        UIManager.getInstance().displayMessage(packet.toProtocolExplanationString(),999);
+        Log.i(Constants.LOG_TAG, packet.toProtocolExplanationString());
     }
 }
 
