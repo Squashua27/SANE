@@ -1,5 +1,7 @@
 package com.sane.router.support;
 
+import java.util.Calendar;
+
 /**
  * universal utilities for general use
  *
@@ -7,8 +9,10 @@ package com.sane.router.support;
  */
 public class Utilities
 {
-    //pads zeros to the beginning of string to return a string of length byteCount
+    //Fields
+    public static long baseDateInSeconds = Calendar.getInstance().getTimeInMillis()/1000;
 
+    //Methods
     /**
      * zero pads a hex string, returns s string of length byteCount
      *
@@ -23,5 +27,14 @@ public class Utilities
             string = "0" + string;//pads a zero
         }
         return string;// return zero-padded string
+    }
+    /**
+     * Returns the time in seconds passed since the base date in seconds
+     *
+     * @return time - time in seconds since base date in seconds
+     */
+    public int getTimeInSeconds()
+    {
+        return (int) (Calendar.getInstance().getTimeInMillis()/1000-baseDateInSeconds);
     }
 }
