@@ -23,12 +23,10 @@ public class UIManager implements Observer
 
     //Singleton_Implementation____________________
     private static final UIManager uiManager = new UIManager();//creates single instance
-
     /**
      * constructor, currently empty
      */
     private UIManager(){/*constructor stuff*/}
-
     /**
      * typical get method
      *

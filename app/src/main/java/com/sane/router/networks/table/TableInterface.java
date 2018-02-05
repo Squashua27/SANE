@@ -1,12 +1,13 @@
 package com.sane.router.networks.table;
 
+import com.sane.router.networks.tableRecords.Record;
 import com.sane.router.networks.tableRecords.TableRecord;
 
 import java.util.List;
 
 /**
  * Interface regulating the operations of the table class object,
- * a structure that will be composed of table record class objects
+ * a structure that will be composed of record class objects
  *
  * @author Joshua Johnston
  */
@@ -14,27 +15,27 @@ public interface TableInterface
 {
     //Interface Methods
     /**
-     * Returns complete Table contents as a list of TableRecords
+     * Returns complete Table contents as a list of Records
      *
      * @return List<TableRecord> - a list of table records
      */
-    public List<TableRecord> getTableAsList();
+    public List<Record> getTableAsList();
     /**
-     * Adds a TableRecord to the Table, throws exception on failure
+     * Adds a Record to the Table, throws exception on failure
      *
-     * @param recordToAdd - TableRecord to be added
+     * @param recordToAdd - Record to be added
      *
-     * @return TableRecord - the TableRecord added
+     * @return TableRecord - the Record added
      */
-    public TableRecord addItem(TableRecord recordToAdd);
+    public Record addItem(Record recordToAdd);
     /**
-     * Returns a TableRecord matching the specified item, throws exception on failure
+     * Returns a Record matching the specified item, throws exception on failure
      *
-     * @param recordToGet - the TableRecord to search for and return
+     * @param recordToGet - the Record to search for and return
      *
-     * @return TableRecord - the found TableRecord to be returned
+     * @return TableRecord - the found Record to be returned
      */
-    public TableRecord getItem(TableRecord recordToGet);
+    public Record getItem(Record recordToGet);
     /**
      * Removes from table and returns a record matching a given key
      *
@@ -42,7 +43,7 @@ public interface TableInterface
      *
      * @return TableRecord -  the removed record, null if key not found
      */
-    public TableRecord removeItem(Integer recordKey);
+    public Record removeItem(Integer recordKey);
     /**
      * Finds and returns a record matching the given record key,
      * throws an exception if matching key is not found
@@ -51,9 +52,9 @@ public interface TableInterface
      *
      * @return TableRecord - the gotten TableRecord
      */
-    public TableRecord getItem(Integer recordKey);
+    public Record getItem(Integer recordKey);
     /**
-     * Clears a Table, removes all TableRecords
+     * Clears a Table, removes all Records
      */
     public void clear();
 }

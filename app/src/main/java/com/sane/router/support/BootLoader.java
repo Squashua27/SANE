@@ -7,7 +7,6 @@ import com.sane.router.UI.UIManager;
 import com.sane.router.networks.Constants;
 import com.sane.router.networks.datagram.LL2PFrame;
 import com.sane.router.networks.tableRecords.AdjacencyRecord;
-import com.sane.router.networks.tableRecords.TableRecord;
 
 import java.util.Observable;
 
@@ -42,13 +41,14 @@ public class BootLoader extends Observable
 
         //Create_Observer_List____________________
         addObserver(UIManager.getInstance());
+        addObserver(FrameLogger.getInstance());
 
         //Misc_Router_Setup____________________
         //(place holder)
 
         //Notify_Observers____________________
         setChanged();//notify Java of change
-        notifyObservers();//calls update method in observers
+        notifyObservers();//trigger update method in observers
 
         //Output____________________
         uiManager.displayMessage(Constants.ROUTER_NAME + " is up and running!");
