@@ -15,8 +15,10 @@ import java.util.Enumeration;
  */
 public class Constants
 {
-    //IP address in dotted decimal notation
-    public static final String IP_ADDRESS;
+
+    public static final String IP_ADDRESS;//IP address in dotted decimal notation
+    public static final int UDP_PORT = 49999;//our chosen port for communication
+
     //used in debugging messages or messages sent to the log file.
     public static final String ROUTER_NAME = "The Promised LAN";
     public static final String LOG_TAG = "The Promised LAN: ";
