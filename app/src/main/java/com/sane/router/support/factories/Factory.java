@@ -1,4 +1,4 @@
-package com.sane.router.support;
+package com.sane.router.support.factories;
 
 /**
  * Factory Interface to be implemented by all Factory Classes

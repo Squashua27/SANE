@@ -1,7 +1,6 @@
 package com.sane.router.networks.table;
 
-import com.sane.router.networks.tableRecords.Record;
-import com.sane.router.networks.tableRecords.TableRecord;
+import com.sane.router.networks.table.tableRecords.Record;
 
 import java.util.List;
 
@@ -19,7 +18,7 @@ public interface TableInterface
      *
      * @return List<TableRecord> - a list of table records
      */
-    public List<Record> getTableAsList();
+    List<Record> getTableAsList();
     /**
      * Adds a Record to the Table, throws exception on failure
      *
@@ -27,7 +26,7 @@ public interface TableInterface
      *
      * @return TableRecord - the Record added
      */
-    public Record addItem(Record recordToAdd);
+    Record addItem(Record recordToAdd);
     /**
      * Returns a Record matching the specified item, throws exception on failure
      *
@@ -35,7 +34,7 @@ public interface TableInterface
      *
      * @return TableRecord - the found Record to be returned
      */
-    public Record getItem(Record recordToGet);
+    Record getItem(Record recordToGet);
     /**
      * Removes from table and returns a record matching a given key
      *
@@ -43,7 +42,7 @@ public interface TableInterface
      *
      * @return TableRecord -  the removed record, null if key not found
      */
-    public Record removeItem(Integer recordKey);
+    Record removeItem(Integer recordKey);
     /**
      * Finds and returns a record matching the given record key,
      * throws an exception if matching key is not found
@@ -52,9 +51,9 @@ public interface TableInterface
      *
      * @return TableRecord - the gotten TableRecord
      */
-    public Record getItem(Integer recordKey);
+    Record getItem(Integer recordKey);
     /**
      * Clears a Table, removes all Records
      */
-    public void clear();
+    void clear();
 }

@@ -1,9 +1,7 @@
-package com.sane.router.networks.tableRecords;
+package com.sane.router.networks.table.tableRecords;
 
 import com.sane.router.networks.Constants;
-import com.sane.router.networks.datagramFields.LL2PTypeField;
 import com.sane.router.support.IPAddressGetter;
-import com.sane.router.support.TableRecordFactory;
 import com.sane.router.support.Utilities;
 
 import java.net.InetAddress;
@@ -74,6 +72,7 @@ public class AdjacencyRecord extends Record
     {
         return LL2PAddress;
     }
+
     /**
      * Overridden Interface method,
      * Age not applicable to Adjacency Records, return 0

@@ -1,10 +1,7 @@
 package com.sane.router.networks.datagramFields;
 
 import com.sane.router.networks.Constants;
-import com.sane.router.networks.headerFields.HeaderField;
 import com.sane.router.support.Utilities;
-
-import java.nio.ByteBuffer;
 
 /**
  * The Type Field of the LL2P packet

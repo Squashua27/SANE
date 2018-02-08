@@ -1,4 +1,4 @@
-package com.sane.router.support;
+package com.sane.router.support.factories;
 
 import android.util.Log;
 
@@ -7,9 +7,7 @@ import com.sane.router.networks.datagramFields.CRC;
 import com.sane.router.networks.datagramFields.DatagramPayloadField;
 import com.sane.router.networks.datagramFields.LL2PAddressField;
 import com.sane.router.networks.datagramFields.LL2PTypeField;
-import com.sane.router.networks.headerFields.HeaderField;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+import com.sane.router.networks.datagramFields.HeaderField;
 
 /**
  * A factory to create Header Field Objects

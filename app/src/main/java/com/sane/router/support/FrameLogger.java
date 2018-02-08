@@ -33,9 +33,9 @@ public class FrameLogger extends Observable implements Observer
     {
         if (observable instanceof BootLoader)
             addObserver(LL1Daemon.getInstance());
-        if (observable instanceof LL1Daemon)
+        if (object instanceof LL2PFrame)
         {
-            frameList.add((LL2PFrame) object);
+            frameList.add((LL2PFrame)object);
             setChanged();
             notifyObservers();
         }

@@ -1,16 +1,18 @@
 package com.sane.router.networks.daemons;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.sane.router.UI.UIManager;
 import com.sane.router.networks.Constants;
 import com.sane.router.networks.datagram.LL2PFrame;
+import com.sane.router.networks.datagramFields.LL2PAddressField;
 import com.sane.router.networks.table.Table;
-import com.sane.router.networks.tableRecords.AdjacencyRecord;
+import com.sane.router.networks.table.tableRecords.AdjacencyRecord;
 import com.sane.router.support.BootLoader;
 import com.sane.router.support.FrameLogger;
 import com.sane.router.support.IPAddressGetter;
-import com.sane.router.support.TableRecordFactory;
+import com.sane.router.support.factories.TableRecordFactory;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -59,8 +61,7 @@ public class LL1Daemon extends Observable implements Observer
             ipAddressGetter = IPAddressGetter.getInstance();
             factory = TableRecordFactory.getInstance();
             uiManager = UIManager.getInstance();
-            //ll2pDaemon = LL2PDaemon.getInstance();
-            //create a frameTransmitter object
+            //ToDo: ll2pDaemon = LL2PDaemon.getInstance();
 
             new ReceiveLayer1Frame().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
@@ -110,6 +111,15 @@ public class LL1Daemon extends Observable implements Observer
 
         return adjacencyTable;
     }
+    public Table removeAdjacency(String ll2pAddress)
+    {
+        adjacencyTable.removeItem(Integer.valueOf(ll2pAddress,16));
+
+        setChanged();
+        notifyObservers();//notify observers of change to the adjacency list
+
+        return adjacencyTable;
+    }
     /**
      * Given a LL2P frame to transmit, passes the frame
      * to and spins a new thread with the SendLayer1Frame class
@@ -120,8 +130,12 @@ public class LL1Daemon extends Observable implements Observer
     {
         //Construct the DatagramPacket Type object to be sent by argument
         byte[] packet = ll2pFrame.toTransmissionString().getBytes();
-        int packetLength = ll2pFrame.toHexString().length()/2;
-        InetAddress IPAddress = ((AdjacencyRecord)adjacencyTable.getItem(0)).getIPAddress();
+        int packetLength = ll2pFrame.toHexString().length();
+        LL2PAddressField dest = ll2pFrame.getDestinationAddress();
+
+        InetAddress IPAddress = null;
+        try{IPAddress=((AdjacencyRecord)adjacencyTable.getItem(dest.getAddress())).getIPAddress();}
+        catch (Exception e) {e.printStackTrace();}
 
         DatagramPacket sendPacket = new DatagramPacket
                 (packet, packetLength, IPAddress, Constants.UDP_PORT);
@@ -139,11 +153,14 @@ public class LL1Daemon extends Observable implements Observer
      */
     public void processL1FrameBytes(byte[] frame)
     {
-        LL2PFrame ll2pFrame = new LL2PFrame(frame.toString());
+        LL2PFrame ll2pFrame = new LL2PFrame(new String(frame));
 
         setChanged();
         notifyObservers(ll2pFrame);
 
-        //pass the frame to LL2Daemon
+        Log.i(Constants.LOG_TAG, "\n \n Frame received from mirror: "
+                + ll2pFrame.toProtocolExplanationString() + "\n \n ");
+
+        //ToDo: pass the frame to LL2Daemon
     }
 }

@@ -1,4 +1,4 @@
-package com.sane.router.networks.tableRecords;
+package com.sane.router.networks.table.tableRecords;
 
 /**
  * Interface defining table record specifications,

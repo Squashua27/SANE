@@ -1,7 +1,6 @@
 package com.sane.router.networks.datagramFields;
 
 import com.sane.router.networks.Constants;
-import com.sane.router.networks.headerFields.HeaderField;
 import com.sane.router.support.Utilities;
 
 /**
@@ -39,6 +38,15 @@ public class LL2PAddressField implements HeaderField
         address = Integer.parseInt(newAddress,16);
         isSourceAddress = isSource;
     }
+
+    /**
+     * Typical getter method
+     * @return int - the address as an integer
+     */
+    public int getAddress() {
+        return address;
+    }
+
     /**
      * Returns the contents of the isSourceAddress field
      *
@@ -62,7 +70,7 @@ public class LL2PAddressField implements HeaderField
     @Override
     public String toString()//necessary to interface, not useful here
     {
-        return Integer.toString(address);
+        return Integer.toHexString(address);
     }
     public String toTransmissionString()//what the address field looks like in transit
     {

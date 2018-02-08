@@ -1,11 +1,7 @@
 package com.sane.router.networks.datagramFields;
 
-import com.sane.router.networks.Constants;
 import com.sane.router.networks.datagram.Datagram;
 import com.sane.router.networks.datagram.TextDatagram;
-import com.sane.router.networks.headerFields.HeaderField;
-import com.sane.router.support.ParentActivity;
-import com.sane.router.support.Utilities;
 
 /**
  * The datagram payload field, holds a datagram object

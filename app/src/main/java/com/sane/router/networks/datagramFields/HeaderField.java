@@ -1,4 +1,4 @@
-package com.sane.router.networks.headerFields;
+package com.sane.router.networks.datagramFields;
 
 /**
  * Interface providing translation of header fields to various text formats

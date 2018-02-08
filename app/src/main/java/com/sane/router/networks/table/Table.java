@@ -1,6 +1,6 @@
 package com.sane.router.networks.table;
 
-import com.sane.router.networks.tableRecords.Record;
+import com.sane.router.networks.table.tableRecords.Record;
 import com.sane.router.support.LabException;
 
 import java.util.ArrayList;
@@ -20,6 +20,18 @@ public class Table extends Observable implements TableInterface
     protected List<Record> table; //the class's definitive list
 
     //Methods
+    @Override public String toString()
+    {
+        Iterator<Record> recordIterator = table.iterator();
+        String returnString = new String();
+
+        while (recordIterator.hasNext())
+        {
+            returnString += recordIterator.next().toString()+"\n ";
+        }
+        new LabException("Failed to perform Record.getItem(recordToGet)");
+        return returnString;
+    }
     /**
      * The constructor for a new empty list, creates a table such that it can contain
      * any one type of table record and is viable in a multi-threaded environment

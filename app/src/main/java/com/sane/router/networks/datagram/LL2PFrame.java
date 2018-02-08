@@ -4,7 +4,7 @@ import com.sane.router.networks.datagramFields.CRC;
 import com.sane.router.networks.datagramFields.DatagramPayloadField;
 import com.sane.router.networks.datagramFields.LL2PAddressField;
 import com.sane.router.networks.datagramFields.LL2PTypeField;
-import com.sane.router.support.HeaderFieldFactory;
+import com.sane.router.support.factories.HeaderFieldFactory;
 
 /**
  * The Lab Layer 2 Protocol frame Class
@@ -48,7 +48,6 @@ public class LL2PFrame implements Datagram
     {
         makeFrame(frame);
     }
-
     /**
      * Method of the constructor, general and default
      *
@@ -80,7 +79,6 @@ public class LL2PFrame implements Datagram
                 (Constants.CRC_FIELD,
                 frame.substring(frame.length() - 2*Constants.LL2P_CRC_FIELD_LENGTH));
     }
-
     /**
      * Makes a datagram payload field
      *
