@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * override of the standard Java method
+     * override of the standard Java method - executed when the options menu is created
      *
      * @param menu - the created options menu
      */
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * override of the standard Java method
+     * override of the standard Java method - executes when an options menu item is selected
      *
      * @param item - the menu item selected
      */
@@ -50,8 +50,11 @@ public class MainActivity extends AppCompatActivity
     {
         if (item.getItemId() == R.id.showIPAddress)
         {
-            //UIManager.raiseToast("Your IP address is "+ Constants.IP_ADDRESS);
             UIManager.getInstance().displayMessage("Your IP address is "+ Constants.IP_ADDRESS);
+        }
+        else if (item.getItemId() == R.id.addAdjacency)
+        {
+            //ToDo: invoke dialogue to add adjacency
         }
         return super.onOptionsItemSelected(item);
     }

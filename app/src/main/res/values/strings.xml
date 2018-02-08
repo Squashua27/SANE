@@ -11,4 +11,5 @@
     <string name="forwarding_table_title">Forwarding Table</string>
 
     <string name="IP_menu_item">Show IP Address</string>
+    <string name="add_adjacency">Add Adjacency Record</string>
 </resources>
