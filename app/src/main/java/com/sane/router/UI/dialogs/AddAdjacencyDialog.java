@@ -1,5 +1,6 @@
 package com.sane.router.UI.dialogs;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
@@ -62,7 +63,9 @@ public class AddAdjacencyDialog extends DialogFragment
 
         final View rootView = inflater.inflate(R.layout.add_adjacency, container, false);
 
-        getDialog().setTitle("Add Adjacency Dialog");
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Add Adjacency Dialog");
+        //builder.create();
 
         LL2PAddressEditText = rootView.findViewById(R.id.LL2PEditText);
         IPAddressEditText = rootView.findViewById(R.id.IPEditText);
@@ -86,7 +89,6 @@ public class AddAdjacencyDialog extends DialogFragment
 
                 Log.i(Constants.LOG_TAG, " \nAdjacency Table: "
                         + LL1Daemon.getInstance().getAdjacencyTable().toString() + " \n");
-
                 dismiss();
             }
         });
@@ -104,7 +106,9 @@ public class AddAdjacencyDialog extends DialogFragment
             }
         });
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        //AlertDialog dialog = builder.create();
+        return rootView;
+        //return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     /**
@@ -115,6 +119,11 @@ public class AddAdjacencyDialog extends DialogFragment
      */
     @Override public Dialog onCreateDialog(Bundle savedInstanceState)
     {
+        Log.i(Constants.LOG_TAG,"\n \n Creating AddAdjacency Dialog... \n ");
+
+        //AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        //builder.setTitle("Add Adjacency Dialog");
+        //builder.create();
         return super.onCreateDialog(savedInstanceState);
     }
 }
