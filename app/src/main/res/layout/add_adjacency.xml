@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <TextView
+            android:id="@+id/LL2PAddressPrompt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enter LL2P Address: "
+            android:textSize="16sp"/>
+
+        <EditText
+            android:id="@+id/LL2PEditText"
+            android:inputType="textMultiLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="EX: ABCDEF"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/IPAddressPrompt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enter IP Address: "
+            android:textSize="16sp"/>
+
+        <EditText
+            android:id="@+id/IPEditText"
+            android:inputType="textMultiLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="EX: 27.27.27.27"
+            android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/addAdjacencyButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancel" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

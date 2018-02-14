@@ -4,11 +4,20 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import com.sane.router.R;
+import com.sane.router.networks.Constants;
+import com.sane.router.networks.daemons.LL1Daemon;
+import com.sane.router.networks.datagramFields.LL2PAddressField;
+import com.sane.router.networks.table.tableRecords.AdjacencyRecord;
+import com.sane.router.support.factories.TableRecordFactory;
 
 /**
  * Dialog providing an interface for user to add adjacency records
@@ -32,10 +41,14 @@ public class AddAdjacencyDialog extends DialogFragment
     /**
      * The constructor: empty
      */
-    public AddAdjacencyDialog(){}
+    public AddAdjacencyDialog()
+    {
+        Log.i(Constants.LOG_TAG,"\n \n Called AddAdjacencyDialog constructor... \n ");
+    }
 
     /**
-     * An Override of the required method - executed on creation of a view
+     * An Override of the required method - executed on creation of a view,
+     * inflates a view and ties layout fields to corresponding Java classes
      *
      * @param inflater - the inflater object to inflate the view
      * @param container - the container
@@ -45,7 +58,51 @@ public class AddAdjacencyDialog extends DialogFragment
     @Nullable @Override public View onCreateView
             (LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
     {
-        //ToDo: View rootView = inflater.inflate(R.layout.add_adjacency_layout, container, false);
+        Log.i(Constants.LOG_TAG,"\n \n Got inside AddAdjacencyDialog.onCreateView... \n ");
+
+        final View rootView = inflater.inflate(R.layout.add_adjacency, container, false);
+
+        getDialog().setTitle("Add Adjacency Dialog");
+
+        LL2PAddressEditText = rootView.findViewById(R.id.LL2PEditText);
+        IPAddressEditText = rootView.findViewById(R.id.IPEditText);
+        addAdjacencyButton = rootView.findViewById(R.id.addAdjacencyButton);
+        cancelButton = rootView.findViewById(R.id.cancelButton);
+
+        //ToDo: AdjacencyPairListener activity = (AdjacencyPairListener); here? In click event?
+
+        /**
+         * Event handler for a click on the Add Adjacency button,
+         * works with the LL1 Daemon to add an adjacency, then dismisses dialog
+         */
+        addAdjacencyButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override public void onClick(View view)
+            {
+                Log.i(Constants.LOG_TAG,"\n \n Add Adjacency Button clicked... \n ");
+
+                LL1Daemon.getInstance().addAdjacency(LL2PAddressEditText.getText().toString(),
+                        IPAddressEditText.getText().toString());
+
+                Log.i(Constants.LOG_TAG, " \nAdjacency Table: "
+                        + LL1Daemon.getInstance().getAdjacencyTable().toString() + " \n");
+
+                dismiss();
+            }
+        });
+
+        /**
+         * Event handler for a click on the cancel button, dismisses dialog
+         */
+        cancelButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override public void onClick(View view)
+            {
+                Log.i(Constants.LOG_TAG,"\n \n Add Adjacency Dialog canceled... \n ");
+
+                dismiss();
+            }
+        });
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }

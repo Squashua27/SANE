@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.sane.router.UI.UIManager;
+import com.sane.router.UI.dialogs.AddAdjacencyDialog;
 import com.sane.router.networks.Constants;
 import com.sane.router.support.BootLoader;
 import com.sane.router.support.Utilities;
@@ -17,10 +18,9 @@ import com.sane.router.support.Utilities;
  *
  * @author Joshua Johnston
  */
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements AddAdjacencyDialog.AdjacencyPairListener
 {
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
+    @Override protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -32,8 +32,7 @@ public class MainActivity extends AppCompatActivity
      *
      * @param menu - the created options menu
      */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
+    @Override public boolean onCreateOptionsMenu(Menu menu)
     {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
@@ -45,8 +44,7 @@ public class MainActivity extends AppCompatActivity
      *
      * @param item - the menu item selected
      */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
+    @Override public boolean onOptionsItemSelected(MenuItem item)
     {
         if (item.getItemId() == R.id.showIPAddress)
         {
@@ -54,8 +52,13 @@ public class MainActivity extends AppCompatActivity
         }
         else if (item.getItemId() == R.id.addAdjacency)
         {
-            //ToDo: invoke dialogue to add adjacency
+            AddAdjacencyDialog dialog = new AddAdjacencyDialog();
+            dialog.show(getFragmentManager(), "add_adjacency");
         }
         return super.onOptionsItemSelected(item);
+    }
+    public void onFinishedEditDialog(String string1, String string2)
+    {
+        //ToDo: call LL1Daemon's addAdjacency method
     }
 }

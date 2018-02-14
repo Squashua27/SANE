@@ -17,6 +17,8 @@ import java.util.Observer;
  */
 public class UIManager implements Observer
 {
+    private TableUI tableUI;
+
     private Activity parentActivity;//activity reference allowing context-dependent operations
 
     private Context context;//holds context for context-dependent operations
@@ -24,9 +26,13 @@ public class UIManager implements Observer
     //Singleton_Implementation____________________
     private static final UIManager uiManager = new UIManager();//creates single instance
     /**
-     * constructor, currently empty
+     * Constructor, constructs the objects managed by the UI Manager
      */
-    private UIManager(){/*constructor stuff*/}
+    private UIManager()
+    {
+        tableUI = new TableUI();
+    }
+    public TableUI getTableUI(){return tableUI;} //Standard getter
     /**
      * typical get method
      *
