@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Observable;
 
 /**
- * A Table of TableRecords, implements TableInterface, Observable
+ * A Table of TableRecords, implements TableInterface, extends Observable
  *
  * @author Joshua Johnston
  */
@@ -25,7 +25,6 @@ public class Table extends Observable implements TableInterface
     {
         Iterator<Record> recordIterator = table.iterator();
         String returnString = new String();
-
         while (recordIterator.hasNext())
         {
             returnString += recordIterator.next().toString()+"\n ";

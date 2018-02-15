@@ -158,8 +158,8 @@ public class LL1Daemon extends Observable implements Observer
         setChanged();
         notifyObservers(ll2pFrame);
 
-        Log.i(Constants.LOG_TAG, "\n \n Frame received from mirror: "
-                + ll2pFrame.toProtocolExplanationString() + "\n \n ");
+        Log.i(Constants.LOG_TAG, " \n \n<<<<<<<<<Received frame: \n"
+                + ll2pFrame.toProtocolExplanationString() + " \n \n");
 
         //ToDo: pass the frame to LL2Daemon
     }

@@ -41,18 +41,32 @@ public class AdjacencyTableUI extends SingleTableUI
             LL2PFrame echoRequest = new LL2PFrame //create echo request LL2P frame
                     (recordToSend.getLL2PAddressAsTransmissionString()
                     + Constants.LL2P_ADDRESS
-                    + Constants.LL2P_TYPE_ECHO_REPLY_HEX
+                    + Constants.LL2P_TYPE_ECHO_REQUEST_HEX
                     + "(Echo request payload)" + "aCRC");
 
             myPersonalDemon.sendFrame(echoRequest);
 
-            Log.i(Constants.LOG_TAG, "\n Adjacency Record clicked - Sending echo Request: "
-                    + echoRequest.toProtocolExplanationString() + "\n ");
+            Log.i(Constants.LOG_TAG, "\n \n \nAdjacency Record clicked"
+                    + " - Sending echo Request: \n"
+                    + echoRequest.toProtocolExplanationString() + " \n \n");
         }
     };
 
-    private AdapterView.OnItemLongClickListener removeAdjacency = new AdapterView.OnItemLongClickListener() {
-        @Override public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+    /**
+     * Allows a user to remove an Adjacency Record by long clicking
+     * on the User Interface Adjacency Table
+     */
+    private AdapterView.OnItemLongClickListener removeAdjacency = new AdapterView.OnItemLongClickListener()
+    {
+        @Override public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l)
+        {
+            AdjacencyRecord recordToRemove = (AdjacencyRecord) recordList.get(i);
+            myPersonalDemon.removeAdjacency(recordToRemove);
+
+            Log.i(Constants.LOG_TAG, " \n \nAdjacency Record long-clicked"
+                    + " - Adjacency Record Removed:   "
+                    + recordToRemove.toString() + " \n \n");
+
             return false;
         }
     };
