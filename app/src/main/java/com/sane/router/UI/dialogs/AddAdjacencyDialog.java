@@ -72,7 +72,9 @@ public class AddAdjacencyDialog extends DialogFragment
         addAdjacencyButton = rootView.findViewById(R.id.addAdjacencyButton);
         cancelButton = rootView.findViewById(R.id.cancelButton);
 
-        //ToDo: AdjacencyPairListener activity = (AdjacencyPairListener); here? In click event?
+        //TODO: AdjacencyPairListener activity = (AdjacencyPairListener); here? In click event?
+
+
 
         /**
          * Event handler for a click on the Add Adjacency button,
@@ -106,9 +108,7 @@ public class AddAdjacencyDialog extends DialogFragment
             }
         });
 
-        //AlertDialog dialog = builder.create();
         return rootView;
-        //return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     /**

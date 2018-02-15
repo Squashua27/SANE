@@ -131,7 +131,7 @@ public class BootLoader extends Observable
                 + myPersonalDemon.getAdjacencyTable().toString());
 
         //Test: Use the mirror
-        myPersonalDemon.addAdjacency("112233","10.30.94.137");
+        myPersonalDemon.addAdjacency("112233","10.30.92.154");
         LL2PFrame frame = new LL2PFrame("112233B1A5ED8008(text datagram)aCRC");
         //Send a packet to the mirror:
         myPersonalDemon.sendFrame(frame);

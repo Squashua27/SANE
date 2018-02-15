@@ -19,7 +19,6 @@ import java.util.Observer;
 public class TableUI implements Runnable, Observer
 {
     //Fields
-    //ToDo: make SingleTableUI class
     private AdjacencyTableUI adjacencyTableUI;
     //private SingleTableUI arpTableUI;
     //private SingleTableUI routingTable;
@@ -46,7 +45,10 @@ public class TableUI implements Runnable, Observer
             Activity activity = ParentActivity.getParentActivity();
             Context context = activity.getBaseContext();
 
-            adjacencyTableUI = new AdjacencyTableUI(activity, R.id.adjacencyTable,LL1Daemon.getInstance().getAdjacencyTable(),LL1Daemon.getInstance());
+            adjacencyTableUI = new AdjacencyTableUI(activity,
+                    R.id.adjacencyTable,
+                    LL1Daemon.getInstance().getAdjacencyTable(),
+                    LL1Daemon.getInstance());
         }
     }
 }

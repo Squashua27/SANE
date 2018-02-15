@@ -4,10 +4,9 @@ import android.app.Activity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.sane.router.R;
 import com.sane.router.networks.table.Table;
 import com.sane.router.networks.table.TableInterface;
-import com.sane.router.networks.table.tableRecords.TableRecord;
+import com.sane.router.networks.table.tableRecords.Record;
 
 import java.util.List;
 import java.util.Observable;
@@ -23,21 +22,24 @@ public class SingleTableUI implements Observer
     //Fields
     protected Activity parentActivity;
     protected Table table;
-    protected List<TableRecord> recordList; //list of displayed records
+    protected List<Record> recordList; //list of displayed records
     protected ListView listViewWidget; //refers to on-screen ListView
     private ArrayAdapter arrayAdapter; //adapts the table for the ListView widget
 
     //Methods
-    public SingleTableUI(Activity activity, int tableID, TableInterface tableInterface)
+    public SingleTableUI(Activity activity, int tableListViewID,
+                         TableInterface tableToDisplay)
     {
         parentActivity = activity;
-        //ToDo: table = ???
+        table = (Table) tableToDisplay;
         arrayAdapter = new ArrayAdapter(parentActivity.getBaseContext(),
-                R.layout.simple_table_row, table.getTableAsList());
+               android.R.layout.simple_list_item_1, table.getTableAsList());
 
-        listViewWidget = (ListView) parentActivity.findViewById(tableID);
+        listViewWidget = (ListView) parentActivity.findViewById(tableListViewID);
 
         listViewWidget.setAdapter(arrayAdapter); // tell the widget its adapter
+
+        recordList = table.getTableAsList();
 
         table.addObserver(this);
     }

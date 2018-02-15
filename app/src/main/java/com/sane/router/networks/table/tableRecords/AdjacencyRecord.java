@@ -2,6 +2,7 @@ package com.sane.router.networks.table.tableRecords;
 
 import com.sane.router.networks.Constants;
 import com.sane.router.support.IPAddressGetter;
+import com.sane.router.support.ParentActivity;
 import com.sane.router.support.Utilities;
 
 import java.net.InetAddress;
@@ -38,6 +39,11 @@ public class AdjacencyRecord extends Record
     {
         return LL2PAddress;
     }
+    public String getLL2PAddressAsTransmissionString()
+    {
+        return Utilities.padHexString(Integer.toHexString(LL2PAddress),
+                Constants.LL2P_ADDRESS_LENGTH);
+    }
     public void setLL2PAddress(int ll2paddress) //Standard setter
     {
         LL2PAddress = ll2paddress;
@@ -45,6 +51,10 @@ public class AdjacencyRecord extends Record
     public InetAddress getIPAddress() //Standard getter
     {
         return IPAddress;
+    }
+    public String getIPAddressAsTransmissionString()
+    {
+        return IPAddress.toString();
     }
     public void setIPAddress(InetAddress ipaddress)
     {
@@ -56,9 +66,9 @@ public class AdjacencyRecord extends Record
      */
     @Override public String toString()
     {
-        return "\nLL2P Address: 0x" + Utilities.padHexString(Integer.toHexString(LL2PAddress),
+        return "LL2P Address: 0x" + Utilities.padHexString(Integer.toHexString(LL2PAddress),
                 Constants.LL2P_ADDRESS_LENGTH)
-                + "\nIP Address: " + IPAddress.toString();
+                + "  |  IP Address: " + IPAddress.toString();
     }
 
     //Interface Implementation

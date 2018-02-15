@@ -1,6 +1,7 @@
 package com.sane.router.networks.table;
 
 import com.sane.router.networks.table.tableRecords.Record;
+import com.sane.router.networks.table.tableRecords.TableRecord;
 import com.sane.router.support.LabException;
 
 import java.util.ArrayList;
@@ -66,6 +67,8 @@ public class Table extends Observable implements TableInterface
     {
         if (!table.add(recordToAdd))
             new LabException("Failed to perform Record.addItem(recordToAdd)");
+        updateDisplay();
+
         return recordToAdd;
     }
     /**
@@ -107,7 +110,6 @@ public class Table extends Observable implements TableInterface
             targetRecord = recordIterator.next();
             if (targetRecord.getKey() == recordKey)
             {
-                recordIterator.remove();
                 return targetRecord;
             }
         }
@@ -132,6 +134,7 @@ public class Table extends Observable implements TableInterface
             if (targetRecord.getKey() == recordKey)
             {
                 recordIterator.remove();
+                updateDisplay();
                 return targetRecord;
             }
         }
@@ -156,6 +159,7 @@ public class Table extends Observable implements TableInterface
             if (targetRecord == recordToRemove)
             {
                 recordIterator.remove();
+                updateDisplay();
                 return targetRecord;
             }
         }
