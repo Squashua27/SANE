@@ -61,20 +61,18 @@ public class AddAdjacencyDialog extends DialogFragment
     {
         Log.i(Constants.LOG_TAG,"\n \n Got inside AddAdjacencyDialog.onCreateView... \n ");
 
-        final View rootView = inflater.inflate(R.layout.add_adjacency, container, false);
+        final View rootView = inflater.inflate //inflates view
+                (R.layout.add_adjacency, container, false);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Add Adjacency Dialog");
-        //builder.create();
+        builder.create();
 
+        //Connect XML layout file widgets to Java class objects
         LL2PAddressEditText = rootView.findViewById(R.id.LL2PEditText);
         IPAddressEditText = rootView.findViewById(R.id.IPEditText);
         addAdjacencyButton = rootView.findViewById(R.id.addAdjacencyButton);
         cancelButton = rootView.findViewById(R.id.cancelButton);
-
-        //TODO: AdjacencyPairListener activity = (AdjacencyPairListener); here? In click event?
-
-
 
         /**
          * Event handler for a click on the Add Adjacency button,
@@ -90,7 +88,7 @@ public class AddAdjacencyDialog extends DialogFragment
                         IPAddressEditText.getText().toString());
 
                 Log.i(Constants.LOG_TAG, " \nAdjacency Table: "
-                        + LL1Daemon.getInstance().getAdjacencyTable().toString() + " \n");
+                        + LL1Daemon.getInstance().getAdjacencyTable().toString() + " \n \n");
                 dismiss();
             }
         });
@@ -102,8 +100,7 @@ public class AddAdjacencyDialog extends DialogFragment
         {
             @Override public void onClick(View view)
             {
-                Log.i(Constants.LOG_TAG,"\n \n Add Adjacency Dialog canceled... \n ");
-
+                Log.i(Constants.LOG_TAG,"\n \n Add Adjacency Dialog canceled... \n");
                 dismiss();
             }
         });

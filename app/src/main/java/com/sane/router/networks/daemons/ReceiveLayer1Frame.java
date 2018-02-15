@@ -17,8 +17,13 @@ public class ReceiveLayer1Frame extends AsyncTask<Void, Void, byte[]>
 {
     private static DatagramSocket receiveSocket;
 
-    @Override
-    protected byte[] doInBackground(Void... nothingToSeeHere)
+    /**
+     * Spins a thread that runs in the background waiting to receive a frame
+     *
+     * @param nothingToSeeHere - Nothing to see here... Really.
+     * @return byte[] - The recieved packet as a byte array
+     */
+    @Override protected byte[] doInBackground(Void... nothingToSeeHere)
     {
         byte[] receiveData = new byte[1024];
         if (receiveSocket==null) //if receiveSocket not yet initialized...
@@ -42,8 +47,13 @@ public class ReceiveLayer1Frame extends AsyncTask<Void, Void, byte[]>
         return frameBytes;
     }
 
-    @Override
-    protected void onPostExecute(byte[] frameBytes) {
+    /**
+     * After the classes primary background thread receives a frame, this method hands the
+     * frame over for processing and spins a new background task to await the next frame
+     *
+     * @param frameBytes - the frame to be processed
+     */
+    @Override protected void onPostExecute(byte[] frameBytes) {
         LL1Daemon.getInstance().processL1FrameBytes(frameBytes);
         new ReceiveLayer1Frame().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }

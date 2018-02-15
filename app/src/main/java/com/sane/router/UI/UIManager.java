@@ -11,16 +11,15 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * manages User Interface and delegates tasks to lower level UI classes, observes BootLoader class
+ * manages User Interface and delegates tasks to lower level UI classes,
+ * observes BootLoader class, begins regular operation after bootLoader gives the all-clear
  *
  * @author Joshua Johnston
  */
 public class UIManager implements Observer
 {
-    private TableUI tableUI;
-
+    private TableUI tableUI;//instance of the Table User Interface
     private Activity parentActivity;//activity reference allowing context-dependent operations
-
     private Context context;//holds context for context-dependent operations
 
     //Singleton_Implementation____________________
