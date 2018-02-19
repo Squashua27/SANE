@@ -19,6 +19,7 @@ import java.util.Observer;
 public class UIManager implements Observer
 {
     private TableUI tableUI;//instance of the Table User Interface
+    private SnifferUI snifferUI;//instance of the Sniffer User Interface
     private Activity parentActivity;//activity reference allowing context-dependent operations
     private Context context;//holds context for context-dependent operations
 
@@ -30,13 +31,10 @@ public class UIManager implements Observer
     private UIManager()
     {
         tableUI = new TableUI();
+        snifferUI = new SnifferUI();
     }
     public TableUI getTableUI(){return tableUI;} //Standard getter
-    /**
-     * typical get method
-     *
-     * @return ourInstance - the single instance of UIManager
-     */
+    public SnifferUI getSnifferUI(){return snifferUI;}//Standard getter
     public static UIManager getInstance() {return uiManager;}//typical get method
 
     //Methods____________________
@@ -64,7 +62,7 @@ public class UIManager implements Observer
     /**
      * allows use of widgets, currently a place holder
      */
-    private void setUpWidgets(){}//place holder, will be used to access on-screen widgets
+    private void setUpWidgets() {}
 
     /**
      * necessary method of Observer class, sets up UI operations after notified to do so

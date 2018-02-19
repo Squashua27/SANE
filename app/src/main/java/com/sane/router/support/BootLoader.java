@@ -47,6 +47,7 @@ public class BootLoader extends Observable
         addObserver(FrameLogger.getInstance());
         addObserver(LL1Daemon.getInstance());
         addObserver(uiManager.getTableUI());
+        addObserver(uiManager.getSnifferUI());
 
         //Misc_Router_Setup____________________
         //(place holder)
