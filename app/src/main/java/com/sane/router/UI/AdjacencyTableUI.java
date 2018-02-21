@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 
 import com.sane.router.networks.Constants;
 import com.sane.router.networks.daemons.LL1Daemon;
+import com.sane.router.networks.daemons.LL2Daemon;
 import com.sane.router.networks.datagram.LL2PFrame;
 import com.sane.router.networks.table.TableInterface;
 import com.sane.router.networks.table.tableRecords.AdjacencyRecord;
@@ -57,7 +58,9 @@ public class AdjacencyTableUI extends SingleTableUI
                     + Constants.LL2P_TYPE_ECHO_REQUEST_HEX
                     + "(Echo request payload)" + "aCRC");
 
-            myPersonalDemon.sendFrame(echoRequest); //send an echo request LL2P frame
+            //myPersonalDemon.sendFrame(echoRequest); //send an echo request LL2P frame
+
+            LL2Daemon.getInstance().sendEchoRequest(recordToSend.getLL2PAddressAsTransmissionString());
 
             Log.i(Constants.LOG_TAG, "\n \n \nAdjacency Record clicked"
                     + " - Sending echo Request: \n"

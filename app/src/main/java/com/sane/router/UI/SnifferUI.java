@@ -18,6 +18,7 @@ import com.sane.router.networks.datagram.LL2PFrame;
 import com.sane.router.support.BootLoader;
 import com.sane.router.support.FrameLogger;
 import com.sane.router.support.ParentActivity;
+import com.sane.router.support.Utilities;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -25,7 +26,7 @@ import java.util.Observer;
 
 /**
  * Manages the sniffer side of the User Interfaces,
- * observes BootLoader & FrameLogger (TODO: Make it so)
+ * observes BootLoader & FrameLogger
  *
  * @author Joshua Johnston
  */
@@ -69,7 +70,7 @@ public class SnifferUI implements Observer
                     + frameToShow.toProtocolExplanationString() + " \n \n");
 
             protocolTextView.setText(frameToShow.toProtocolExplanationString());
-            byteDumpTextView.setText(frameToShow.toHexString());
+            byteDumpTextView.setText(Utilities.eightBytesPerLine(frameToShow.toHexString()));
         }
     };
 

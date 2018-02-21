@@ -215,10 +215,10 @@
             android:layout_below="@+id/packetList"
             android:layout_marginTop="7dp"
             android:background="@color/colorAccentLight"
-            android:gravity="center"
+            android:gravity="left"
             android:padding="2dp"
             android:text="protocol description here"
-            android:textSize="14sp" />
+            android:textSize="19sp" />
 
         <TextView
             android:id="@+id/hexDescription"
@@ -229,10 +229,10 @@
             android:layout_below="@+id/protocolDescription"
             android:layout_marginTop="7dp"
             android:background="@color/colorAccentLight"
-            android:gravity="center"
+            android:gravity="left"
             android:padding="2dp"
             android:text="hex and ASCI dump here"
-            android:textSize="14sp" />
+            android:textSize="19sp" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
