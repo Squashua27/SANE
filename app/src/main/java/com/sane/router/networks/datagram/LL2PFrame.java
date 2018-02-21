@@ -138,9 +138,9 @@ public class LL2PFrame implements Datagram
     }
     public String toSummaryString()
     {
-        return    "type: 0x" + type.toTransmissionString()
-                + "  source: 0x" + sourceAddress.toTransmissionString()
-                + "  dest: 0x" + destinationAddress.toTransmissionString();
+        return    "type: 0x" + type.toTransmissionString().toUpperCase()
+                + "  source: 0x" + sourceAddress.toTransmissionString().toUpperCase()
+                + "  dest: 0x" + destinationAddress.toTransmissionString().toUpperCase();
     }
     public String toTransmissionString()
     {

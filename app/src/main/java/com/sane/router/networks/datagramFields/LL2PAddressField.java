@@ -63,7 +63,7 @@ public class LL2PAddressField implements HeaderField
             explanation = "Source ";
         else
             explanation = "Destination ";
-        explanation += "LL2P Address: 0x" + toTransmissionString();
+        explanation += "LL2P Address: 0x" + toTransmissionString().toUpperCase();
     }
 
     //Interface Implementation (see interface documentation)

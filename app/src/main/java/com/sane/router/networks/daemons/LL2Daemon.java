@@ -39,11 +39,12 @@ public class LL2Daemon implements Observer
         LL2PAddressField dest = frame.getDestinationAddress();
         LL2PAddressField source = frame.getSourceAddress();
 
-        if (dest.toString() == Constants.LL2P_ADDRESS) //Is this frame for me?
+        if (dest.toString().equalsIgnoreCase(Constants.LL2P_ADDRESS)) //Is this frame for me?
         {
             //TODO: check CRC
 
-            if (type.toHexString() == Constants.LL2P_TYPE_ECHO_REQUEST_HEX || type.toHexString() == Constants.LL2P_TYPE_TEXT_HEX)
+            if (type.toHexString().equalsIgnoreCase(Constants.LL2P_TYPE_ECHO_REQUEST_HEX) ||
+                    type.toHexString().equalsIgnoreCase(Constants.LL2P_TYPE_TEXT_HEX) )
             {
                 LL2PFrame echoReply = new LL2PFrame
                         (source.toTransmissionString()
