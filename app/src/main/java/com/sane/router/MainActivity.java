@@ -1,6 +1,5 @@
 package com.sane.router;
 
-import android.provider.Contacts;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,7 +10,6 @@ import com.sane.router.UI.UIManager;
 import com.sane.router.UI.dialogs.AddAdjacencyDialog;
 import com.sane.router.networks.Constants;
 import com.sane.router.support.BootLoader;
-import com.sane.router.support.Utilities;
 
 /**
  * the main activity

@@ -4,11 +4,10 @@ import com.sane.router.networks.Constants;
 import com.sane.router.support.Utilities;
 
 /**
- * The Type Field of the LL2P packet
+ * The Type Field of a LL2P packet
  *
  * @author Joshua Johnston
  */
-
 public class LL2PTypeField implements HeaderField
 {
     //Fields
@@ -40,7 +39,7 @@ public class LL2PTypeField implements HeaderField
     private void setExplanation()
     {
         explanation = "";
-        explanation += "LL2P Type: " + toTransmissionString();
+        explanation += "LL2P Type: 0x" + toTransmissionString();
 
         if(type == Constants.LL2P_TYPE_LL3P)
             explanation += " - the LL3P type";
@@ -59,12 +58,11 @@ public class LL2PTypeField implements HeaderField
         else if(type == Constants.LL2P_TYPE_TEXT)
             explanation += " - the Text type";
         else
-            explanation += " - an invalid type, you fool";
+            explanation += " - NOT a valid LL2P Type";
     }
 
     //Interface Implementation (see interface documentation)
-    @Override
-    public String toString()//necessary to interface, not very useful here
+    @Override public String toString()//necessary to interface, not very useful here
     {
         return Integer.toString(type);
     }

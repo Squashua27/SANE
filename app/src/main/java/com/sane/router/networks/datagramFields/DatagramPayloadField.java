@@ -45,8 +45,7 @@ public class DatagramPayloadField implements HeaderField
     }
 
     //Interface Implementation (see interface documentation)
-    @Override
-    public String toString()//necessary to interface, not useful here
+    @Override public String toString()//necessary to interface, not useful here
     {
         return packet.toString();
     }

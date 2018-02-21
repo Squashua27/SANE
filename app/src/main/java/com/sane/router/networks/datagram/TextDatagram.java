@@ -44,7 +44,7 @@ public class TextDatagram implements Datagram
     public String toHexString()
     { return payload; }
     public String toProtocolExplanationString()
-    { return payload; }
+    { return "Payload: " + payload; }
     public String toSummaryString()
     { return payload; }
     public String toTransmissionString()

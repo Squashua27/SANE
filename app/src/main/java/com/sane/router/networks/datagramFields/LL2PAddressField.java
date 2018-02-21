@@ -67,8 +67,7 @@ public class LL2PAddressField implements HeaderField
     }
 
     //Interface Implementation (see interface documentation)
-    @Override
-    public String toString()//necessary to interface, not useful here
+    @Override public String toString()//necessary to interface, not useful here
     {
         return Integer.toHexString(address);
     }
@@ -79,6 +78,15 @@ public class LL2PAddressField implements HeaderField
     public String toHexString()//the hex address field, pre-padding
     {
         return Integer.toHexString(address);
+
+        //char[] bytes = string.toCharArray();
+        //StringBuilder sb = new StringBuilder();
+        //for (int i = 0; i+2 < string.length(); i+=2)
+        //{
+        //    sb.append(String.format("%02X ", bytes[i]));
+        //}
+
+        //return sb.toString();
     }
     public String explainSelf()//the LL2P Address Field explains itself
     {
@@ -87,7 +95,7 @@ public class LL2PAddressField implements HeaderField
     }
     public String toASCIIString()//necessary interface function, not useful here
     {
-        return Integer.toString(address);
+        return Integer.toString(address).toUpperCase();
     }
 
 }

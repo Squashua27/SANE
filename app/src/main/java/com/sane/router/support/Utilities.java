@@ -34,39 +34,40 @@ public class Utilities
     /**
      * Formats a hex string for output to a hex dump display
      *
-     * @param inputString - the input string
+     * @param inputString - the input hex string
      * @return outputString - the output string
      */
     public static String eightBytesPerLine(String inputString)
     {
-        int charCount = inputString.length();
-        int lineCount = charCount/16 + 1;
-        String outputString = "";
+        int charCount = inputString.length();//total hex characters
+        int lineCount = charCount/16 + 1;//total lines of output to make
 
-        //formatting per line (technically, two lines)
-        for (int lineIndex = 0; lineIndex < lineCount; lineIndex++)
+        String outputString = "     0x:__0__1__2__3__4__5__6__7\n";//Label: column offset in bytes
+        for (int lineIndex = 0; lineIndex < lineCount; lineIndex++)//line-by-line formatting
         {
-            //formatting hex dump line
-            outputString += padHexString(Integer.toHexString(lineIndex*8),2)//offset of row
-            + "   ";
+            outputString += " 0x"//row offset in bytes
+            + padHexString(Integer.toHexString(lineIndex*8),2) + "| ";
 
-            for (int charIndex = 0; charIndex < min(charCount - 16*lineIndex, 16); charIndex++)
+            int hexCount = min(charCount - 16*lineIndex, 16);//number of hex characters in line
+            for (int hexIndex = 0; hexIndex < hexCount; hexIndex++)//formatting per hex char
             {
-                //formatting per hex character
-                outputString += inputString.charAt(16*lineIndex + charIndex);
-
-                if (charIndex % 2 == 1)
-                    outputString += " ";//add spaces to group characters into twos
+                outputString += inputString.charAt(16*lineIndex + hexIndex);//add hex char
+                if (hexIndex % 2 == 1)
+                    outputString += " ";//group hex pairs into bytes
             }
-            outputString += "\n"; //end of hex dump line
+            for (int dif = (16 - hexCount + 1)/2 + 1; dif > 0; dif--)//formatting for last line
+            outputString += "   "; //end of hex dump
 
-            //formatting ASCII dump line
-            if (lineIndex < lineCount - 1)
-            //    outputString += Integer.parseInt(inputString.substring(lineIndex*16, lineIndex*16+15),16);
-                outputString += inputString.substring(lineIndex*16, lineIndex*16+16)+"\n";
-            else
-            //    outputString += Integer.parseInt(inputString.substring(lineIndex*16),16);
-                outputString += inputString.substring(lineIndex*16);
+            //formatting ASCII dump lin
+            //if (lineIndex < lineCount - 1)
+            //outputString += inputString.substring(lineIndex*16, lineIndex*16+16)+"\n";
+            //int ASCIICount = min(8, charCount/2 - 8*(lineCount-lineIndex));
+            //int ASCIICount = hexCount/2;//number of ASCII characters in line
+
+            for (int hexIndex = 0; hexIndex+2 < hexCount; hexIndex+=2)//formatting per ASCII char
+                outputString += Integer.valueOf(Integer.parseInt(inputString.substring
+                        (16*lineIndex+hexIndex,16*lineIndex+hexIndex+2),16));
+            outputString += "\n";
         }
 
         return outputString;

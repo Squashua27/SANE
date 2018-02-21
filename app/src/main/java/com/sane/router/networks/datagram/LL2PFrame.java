@@ -130,17 +130,17 @@ public class LL2PFrame implements Datagram
     }
     public String toProtocolExplanationString()
     {
-        return destinationAddress.explainSelf() + "\n"
-                + sourceAddress.explainSelf() + "\n"
-                + type.explainSelf() + "\n"
-                + payload.explainSelf() + "\n"
+        return " " + destinationAddress.explainSelf() + "\n "
+                + sourceAddress.explainSelf() + "\n "
+                + type.explainSelf() + "\n "
+                + payload.explainSelf() + "\n "
                 + crc.explainSelf();
     }
     public String toSummaryString()
     {
-        return    "type: 0x" + type.toTransmissionString().toUpperCase()
-                + "  source: 0x" + sourceAddress.toTransmissionString().toUpperCase()
-                + "  dest: 0x" + destinationAddress.toTransmissionString().toUpperCase();
+        return    " Type: 0x" + type.toTransmissionString().toUpperCase()
+                + "   Source: 0x" + sourceAddress.toTransmissionString().toUpperCase()
+                + "   Dest: 0x" + destinationAddress.toTransmissionString().toUpperCase();
     }
     public String toTransmissionString()
     {

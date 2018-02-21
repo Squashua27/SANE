@@ -217,7 +217,7 @@
             android:background="@color/colorAccentLight"
             android:gravity="left"
             android:padding="2dp"
-            android:text="protocol description here"
+            android:text="  protocol description here"
             android:textSize="19sp" />
 
         <TextView
@@ -231,8 +231,9 @@
             android:background="@color/colorAccentLight"
             android:gravity="left"
             android:padding="2dp"
-            android:text="hex and ASCI dump here"
-            android:textSize="19sp" />
+            android:text=" hex and ASCI dump here"
+            android:textSize="19sp"
+            android:fontFamily="monospace"/>
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
