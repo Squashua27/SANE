@@ -64,11 +64,12 @@ public class Utilities
             //int ASCIICount = min(8, charCount/2 - 8*(lineCount-lineIndex));
             //int ASCIICount = hexCount/2;//number of ASCII characters in line
 
-            for (int hexIndex = 0; hexIndex+2 < hexCount; hexIndex+=2)//formatting per ASCII char
-                outputString += Integer.valueOf(Integer.parseInt(inputString.substring
-                        (16*lineIndex+hexIndex,16*lineIndex+hexIndex+2),16));
-            outputString += "\n";
+            //for (int hexIndex = 0; hexIndex+2 < hexCount; hexIndex+=2)//formatting per ASCII char
+            //    outputString += (char) Integer.parseInt(inputString.substring
+            //            (16*lineIndex+hexIndex,16*lineIndex+hexIndex+2));
+            //outputString += "\n";
         }
+
 
         return outputString;
     }

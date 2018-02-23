@@ -37,7 +37,7 @@ public class LL2PFrame implements Datagram
      */
     public LL2PFrame()
     {
-        makeFrame("F1A5C0B1A5ED8008(text datagram)aCRC");
+        makeFrame("F1A5C0B1A5ED8008(text datagram)CC");
     }
     /**
      * The constructor generally used to make an LL2PFrame
@@ -73,11 +73,11 @@ public class LL2PFrame implements Datagram
         payload = HeaderFieldFactory.getInstance().getItem
                 (Constants.LL2P_PAYLOAD_FIELD,
                 frame.substring(2*Constants.LL2P_PAYLOAD_OFFSET,
-                frame.length() - 2*Constants.LL2P_CRC_FIELD_LENGTH));
+                frame.length() - Constants.LL2P_CRC_FIELD_LENGTH));
 
         crc = HeaderFieldFactory.getInstance().getItem
                 (Constants.CRC_FIELD,
-                frame.substring(frame.length() - 2*Constants.LL2P_CRC_FIELD_LENGTH));
+                frame.substring(frame.length() - Constants.LL2P_CRC_FIELD_LENGTH));
     }
     /**
      * Makes a datagram payload field

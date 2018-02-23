@@ -56,7 +56,7 @@ public class AdjacencyTableUI extends SingleTableUI
                     (recordToSend.getLL2PAddressAsTransmissionString()
                     + Constants.LL2P_ADDRESS
                     + Constants.LL2P_TYPE_ECHO_REQUEST_HEX
-                    + "(Echo request payload)" + "aCRC");
+                    + "(Echo request payload)" + "CC");
 
             //myPersonalDemon.sendFrame(echoRequest); //send an echo request LL2P frame
 

@@ -50,7 +50,7 @@ public class LL2Daemon implements Observer
                         (source.toTransmissionString()
                         + Constants.LL2P_ADDRESS
                         + Constants.LL2P_TYPE_ECHO_REPLY_HEX
-                        + "aCRC");
+                        + "CC");
 
                 lesserDaemon.sendFrame(echoReply);
             }
@@ -64,7 +64,7 @@ public class LL2Daemon implements Observer
                         + Constants.LL2P_ADDRESS
                         + Constants.LL2P_TYPE_TEXT_HEX
                         + "Why does the 'sendEchoRequest' method send a text datagram?"
-                        + "aCRC");
+                        + "CC");
 
         lesserDaemon.sendFrame(echoRequest);
     }

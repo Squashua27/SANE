@@ -12,7 +12,7 @@ import com.sane.router.support.Utilities;
 public class CRC implements HeaderField
 {
     //Fields
-    private String CRCValue; //fake string value of the address
+    private String CRCValue; //CRC stored as ASCII
 
     //Methods
     /**
@@ -22,12 +22,11 @@ public class CRC implements HeaderField
      */
     public CRC(String typeValueString)
     {
-        CRCValue = typeValueString.substring(0, 2* Constants.LL2P_CRC_FIELD_LENGTH);
+        CRCValue = typeValueString.substring(0, Constants.LL2P_CRC_FIELD_LENGTH);
     }
 
     //Interface Implementation (see interface documentation)
-    @Override
-    public String toString()//returns CRC value as is
+    @Override public String toString()//returns CRC value as is
     {
         return CRCValue;
     }
@@ -37,7 +36,13 @@ public class CRC implements HeaderField
     }
     public String toHexString()//the hex CRC field, pre-padding
     {
-        return CRCValue;
+        String returnString = "";
+        StringBuilder builder = new StringBuilder();
+        for (int index = 0; index < CRCValue.length(); index++)
+        {
+            builder.append(Integer.toHexString(CRCValue.charAt(index)));
+        }
+        return builder.toString();
     }
     public String explainSelf()//the CRC Field explains itself
     {

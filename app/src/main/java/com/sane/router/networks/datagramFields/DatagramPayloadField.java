@@ -43,7 +43,6 @@ public class DatagramPayloadField implements HeaderField
     {
         return packet;
     }
-
     //Interface Implementation (see interface documentation)
     @Override public String toString()//necessary to interface, not useful here
     {
@@ -55,7 +54,14 @@ public class DatagramPayloadField implements HeaderField
     }
     public String toHexString()//the hex address field, pre-padding
     {
-        return packet.toHexString();
+        StringBuilder builder = new StringBuilder();
+        String string = packet.toTransmissionString();
+
+        for (int index = 0; index < string.length(); index++)
+        {
+            builder.append(Integer.toHexString(string.charAt(index)));
+        }
+        return builder.toString();
     }
     public String explainSelf()//the LL2P Address Field explains itself
     {

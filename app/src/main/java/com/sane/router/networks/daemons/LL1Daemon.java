@@ -130,7 +130,7 @@ public class LL1Daemon extends Observable implements Observer
     {
         //Construct the DatagramPacket Type object to be sent by argument
         byte[] packet = ll2pFrame.toTransmissionString().getBytes();
-        int packetLength = ll2pFrame.toHexString().length();
+        int packetLength = ll2pFrame.toTransmissionString().length();
         LL2PAddressField dest = ll2pFrame.getDestinationAddress();
 
         InetAddress IPAddress = null;

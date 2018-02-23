@@ -73,7 +73,7 @@ public class BootLoader extends Observable
         //Lab_3_Test____________________
         /**
         //Test: Create an LL2P frame, tests Classes and Header Factory
-        LL2PFrame packet = new LL2PFrame("F1A5C0B1A5ED8008(text datagram)aCRC");
+        LL2PFrame packet = new LL2PFrame("F1A5C0B1A5ED8008(text datagram)CC");
         Log.i(Constants.LOG_TAG," \n \n"+packet.toProtocolExplanationString()+" \n \n");
 
         //Test: Create an adjacency record, tests Classes and Table Record Factory
@@ -135,7 +135,7 @@ public class BootLoader extends Observable
 
         //Test: Use the mirror
         myPersonalDemon.addAdjacency("112233","10.30.92.154");
-        LL2PFrame frame = new LL2PFrame("112233B1A5ED8008(text datagram)aCRC");
+        LL2PFrame frame = new LL2PFrame("112233B1A5ED8008(text datagram)CC");
         //Send a packet to the mirror:
         myPersonalDemon.sendFrame(frame);
     }

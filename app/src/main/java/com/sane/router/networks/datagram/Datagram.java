@@ -7,13 +7,12 @@ package com.sane.router.networks.datagram;
  */
 public interface Datagram
 {
-    @Override
     /**
      * Returns datagram field contents as string suitable for transmission
      *
      * @return String - datagram contents as string
      */
-    String toString();
+    @Override String toString();
     /**
      * Returns datagram field contents as hex string - often used by snifferUI
      *
