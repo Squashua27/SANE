@@ -58,7 +58,7 @@ public class Utilities
             for (int dif = (16 - hexCount + 1)/2 + 1; dif > 0; dif--)//formatting for last line
             outputString += "   "; //end of hex dump
 
-            //formatting ASCII dump lin
+            //formatting ASCII dump line
             //if (lineIndex < lineCount - 1)
             //outputString += inputString.substring(lineIndex*16, lineIndex*16+16)+"\n";
             //int ASCIICount = min(8, charCount/2 - 8*(lineCount-lineIndex));
@@ -71,6 +71,7 @@ public class Utilities
 
             String hex = inputString.substring(16*lineIndex, 16*lineIndex + hexCount);
             StringBuilder ASCII = new StringBuilder();
+            //formatting per ASCII char
             for (int i = 0; i < hex.length(); i+=2)
             {
                 String str = hex.substring(i, i+2);
