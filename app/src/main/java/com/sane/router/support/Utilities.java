@@ -68,6 +68,15 @@ public class Utilities
             //    outputString += (char) Integer.parseInt(inputString.substring
             //            (16*lineIndex+hexIndex,16*lineIndex+hexIndex+2));
             //outputString += "\n";
+
+            String hex = inputString.substring(16*lineIndex, 16*lineIndex + hexCount);
+            StringBuilder ASCII = new StringBuilder();
+            for (int i = 0; i < hex.length(); i+=2)
+            {
+                String str = hex.substring(i, i+2);
+                ASCII.append((char)Integer.parseInt(str, 16));
+            }
+            outputString += ASCII.toString() + "\n";
         }
 
 
