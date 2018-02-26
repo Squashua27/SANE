@@ -58,29 +58,19 @@ public class Utilities
             for (int dif = (16 - hexCount + 1)/2 + 1; dif > 0; dif--)//formatting for last line
             outputString += "   "; //end of hex dump
 
-            //formatting ASCII dump line
-            //if (lineIndex < lineCount - 1)
-            //outputString += inputString.substring(lineIndex*16, lineIndex*16+16)+"\n";
-            //int ASCIICount = min(8, charCount/2 - 8*(lineCount-lineIndex));
-            //int ASCIICount = hexCount/2;//number of ASCII characters in line
-
-            //for (int hexIndex = 0; hexIndex+2 < hexCount; hexIndex+=2)//formatting per ASCII char
-            //    outputString += (char) Integer.parseInt(inputString.substring
-            //            (16*lineIndex+hexIndex,16*lineIndex+hexIndex+2));
-            //outputString += "\n";
-
             String hex = inputString.substring(16*lineIndex, 16*lineIndex + hexCount);
             StringBuilder ASCII = new StringBuilder();
             //formatting per ASCII char
             for (int i = 0; i < hex.length(); i+=2)
             {
                 String str = hex.substring(i, i+2);
-                ASCII.append((char)Integer.parseInt(str, 16));
+                if (32<=Integer.parseInt(str,16) && Integer.parseInt(str,16)<=126)
+                    ASCII.append((char)Integer.parseInt(str, 16));
+                else
+                    ASCII.append(".");
             }
             outputString += ASCII.toString() + "\n";
         }
-
-
         return outputString;
     }
     /**
