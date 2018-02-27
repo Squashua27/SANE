@@ -37,8 +37,7 @@ public class Record implements TableRecord
      */
     public int compareTo(Record record)
     {
-        //return getKey().compareTo(TableRecord.getKey());
-        return 0;
+        return getKey() - record.getKey();
     }
 
     //Interface Implementation (see interface for method documentation)
