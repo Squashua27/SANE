@@ -15,8 +15,8 @@ import java.util.Enumeration;
  */
 public class Constants
 {
-
     public static final String IP_ADDRESS;//IP address in dotted decimal notation
+    public static final String LL2P_ADDRESS = "B1A5ED";
     public static final int UDP_PORT = 49999;//our chosen port for communication
 
     //used in debugging messages or messages sent to the log file.
@@ -24,19 +24,26 @@ public class Constants
     public static final String LOG_TAG = "The Promised LAN: ";
 
     //Datagram Constants (lengths and offsets in bytes)
-    //LL2P (Lab Layer 2 Protocol) Constants
-    public static final String LL2P_ADDRESS = "B1A5ED";
+    //Lengths (in bytes)
+    public static final int LL2P_ADDRESS_LENGTH = 3;
+    public static final int LL2P_TYPE_FIELD_LENGTH = 2;
+    public static final int LL2P_CRC_FIELD_LENGTH = 2;
 
+    public static final int LL3P_ADDRESS_LENGTH = 2;
+    public static final int LL3P_ADDRESS_NETWORK_LENGTH = 1;
+    public static final int LL3P_ADDRESS_HOST_LENGTH = 1;
+
+    //Offsets (in bytes)
     public static final int LL2P_DEST_ADDRESS_OFFSET = 0;
     public static final int LL2P_SOURCE_ADDRESS_OFFSET = 3;
     public static final int LL2P_TYPE_FIELD_OFFSET = 6;
     public static final int LL2P_PAYLOAD_OFFSET = 8;
 
-    public static final int LL2P_ADDRESS_LENGTH = 3;
-    public static final int LL2P_TYPE_FIELD_LENGTH = 2;
-    public static final int LL2P_CRC_FIELD_LENGTH = 2;
+    public static final int LL3P_ADDRESS_NETWORK_OFFSET = 0;
+    public static final int LL3P_ADDRESS_HOST_OFFSET = 1;
 
-    //LL2P Types
+
+    //LL2P Type Designations
     public static final int LL2P_TYPE_LL3P = 0x8001;
     public static final int LL2P_TYPE_RESERVED = 0x8002;
     public static final int LL2P_TYPE_LRP = 0x8003;
@@ -45,7 +52,7 @@ public class Constants
     public static final int LL2P_TYPE_ARP_REQUEST = 0x8006;
     public static final int LL2P_TYPE_ARP_REPLY = 0x8007;
     public static final int LL2P_TYPE_TEXT = 0x8008;
-
+    //string representations
     public static final String LL2P_TYPE_LL3P_HEX = "8001";
     public static final String LL2P_TYPE_RESERVED_HEX = "8002";
     public static final String LL2P_TYPE_LRP_HEX = "8003";
@@ -55,13 +62,17 @@ public class Constants
     public static final String LL2P_TYPE_ARP_REPLY_HEX = "8007";
     public static final String LL2P_TYPE_TEXT_HEX = "8008";
 
-    //Arbitrary (but consistent) integer values to refer to fields
+    //Arbitrary (but consistent) integer values to refer to fields created in factory
+    //Header Field Factory:
     public static final int LL2P_DEST_ADDRESS_FIELD = 0;
     public static final int LL2P_SOURCE_ADDRESS_FIELD = 1;
-    public static final int LL2P_TYPE_FIELD = 2;
-    public static final int LL2P_PAYLOAD_FIELD = 3;
-    public static final int CRC_FIELD = 4;
+    public static final int LL3P_DEST_ADDRESS_FIELD = 2;
+    public static final int LL3P_SOURCE_ADDRESS_FIELD = 3;
+    public static final int LL2P_TYPE_FIELD = 4;
+    public static final int LL2P_PAYLOAD_FIELD = 5;
+    public static final int CRC_FIELD = 6;
 
+    //Table Record Factory:
     public static final int RECORD = 0;
     public static final int ADJACENCY_RECORD = 1;
 

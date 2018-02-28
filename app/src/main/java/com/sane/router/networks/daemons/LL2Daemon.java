@@ -41,7 +41,7 @@ public class LL2Daemon implements Observer
 
         if (dest.toString().equalsIgnoreCase(Constants.LL2P_ADDRESS)) //Is this frame for me?
         {
-            //TODO: check CRC
+            //TODO: check CRCField
 
             if (type.toHexString().equalsIgnoreCase(Constants.LL2P_TYPE_ECHO_REQUEST_HEX) ||
                     type.toHexString().equalsIgnoreCase(Constants.LL2P_TYPE_TEXT_HEX) )

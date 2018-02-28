@@ -4,37 +4,37 @@ import com.sane.router.networks.Constants;
 import com.sane.router.support.Utilities;
 
 /**
- * The CRC field, placeholder for full Cyclical Redundancy Check Class
+ * The CRCField field, placeholder for full Cyclical Redundancy Check Class
  *
  * @author Joshua Johnston
  */
 
-public class CRC implements HeaderField
+public class CRCField implements HeaderField
 {
     //Fields
-    private String CRCValue; //CRC stored as ASCII
+    private String CRCValue; //CRCField stored as ASCII
 
     //Methods
     /**
      * A typical constructor
      *
-     * @param typeValueString - a string representing the constructed CRC field
+     * @param typeValueString - a string representing the constructed CRCField field
      */
-    public CRC(String typeValueString)
+    public CRCField(String typeValueString)
     {
         CRCValue = typeValueString.substring(0, Constants.LL2P_CRC_FIELD_LENGTH);
     }
 
     //Interface Implementation (see interface documentation)
-    @Override public String toString()//returns CRC value as is
+    @Override public String toString()//returns CRCField value as is
     {
         return CRCValue;
     }
-    public String toTransmissionString()//what the CRC field looks like in transit
+    public String toTransmissionString()//what the CRCField field looks like in transit
     {
         return Utilities.padHexString(CRCValue, Constants.LL2P_CRC_FIELD_LENGTH);
     }
-    public String toHexString()//the hex CRC field, pre-padding
+    public String toHexString()//the hex CRCField field, pre-padding
     {
         String returnString = "";
         StringBuilder builder = new StringBuilder();
@@ -44,9 +44,9 @@ public class CRC implements HeaderField
         }
         return builder.toString();
     }
-    public String explainSelf()//the CRC Field explains itself
+    public String explainSelf()//the CRCField Field explains itself
     {
-        return "CRC Value: " + CRCValue;
+        return "CRCField Value: " + CRCValue;
     }
     public String toASCIIString()//necessary interface function, not very useful here
     {

@@ -1,6 +1,6 @@
 package com.sane.router.networks.datagram;
 import com.sane.router.networks.Constants;
-import com.sane.router.networks.datagramFields.CRC;
+import com.sane.router.networks.datagramFields.CRCField;
 import com.sane.router.networks.datagramFields.DatagramPayloadField;
 import com.sane.router.networks.datagramFields.LL2PAddressField;
 import com.sane.router.networks.datagramFields.LL2PTypeField;
@@ -27,7 +27,7 @@ public class LL2PFrame implements Datagram
     private LL2PAddressField sourceAddress;
     private LL2PTypeField type;
     private DatagramPayloadField payload;
-    private CRC crc;
+    private CRCField crc;
 
     //Methods
     /**
@@ -105,7 +105,7 @@ public class LL2PFrame implements Datagram
     {
         return payload;
     }
-    public CRC getCrc()
+    public CRCField getCrc()
     {
         return crc;
     }

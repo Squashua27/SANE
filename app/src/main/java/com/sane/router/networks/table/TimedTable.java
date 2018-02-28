@@ -46,7 +46,7 @@ public class TimedTable extends Table
      * Updates the age of the record matching a given key,
      * making the record 0 seconds old (Record.lastTimeTouched = 0)
      *
-     * @param key
+     * @param key - table element identifier, LL2P address for ARP Records
      */
     public void touch(Integer key)
     {
