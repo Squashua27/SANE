@@ -24,16 +24,16 @@ public class ARPDaemon extends Observable implements Observer, Runnable
 
     //Singleton Implementation
     private static final ARPDaemon ourInstance = new ARPDaemon();
-
     public static ARPDaemon getInstance() {
         return ourInstance;
     }
-
     private ARPDaemon() {
         arpTable = new TimedTable();
     }
 
     //Methods
+    public TimedTable getArpTable(){return arpTable;}
+
     private void addARPRecord(int ll2p, int ll3p)
     {
         Log.i(Constants.LOG_TAG, "\n\nAdding ARP Record, checking for matching key...\n\n");
@@ -51,10 +51,10 @@ public class ARPDaemon extends Observable implements Observer, Runnable
 
             arpTable.addItem(newRecord); //add new record to ARP table
             Log.i(Constants.LOG_TAG, "Record added to table: "
-                    + newRecord.explainSelf() + "\n\n");
+                    + newRecord.explainSelf() + "\n\n\n");
         }
-        //setChanged();//notify observers of change to the adjacency list
-        //notifyObservers();
+        setChanged();//notify observers of change to the adjacency list
+        notifyObservers();
     }
 
     /**
@@ -63,7 +63,23 @@ public class ARPDaemon extends Observable implements Observer, Runnable
      */
     public void testARP()
     {
+        Log.i(Constants.LOG_TAG, "\n\n\nBeginning ARP test...\n\n");
+        Log.i(Constants.LOG_TAG, "Creating Arp Table Entry...\n\n");
+        addARPRecord(27,11);
+        Log.i(Constants.LOG_TAG, "Table content:\n\n"+arpTable.toString()+"\n\n");
 
+        Log.i(Constants.LOG_TAG, "Creating two more Table Entries...\n\n");
+        addARPRecord(1,1);
+        addARPRecord(13,13);
+
+        Log.i(Constants.LOG_TAG, "\nTable content:\n\n"+arpTable.toString()+"\n\n");
+
+        Log.i(Constants.LOG_TAG, "\nCreating two more Table Entries...\n\n");
+        Log.i(Constants.LOG_TAG, "\nTable content:\n\n"+arpTable.toString()+"\n\n");
+
+        Log.i(Constants.LOG_TAG, "\nTouching some records just for fun...\n\n");
+        arpTable.touch(1);
+        arpTable.touch(27);
     }
 
     /**

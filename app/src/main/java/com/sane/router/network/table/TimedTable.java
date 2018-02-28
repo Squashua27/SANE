@@ -1,5 +1,8 @@
 package com.sane.router.network.table;
 
+import android.util.Log;
+
+import com.sane.router.network.Constants;
 import com.sane.router.network.table.tableRecords.Record;
 import com.sane.router.support.LabException;
 
@@ -58,11 +61,13 @@ public class TimedTable extends Table
             if (key == targetRecord.getKey())
             {
                 targetRecord.updateTime();//touches the record
+                Log.i(Constants.LOG_TAG, "\nRecord found and touched...\n\n");
                 return true;//record appropriately touched, exit loop and method
             }
         }
         //If no record matching the passed key is found, throw exception:
         new LabException("Failed to perform TimedTable.touch(key)");
+        Log.i(Constants.LOG_TAG, "\nRecord touching failure...\n\n");
         return false;
     }
 }

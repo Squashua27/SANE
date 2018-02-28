@@ -18,8 +18,8 @@ public class ARPRecord extends Record
     public ARPRecord(String addresses)//primary constructor
     {
         super();
-        ll2pAddress = Integer.parseInt(addresses.substring(0,2*Constants.LL2P_ADDRESS_LENGTH));
-        ll3pAddress = Integer.parseInt(addresses.substring(2*Constants.LL2P_ADDRESS_LENGTH));
+        ll2pAddress = Integer.parseInt(addresses.substring(0,2*Constants.LL2P_ADDRESS_LENGTH),16);
+        ll3pAddress = Integer.parseInt(addresses.substring(2*Constants.LL2P_ADDRESS_LENGTH),16);
     }
     public ARPRecord(int ll2p, int ll3p)//constructor for use in testing
     {

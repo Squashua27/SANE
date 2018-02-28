@@ -65,6 +65,7 @@ public class BootLoader extends Observable
 
         //Testing____________________
         test();
+        ARPDaemon.getInstance().testARP();
     }
 
     /**

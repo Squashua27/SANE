@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.sane.router.R;
+import com.sane.router.network.daemons.ARPDaemon;
 import com.sane.router.network.daemons.LL1Daemon;
 import com.sane.router.support.BootLoader;
 import com.sane.router.support.ParentActivity;
@@ -20,7 +21,7 @@ public class TableUI implements Runnable, Observer
 {
     //Fields
     private AdjacencyTableUI adjacencyTableUI;
-    //private SingleTableUI arpTableUI;
+    private SingleTableUI arpTableUI;
     //private SingleTableUI routingTable;
     //private SingleTableUI forwardingUI;
 
@@ -55,6 +56,10 @@ public class TableUI implements Runnable, Observer
                     R.id.adjacencyTable,
                     LL1Daemon.getInstance().getAdjacencyTable(),
                     LL1Daemon.getInstance());
+
+            arpTableUI = new SingleTableUI(activity,
+                    R.id.ARPTable,
+                    ARPDaemon.getInstance().getArpTable());
         }
     }
 }
