@@ -11,14 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.sane.router.R;
-import com.sane.router.networks.Constants;
-import com.sane.router.networks.daemons.LL1Daemon;
-import com.sane.router.networks.datagramFields.LL2PAddressField;
-import com.sane.router.networks.table.tableRecords.AdjacencyRecord;
-import com.sane.router.support.factories.TableRecordFactory;
+import com.sane.router.network.Constants;
+import com.sane.router.network.daemons.LL1Daemon;
 
 /**
  * Dialog providing an interface for user to add adjacency records

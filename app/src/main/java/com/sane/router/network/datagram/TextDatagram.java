@@ -1,4 +1,4 @@
-package com.sane.router.networks.datagram;
+package com.sane.router.network.datagram;
 
 /**
  * A type of datagram containing only text

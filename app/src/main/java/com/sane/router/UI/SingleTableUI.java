@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.sane.router.networks.table.Table;
-import com.sane.router.networks.table.TableInterface;
-import com.sane.router.networks.table.tableRecords.Record;
+import com.sane.router.network.table.Table;
+import com.sane.router.network.table.TableInterface;
+import com.sane.router.network.table.tableRecords.Record;
 
 import java.util.List;
 import java.util.Observable;

@@ -1,9 +1,9 @@
-package com.sane.router.networks.daemons;
+package com.sane.router.network.daemons;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.sane.router.networks.Constants;
+import com.sane.router.network.Constants;
 
 import java.io.IOException;
 import java.net.DatagramPacket;

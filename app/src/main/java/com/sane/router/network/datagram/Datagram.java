@@ -1,4 +1,4 @@
-package com.sane.router.networks.datagram;
+package com.sane.router.network.datagram;
 
 /**
  * Interface to be implemented by all datagrams

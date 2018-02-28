@@ -3,7 +3,7 @@ package com.sane.router.support;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.sane.router.networks.Constants;
+import com.sane.router.network.Constants;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

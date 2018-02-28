@@ -1,14 +1,14 @@
-package com.sane.router.networks.daemons;
+package com.sane.router.network.daemons;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.sane.router.UI.UIManager;
-import com.sane.router.networks.Constants;
-import com.sane.router.networks.datagram.LL2PFrame;
-import com.sane.router.networks.datagramFields.LL2PAddressField;
-import com.sane.router.networks.table.Table;
-import com.sane.router.networks.table.tableRecords.AdjacencyRecord;
+import com.sane.router.network.Constants;
+import com.sane.router.network.datagram.LL2PFrame;
+import com.sane.router.network.datagramFields.LL2PAddressField;
+import com.sane.router.network.table.Table;
+import com.sane.router.network.table.tableRecords.AdjacencyRecord;
 import com.sane.router.support.BootLoader;
 import com.sane.router.support.FrameLogger;
 import com.sane.router.support.IPAddressGetter;

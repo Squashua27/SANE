@@ -1,8 +1,7 @@
-package com.sane.router.networks.table.tableRecords;
+package com.sane.router.network.table.tableRecords;
 
-import com.sane.router.networks.Constants;
+import com.sane.router.network.Constants;
 import com.sane.router.support.IPAddressGetter;
-import com.sane.router.support.ParentActivity;
 import com.sane.router.support.Utilities;
 
 import java.net.InetAddress;

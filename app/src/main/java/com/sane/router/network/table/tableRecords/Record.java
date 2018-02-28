@@ -1,4 +1,4 @@
-package com.sane.router.networks.table.tableRecords;
+package com.sane.router.network.table.tableRecords;
 
 /**
  * The base class of all table classes,

@@ -1,7 +1,6 @@
-package com.sane.router.networks.table;
+package com.sane.router.network.table;
 
-import com.sane.router.networks.table.tableRecords.Record;
-import com.sane.router.networks.table.tableRecords.TableRecord;
+import com.sane.router.network.table.tableRecords.Record;
 import com.sane.router.support.LabException;
 
 import java.util.ArrayList;

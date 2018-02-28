@@ -1,10 +1,10 @@
-package com.sane.router.networks.daemons;
+package com.sane.router.network.daemons;
 
 import com.sane.router.UI.UIManager;
-import com.sane.router.networks.Constants;
-import com.sane.router.networks.datagram.LL2PFrame;
-import com.sane.router.networks.datagramFields.LL2PAddressField;
-import com.sane.router.networks.datagramFields.LL2PTypeField;
+import com.sane.router.network.Constants;
+import com.sane.router.network.datagram.LL2PFrame;
+import com.sane.router.network.datagramFields.LL2PAddressField;
+import com.sane.router.network.datagramFields.LL2PTypeField;
 
 import java.util.Observable;
 import java.util.Observer;

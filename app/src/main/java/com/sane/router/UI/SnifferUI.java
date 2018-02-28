@@ -12,9 +12,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.sane.router.R;
-import com.sane.router.networks.Constants;
-import com.sane.router.networks.datagram.Datagram;
-import com.sane.router.networks.datagram.LL2PFrame;
+import com.sane.router.network.Constants;
+import com.sane.router.network.datagram.Datagram;
+import com.sane.router.network.datagram.LL2PFrame;
 import com.sane.router.support.BootLoader;
 import com.sane.router.support.FrameLogger;
 import com.sane.router.support.ParentActivity;

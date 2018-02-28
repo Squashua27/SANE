@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 import com.sane.router.UI.UIManager;
 import com.sane.router.UI.dialogs.AddAdjacencyDialog;
-import com.sane.router.networks.Constants;
+import com.sane.router.network.Constants;
 import com.sane.router.support.BootLoader;
 
 /**

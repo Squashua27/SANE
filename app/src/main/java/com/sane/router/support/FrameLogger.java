@@ -1,7 +1,7 @@
 package com.sane.router.support;
 
-import com.sane.router.networks.daemons.LL1Daemon;
-import com.sane.router.networks.datagram.LL2PFrame;
+import com.sane.router.network.daemons.LL1Daemon;
+import com.sane.router.network.datagram.LL2PFrame;
 
 import java.util.ArrayList;
 import java.util.Observable;

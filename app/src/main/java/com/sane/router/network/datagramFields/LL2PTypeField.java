@@ -1,6 +1,6 @@
-package com.sane.router.networks.datagramFields;
+package com.sane.router.network.datagramFields;
 
-import com.sane.router.networks.Constants;
+import com.sane.router.network.Constants;
 import com.sane.router.support.Utilities;
 
 /**

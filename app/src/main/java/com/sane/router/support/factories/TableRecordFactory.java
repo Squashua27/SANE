@@ -2,10 +2,10 @@ package com.sane.router.support.factories;
 
 import android.util.Log;
 
-import com.sane.router.networks.Constants;
-import com.sane.router.networks.table.tableRecords.AdjacencyRecord;
-import com.sane.router.networks.table.tableRecords.Record;
-import com.sane.router.networks.table.tableRecords.TableRecord;
+import com.sane.router.network.Constants;
+import com.sane.router.network.table.tableRecords.AdjacencyRecord;
+import com.sane.router.network.table.tableRecords.Record;
+import com.sane.router.network.table.tableRecords.TableRecord;
 
 /**
  * A factory to create Table Record Objects

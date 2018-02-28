@@ -2,13 +2,13 @@ package com.sane.router.support.factories;
 
 import android.util.Log;
 
-import com.sane.router.networks.Constants;
-import com.sane.router.networks.datagramFields.CRCField;
-import com.sane.router.networks.datagramFields.DatagramPayloadField;
-import com.sane.router.networks.datagramFields.LL2PAddressField;
-import com.sane.router.networks.datagramFields.LL2PTypeField;
-import com.sane.router.networks.datagramFields.HeaderField;
-import com.sane.router.networks.datagramFields.LL3PAddressField;
+import com.sane.router.network.Constants;
+import com.sane.router.network.datagramFields.CRCField;
+import com.sane.router.network.datagramFields.DatagramPayloadField;
+import com.sane.router.network.datagramFields.LL2PAddressField;
+import com.sane.router.network.datagramFields.LL2PTypeField;
+import com.sane.router.network.datagramFields.HeaderField;
+import com.sane.router.network.datagramFields.LL3PAddressField;
 
 /**
  * A factory to create Header Field Objects

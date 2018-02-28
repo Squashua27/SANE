@@ -1,9 +1,9 @@
-package com.sane.router.networks.datagram;
-import com.sane.router.networks.Constants;
-import com.sane.router.networks.datagramFields.CRCField;
-import com.sane.router.networks.datagramFields.DatagramPayloadField;
-import com.sane.router.networks.datagramFields.LL2PAddressField;
-import com.sane.router.networks.datagramFields.LL2PTypeField;
+package com.sane.router.network.datagram;
+import com.sane.router.network.Constants;
+import com.sane.router.network.datagramFields.CRCField;
+import com.sane.router.network.datagramFields.DatagramPayloadField;
+import com.sane.router.network.datagramFields.LL2PAddressField;
+import com.sane.router.network.datagramFields.LL2PTypeField;
 import com.sane.router.support.factories.HeaderFieldFactory;
 
 /**

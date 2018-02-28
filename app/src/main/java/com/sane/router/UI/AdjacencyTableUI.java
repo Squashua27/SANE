@@ -5,12 +5,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.sane.router.networks.Constants;
-import com.sane.router.networks.daemons.LL1Daemon;
-import com.sane.router.networks.daemons.LL2Daemon;
-import com.sane.router.networks.datagram.LL2PFrame;
-import com.sane.router.networks.table.TableInterface;
-import com.sane.router.networks.table.tableRecords.AdjacencyRecord;
+import com.sane.router.network.Constants;
+import com.sane.router.network.daemons.LL1Daemon;
+import com.sane.router.network.daemons.LL2Daemon;
+import com.sane.router.network.datagram.LL2PFrame;
+import com.sane.router.network.table.TableInterface;
+import com.sane.router.network.table.tableRecords.AdjacencyRecord;
 
 /**
  * An extension of the SingleTableUI Class to handle the unique purpose

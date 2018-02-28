@@ -1,4 +1,4 @@
-package com.sane.router.networks;
+package com.sane.router.network;
 
 import android.util.Log;
 

@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.util.Log;
 
 import com.sane.router.UI.UIManager;
-import com.sane.router.networks.Constants;
-import com.sane.router.networks.daemons.LL1Daemon;
-import com.sane.router.networks.daemons.LL2Daemon;
-import com.sane.router.networks.datagram.LL2PFrame;
-import com.sane.router.networks.table.Table;
-import com.sane.router.networks.table.tableRecords.AdjacencyRecord;
+import com.sane.router.network.Constants;
+import com.sane.router.network.daemons.LL1Daemon;
+import com.sane.router.network.daemons.LL2Daemon;
+import com.sane.router.network.datagram.LL2PFrame;
+import com.sane.router.network.table.Table;
+import com.sane.router.network.table.tableRecords.AdjacencyRecord;
 import com.sane.router.support.factories.TableRecordFactory;
 
 import java.util.Observable;

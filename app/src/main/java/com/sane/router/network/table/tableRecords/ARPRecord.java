@@ -1,8 +1,6 @@
-package com.sane.router.networks.table.tableRecords;
+package com.sane.router.network.table.tableRecords;
 
-import com.sane.router.networks.Constants;
-
-import java.util.Observable;
+import com.sane.router.network.Constants;
 
 /**
  * An Address Resolution Protocol Record,

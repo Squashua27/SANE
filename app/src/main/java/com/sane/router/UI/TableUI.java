@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.sane.router.R;
-import com.sane.router.networks.daemons.LL1Daemon;
+import com.sane.router.network.daemons.LL1Daemon;
 import com.sane.router.support.BootLoader;
 import com.sane.router.support.ParentActivity;
 
