@@ -48,7 +48,7 @@ public class TimedTable extends Table
      *
      * @param key - table element identifier, LL2P address for ARP Records
      */
-    public void touch(Integer key)
+    public boolean touch(Integer key)
     {
         Iterator<Record> recordIterator = table.iterator();
         Record targetRecord;
@@ -58,10 +58,11 @@ public class TimedTable extends Table
             if (key == targetRecord.getKey())
             {
                 targetRecord.updateTime();//touches the record
-                return;//record appropriately touched, exit loop and method
+                return true;//record appropriately touched, exit loop and method
             }
         }
         //If no record matching the passed key is found, throw exception:
         new LabException("Failed to perform TimedTable.touch(key)");
+        return false;
     }
 }

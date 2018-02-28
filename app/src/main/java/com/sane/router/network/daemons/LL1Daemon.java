@@ -33,7 +33,7 @@ public class LL1Daemon extends Observable implements Observer
     private IPAddressGetter ipAddressGetter;//private reference to a singleton
     private UIManager uiManager;//private reference to a singleton
     private TableRecordFactory factory;//private singleton factory reference
-    private LL2Daemon greaterDeamon;//private reference to upper layer's daemon singleton
+    private LL2Daemon greaterDemon;//private reference to upper layer's daemon singleton
 
     //Singleton Implementation
     private static final LL1Daemon ourInstance = new LL1Daemon();
@@ -61,7 +61,7 @@ public class LL1Daemon extends Observable implements Observer
             ipAddressGetter = IPAddressGetter.getInstance();
             factory = TableRecordFactory.getInstance();
             uiManager = UIManager.getInstance();
-            greaterDeamon = LL2Daemon.getInstance();
+            greaterDemon = LL2Daemon.getInstance();
 
             new ReceiveLayer1Frame().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
@@ -161,6 +161,6 @@ public class LL1Daemon extends Observable implements Observer
         Log.i(Constants.LOG_TAG, " \n \n<<<<<<<<<Received frame: \n"
                 + ll2pFrame.toProtocolExplanationString() + " \n \n");
 
-        greaterDeamon.processLL2PFrame(ll2pFrame);
+        greaterDemon.processLL2PFrame(ll2pFrame);
     }
 }

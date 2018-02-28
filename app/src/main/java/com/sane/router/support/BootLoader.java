@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.sane.router.UI.UIManager;
 import com.sane.router.network.Constants;
+import com.sane.router.network.daemons.ARPDaemon;
 import com.sane.router.network.daemons.LL1Daemon;
 import com.sane.router.network.daemons.LL2Daemon;
 import com.sane.router.network.datagram.LL2PFrame;
@@ -48,6 +49,7 @@ public class BootLoader extends Observable
         addObserver(FrameLogger.getInstance());
         addObserver(LL1Daemon.getInstance());
         addObserver(LL2Daemon.getInstance());
+        addObserver(ARPDaemon.getInstance());
         addObserver(uiManager.getTableUI());
         addObserver(uiManager.getSnifferUI());
 

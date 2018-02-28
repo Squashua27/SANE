@@ -75,6 +75,7 @@ public class Constants
     //Table Record Factory:
     public static final int RECORD = 0;
     public static final int ADJACENCY_RECORD = 1;
+    public static final int ARP_RECORD = 2;
 
     /**
      * the following code snippet by Corbin Young,

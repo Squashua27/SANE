@@ -17,14 +17,14 @@ public class LL2Daemon implements Observer
 {
     //Fields
     private UIManager uiManager; //reference used to interface manager
-    private LL1Daemon lesserDaemon; //the less experienced daemon
+    private LL1Daemon lesserDemon; //the less experienced daemon
 
     //Singleton Implementation
     private static final LL2Daemon ourInstance = new LL2Daemon();//empty constructor
     public static LL2Daemon getInstance() {
         return ourInstance;
     }
-    private LL2Daemon() {}
+    private LL2Daemon(){}
 
     //Methods
 
@@ -52,7 +52,7 @@ public class LL2Daemon implements Observer
                         + Constants.LL2P_TYPE_ECHO_REPLY_HEX
                         + "CC");
 
-                lesserDaemon.sendFrame(echoReply);
+                lesserDemon.sendFrame(echoReply);
             }
         }
     }
@@ -63,10 +63,10 @@ public class LL2Daemon implements Observer
                 (LL2PAddress//Integer.parseInt(LL2PAddress,16)
                         + Constants.LL2P_ADDRESS
                         + Constants.LL2P_TYPE_TEXT_HEX
-                        + "Why does the 'sendEchoRequest' method send a text datagram?"
+                        + "This sentence is a text payload."
                         + "CC");
 
-        lesserDaemon.sendFrame(echoRequest);
+        lesserDemon.sendFrame(echoRequest);
     }
 
     /**
@@ -78,6 +78,6 @@ public class LL2Daemon implements Observer
     public void update(Observable observer, Object object)
     {
         uiManager = UIManager.getInstance();
-        lesserDaemon = LL1Daemon.getInstance();
+        lesserDemon = LL1Daemon.getInstance();
     }
 }

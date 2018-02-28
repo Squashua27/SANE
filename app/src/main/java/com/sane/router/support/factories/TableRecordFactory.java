@@ -3,6 +3,7 @@ package com.sane.router.support.factories;
 import android.util.Log;
 
 import com.sane.router.network.Constants;
+import com.sane.router.network.table.tableRecords.ARPRecord;
 import com.sane.router.network.table.tableRecords.AdjacencyRecord;
 import com.sane.router.network.table.tableRecords.Record;
 import com.sane.router.network.table.tableRecords.TableRecord;
@@ -34,8 +35,10 @@ public class TableRecordFactory implements Factory<TableRecord, String>
             return (U) new Record();
         else if (type == Constants.ADJACENCY_RECORD)
             return (U) new AdjacencyRecord(data);
+        else if (type == Constants.ARP_RECORD)
+            return (U) new ARPRecord(data);
         else
-        Log.e(Constants.LOG_TAG, "Error creating TableRecord");
+        Log.e(Constants.LOG_TAG, "Error in TableRecordFactory");
         return null;
     }
 
