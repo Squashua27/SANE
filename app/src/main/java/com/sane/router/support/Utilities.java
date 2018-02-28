@@ -78,7 +78,7 @@ public class Utilities
      *
      * @return time - time in seconds since base date in seconds
      */
-    public int getTimeInSeconds()
+    public static int getTimeInSeconds()
     {
         return (int) (Calendar.getInstance().getTimeInMillis()/1000-baseDateInSeconds);
     }

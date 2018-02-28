@@ -72,6 +72,7 @@ public class ARPDaemon extends Observable implements Observer, Runnable
         addARPRecord(1,1);
         addARPRecord(13,13);
 
+
         Log.i(Constants.LOG_TAG, "\nTable content:\n\n"+arpTable.toString()+"\n\n");
 
         Log.i(Constants.LOG_TAG, "\nCreating two more Table Entries...\n\n");
@@ -80,6 +81,8 @@ public class ARPDaemon extends Observable implements Observer, Runnable
         Log.i(Constants.LOG_TAG, "\nTouching some records just for fun...\n\n");
         arpTable.touch(1);
         arpTable.touch(27);
+
+        arpTable.expireRecords(3);
     }
 
     /**

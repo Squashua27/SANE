@@ -1,5 +1,7 @@
 package com.sane.router.network.table.tableRecords;
 
+import com.sane.router.support.Utilities;
+
 /**
  * The base class of all table classes,
  * implements the TableRecord interface
@@ -24,7 +26,7 @@ public class Record implements TableRecord
      */
     public void updateTime()
     {
-        lastTimeTouched = Math.round(System.currentTimeMillis()/1000L);
+        lastTimeTouched = Utilities.getTimeInSeconds();
     }
     /**
      * Makes a comparison between records.
@@ -47,6 +49,7 @@ public class Record implements TableRecord
     }
     public int getAgeInSeconds()
     {
-        return Math.round(System.currentTimeMillis()/1000L) - lastTimeTouched;
+        int temp = Utilities.getTimeInSeconds() - lastTimeTouched;
+        return Utilities.getTimeInSeconds() - lastTimeTouched;
     }
 }
