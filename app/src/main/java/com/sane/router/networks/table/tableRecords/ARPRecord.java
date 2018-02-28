@@ -5,7 +5,8 @@ import com.sane.router.networks.Constants;
 import java.util.Observable;
 
 /**
- * An Address Resolution Protocol Record
+ * An Address Resolution Protocol Record,
+ * a record linking layer 2 to layer 3 address
  *
  * @author Joshua Johnston
  */
@@ -35,7 +36,7 @@ public class ARPRecord extends Record
     public void setLL2PAddress(int ll2p){ll2pAddress=ll2p;}//standard setter
     public void setLL3PAddress(int ll3p){ll3pAddress=ll3p;}//standard setter
 
-    public String toString()//
+    public String toString()
     {
         return "LL2P Address:  " + getLL2PAsString()
             + "   LL3P Address:  " + getLL3PAsString();
