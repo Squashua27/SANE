@@ -36,9 +36,9 @@ public class ARPRecord extends Record
 
     public String toString()
     {
-        return "LL2P Address:  " + getLL2PAsString()
-            + "   LL3P Address:  " + getLL3PAsString();
-        //TODO: Add age in seconds to string
+        return "LL2P Address: " + getLL2PAsString()
+            + " | LL3P Address: " + getLL3PAsString()
+            + " | age: " + Integer.toString(getAgeInSeconds());
     }
     public String getLL2PAsString()
     {

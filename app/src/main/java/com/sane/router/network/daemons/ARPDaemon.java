@@ -82,7 +82,7 @@ public class ARPDaemon extends Observable implements Observer, Runnable
         arpTable.touch(1);
         arpTable.touch(27);
 
-        arpTable.expireRecords(3);
+        arpTable.expireRecords(10);
     }
 
     /**

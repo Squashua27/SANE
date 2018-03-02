@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.sane.router.network.Constants;
 import com.sane.router.network.table.tableRecords.Record;
+import com.sane.router.network.table.tableRecords.TableRecord;
 import com.sane.router.support.LabException;
 
 import java.util.ArrayList;
@@ -31,17 +32,19 @@ public class TimedTable extends Table
     public List<Record> expireRecords(int maxAge)
     {
         List<Record> removedRecordList = Collections.synchronizedList(new ArrayList<Record>());
-
-        Iterator<Record> recordIterator = table.iterator();
         Record targetRecord;
-        while (recordIterator.hasNext()) {
+
+        Iterator<Record> recordIterator = table.iterator();//Iterator to create list to remove
+        while (recordIterator.hasNext())
+        {
             targetRecord = recordIterator.next();
             if (targetRecord.getAgeInSeconds() > maxAge)
-            {
                 removedRecordList.add(targetRecord);//add target to list of removed records
-                table.remove(targetRecord);//remove target
-            }
         }
+
+        for (TableRecord recordToRemove: removedRecordList)
+            table.remove(recordToRemove);//remove target
+
         return removedRecordList;
     }
 
