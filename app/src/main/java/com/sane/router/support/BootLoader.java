@@ -52,6 +52,7 @@ public class BootLoader extends Observable
         addObserver(ARPDaemon.getInstance());
         addObserver(uiManager.getTableUI());
         addObserver(uiManager.getSnifferUI());
+        addObserver(ARPDaemon.getInstance());
 
         //Misc_Router_Setup____________________
         //(place holder)

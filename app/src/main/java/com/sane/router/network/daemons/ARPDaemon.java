@@ -3,12 +3,17 @@ package com.sane.router.network.daemons;
 import android.util.Log;
 
 import com.sane.router.network.Constants;
+import com.sane.router.network.datagram.ARPDatagram;
 import com.sane.router.network.table.TimedTable;
 import com.sane.router.network.table.tableRecords.ARPRecord;
+import com.sane.router.network.table.tableRecords.Record;
 import com.sane.router.support.BootLoader;
 import com.sane.router.support.Utilities;
 import com.sane.router.support.factories.TableRecordFactory;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -32,7 +37,20 @@ public class ARPDaemon extends Observable implements Observer, Runnable
     }
 
     //Methods
-    public TimedTable getArpTable(){return arpTable;}
+    public int getMacAddress(int ll3p)
+    {
+        for (Record arpRecord : arpTable.getTableAsList())
+        {
+            if (((ARPRecord)arpRecord).getLL3PAddress()==ll3p)
+            {
+                arpTable.touch(arpRecord.getKey());
+                return ((ARPRecord)arpRecord).getLL3PAddress();
+            }
+        }
+        return -1;
+    }
+
+    public List<Record> getArpTable(){return arpTable.getTableAsList();}//standard getter
 
     private void addARPRecord(int ll2p, int ll3p)
     {
@@ -55,6 +73,33 @@ public class ARPDaemon extends Observable implements Observer, Runnable
         }
         setChanged();//notify observers of change to the adjacency list
         notifyObservers();
+    }
+
+    public List<Integer> getAttachedNodes()
+    {
+        List<Integer> nodeList = Collections.synchronizedList(new ArrayList<Integer>());
+        for (Record arpRecord : arpTable.getTableAsList())
+            nodeList.add(((ARPRecord) arpRecord).getLL3PAddress());
+
+        return nodeList;
+    }
+
+    public void processARPRequest(int ll2pAddress, ARPDatagram arpDatagram)
+    {
+        addARPRecord(ll2pAddress,arpDatagram.getLL3PAddress());
+        //ll2Demon.processLL2PFrame();
+
+    }
+
+    /**
+     * Processes an ARP Reply
+     *
+     * @param ll2pAddress - the LL2P Address to touch/add
+     * @param arpDatagram - contains the related LL3P address
+     */
+    public void processARPReply(int ll2pAddress, ARPDatagram arpDatagram)
+    {
+        addARPRecord(ll2pAddress,arpDatagram.getLL3PAddress());
     }
 
     /**
@@ -98,7 +143,11 @@ public class ARPDaemon extends Observable implements Observer, Runnable
             ll2Demon = LL2Daemon.getInstance();
             factory = TableRecordFactory.getInstance();
         }
-
     }
-    @Override public void run(){} //TODO: write this method
+    @Override public void run()
+    {
+        List<Record> removedRecords = arpTable.expireRecords(Constants.ARP_RECORD_TTL);
+        if (!removedRecords.isEmpty())
+            notifyObservers(removedRecords);
+    }
 }

@@ -69,6 +69,9 @@ public class LL2Daemon implements Observer
         lesserDemon.sendFrame(echoRequest);
     }
 
+    //TODO: method - sendARPRequest
+    //TODO: method - sendArpReply
+
     /**
      * Required method of Observer classes, triggered by bootLoader, constructs self
      *

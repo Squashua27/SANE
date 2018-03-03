@@ -31,6 +31,7 @@ public class LL3PAddressField implements HeaderField
 
         isSource = source;
     }
+    public int getLL3PAddress(){return address;}//Standard getter
 
     //HeaderField Interface Implementation
     @Override public String toTransmissionString()

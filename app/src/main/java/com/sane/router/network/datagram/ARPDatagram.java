@@ -28,6 +28,8 @@ public class ARPDatagram implements Datagram
         ll3PAddressField = HeaderFieldFactory.getInstance().getItem(type,ll3p);
     }
 
+    public int getLL3PAddress(){return ll3PAddressField.getLL3PAddress();}
+
     //Datagram Interface Implementation
     @Override public String toHexString() {return ll3PAddressField.toHexString();}
     @Override public String toProtocolExplanationString() {return ll3PAddressField.explainSelf();}
