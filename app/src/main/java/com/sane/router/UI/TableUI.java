@@ -33,10 +33,14 @@ public class TableUI implements Runnable, Observer
     public void TableUI(){}
 
     /**
-     * Runs once per second to keep the table current, currently empty
+     * Runs once per second to keep tables current
      */
     @Override public void run()
     {
+        adjacencyTableUI.updateView();
+        arpTableUI.updateView();
+        //routingTable.updateView();
+        //forwardingTable.updateView();
     }
 
     /**

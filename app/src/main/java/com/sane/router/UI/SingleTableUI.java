@@ -60,10 +60,7 @@ public class SingleTableUI implements Observer
      * @param observable - the observed object
      * @param object - an object passed by the triggering observed object
      */
-    @Override public void update(Observable observable, Object object)
-    {
-        updateView();
-    }
+    @Override public void update(Observable observable, Object object) {updateView();}
 
     /**
      * Reloads the array and updates the on-screen table
@@ -71,11 +68,8 @@ public class SingleTableUI implements Observer
     public void updateView()
     {
         parentActivity.runOnUiThread(new Runnable()
-        {
-            @Override public void run()// this is a mini-Runnable class’s run method!
-            {
-                arrayAdapter.notifyDataSetChanged();// notify the OS of change
-            }
+        {// a mini-Runnable class’s run method:
+            @Override public void run(){arrayAdapter.notifyDataSetChanged();}
         });
 
     }
