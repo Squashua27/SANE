@@ -2,6 +2,7 @@ package com.sane.router.network.daemons;
 
 import com.sane.router.UI.UIManager;
 import com.sane.router.network.Constants;
+import com.sane.router.network.datagram.ARPDatagram;
 import com.sane.router.network.datagram.LL2PFrame;
 import com.sane.router.network.datagramFields.LL2PAddressField;
 import com.sane.router.network.datagramFields.LL2PTypeField;
@@ -18,6 +19,7 @@ public class LL2Daemon implements Observer
     //Fields
     private UIManager uiManager; //reference used to interface manager
     private LL1Daemon lesserDemon; //the less experienced daemon
+    private ARPDaemon arpDemon; //reference to help manage ARP frames
 
     //Singleton Implementation
     private static final LL2Daemon ourInstance = new LL2Daemon();//empty constructor
@@ -54,23 +56,56 @@ public class LL2Daemon implements Observer
 
                 lesserDemon.sendFrame(echoReply);
             }
+            if (type.toHexString().equalsIgnoreCase(Constants.LL2P_TYPE_ARP_REQUEST_HEX))
+            {
+                arpDemon.processARPRequest(source.getAddress(),
+                        ((ARPDatagram) frame.getPayload().getPayload()));
+                sendARPReply(source.getAddress());
+
+            }
+            if (type.toHexString().equalsIgnoreCase(Constants.LL2P_TYPE_ARP_REPLY_HEX))
+            {
+                arpDemon.processARPReply(source.getAddress(),
+                        ((ARPDatagram) frame.getPayload().getPayload()));
+            }
         }
     }
 
     public void sendEchoRequest(String LL2PAddress)
     {
         LL2PFrame echoRequest = new LL2PFrame
-                (LL2PAddress//Integer.parseInt(LL2PAddress,16)
-                        + Constants.LL2P_ADDRESS
-                        + Constants.LL2P_TYPE_TEXT_HEX
-                        + "This sentence is a text payload."
-                        + "CC");
+                (LL2PAddress
+                + Constants.LL2P_ADDRESS
+                + Constants.LL2P_TYPE_TEXT_HEX
+                + "This sentence is a text payload."
+                + "CC");
 
         lesserDemon.sendFrame(echoRequest);
     }
 
-    //TODO: method - sendARPRequest
-    //TODO: method - sendArpReply
+    public void sendARPRequest(int ll2p)
+    {
+        LL2PFrame frame = new LL2PFrame
+                (Integer.toHexString(ll2p)
+                + Constants.LL2P_ADDRESS
+                + Constants.LL2P_TYPE_ARP_REQUEST_HEX
+                + Constants.LL3P_ADDRESS
+                + "CC");
+
+        lesserDemon.sendFrame(frame);
+    }
+
+    public void sendARPReply(int ll2p)
+    {
+        LL2PFrame frame = new LL2PFrame
+                (Integer.toHexString(ll2p)
+                + Constants.LL2P_ADDRESS
+                + Constants.LL2P_TYPE_ARP_REPLY_HEX
+                + Constants.LL3P_ADDRESS
+                + "CC");
+
+        lesserDemon.sendFrame(frame);
+    }
 
     /**
      * Required method of Observer classes, triggered by bootLoader, constructs self
@@ -82,5 +117,6 @@ public class LL2Daemon implements Observer
     {
         uiManager = UIManager.getInstance();
         lesserDemon = LL1Daemon.getInstance();
+        arpDemon = ARPDaemon.getInstance();
     }
 }

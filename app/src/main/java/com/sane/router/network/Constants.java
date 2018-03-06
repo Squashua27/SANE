@@ -17,6 +17,8 @@ public class Constants
 {
     public static final String IP_ADDRESS;//IP address in dotted decimal notation
     public static final String LL2P_ADDRESS = "B1A5ED";
+//    public static final int LL2P_ADDRESS_int = 127;
+    public static final String LL3P_ADDRESS = "2727";
     public static final int UDP_PORT = 49999;//our chosen port for communication
 
     //used in debugging messages or messages sent to the log file.

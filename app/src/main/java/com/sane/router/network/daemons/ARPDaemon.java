@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.sane.router.network.Constants;
 import com.sane.router.network.datagram.ARPDatagram;
+import com.sane.router.network.table.Table;
 import com.sane.router.network.table.TimedTable;
 import com.sane.router.network.table.tableRecords.ARPRecord;
 import com.sane.router.network.table.tableRecords.Record;
@@ -50,7 +51,8 @@ public class ARPDaemon extends Observable implements Observer, Runnable
         return -1;
     }
 
-    public List<Record> getArpTable(){return arpTable.getTableAsList();}//standard getter
+    public Table getARPTable(){return  arpTable;}//standard getter
+    public List<Record> getArpTableAsList(){return arpTable.getTableAsList();}//standard getter
 
     private void addARPRecord(int ll2p, int ll3p)
     {
@@ -87,8 +89,6 @@ public class ARPDaemon extends Observable implements Observer, Runnable
     public void processARPRequest(int ll2pAddress, ARPDatagram arpDatagram)
     {
         addARPRecord(ll2pAddress,arpDatagram.getLL3PAddress());
-        //ll2Demon.processLL2PFrame();
-
     }
 
     /**

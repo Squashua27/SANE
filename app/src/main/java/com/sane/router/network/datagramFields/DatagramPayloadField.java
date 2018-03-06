@@ -43,6 +43,7 @@ public class DatagramPayloadField implements HeaderField
     {
         return packet;
     }
+    public void setPacket(Datagram setPacket){packet=setPacket;}
     //Interface Implementation (see interface documentation)
     @Override public String toString()//necessary to interface, not useful here
     {

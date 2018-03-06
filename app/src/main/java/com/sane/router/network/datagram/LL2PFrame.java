@@ -111,8 +111,7 @@ public class LL2PFrame implements Datagram
     }
 
     //Interface Implementation (see interface for function descriptions)
-    @Override
-    public String toString()
+    @Override public String toString()
     {
         return destinationAddress.toTransmissionString()
                 + sourceAddress.toTransmissionString()

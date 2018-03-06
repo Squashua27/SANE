@@ -63,7 +63,7 @@ public class TableUI implements Runnable, Observer
 
             arpTableUI = new SingleTableUI(activity,
                     R.id.ARPTable,
-                    ARPDaemon.getInstance().getArpTable());
+                    ARPDaemon.getInstance().getARPTable());
         }
     }
 }
