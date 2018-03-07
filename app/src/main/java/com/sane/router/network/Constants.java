@@ -18,7 +18,7 @@ public class Constants
     public static final String IP_ADDRESS;//IP address in dotted decimal notation
     public static final String LL2P_ADDRESS = "B1A5ED";
 //    public static final int LL2P_ADDRESS_int = 127;
-    public static final String LL3P_ADDRESS = "2727";
+    public static final String LL3P_ADDRESS = "0901";
     public static final int UDP_PORT = 49999;//our chosen port for communication
 
     //used in debugging messages or messages sent to the log file.
@@ -26,11 +26,11 @@ public class Constants
     public static final String LOG_TAG = "The Promised LAN: ";
 
     //Schedule Management (times in seconds)
-    public static final int THREAD_COUNT = 2;
-    public static final int ROUTER_BOOT_TIME = 4;
+    public static final int THREAD_COUNT = 3;
+    public static final int ROUTER_BOOT_TIME = 3;
     public static final int UI_UPDATE_INTERVAL = 1;
     public static final int ARP_UPDATE_INTERVAL = 5;
-    public static final int ARP_RECORD_TTL = 10;
+    public static final int ARP_RECORD_TTL = 19;
 
     //Datagram Constants (lengths and offsets in bytes)
     //Lengths (in bytes)

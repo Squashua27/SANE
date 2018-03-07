@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.sane.router.R;
+import com.sane.router.network.Constants;
 import com.sane.router.network.daemons.ARPDaemon;
 import com.sane.router.network.daemons.LL1Daemon;
+import com.sane.router.network.table.TimedTable;
 import com.sane.router.support.BootLoader;
 import com.sane.router.support.ParentActivity;
 
@@ -37,7 +39,6 @@ public class TableUI implements Runnable, Observer
      */
     @Override public void run()
     {
-        adjacencyTableUI.updateView();
         arpTableUI.updateView();
         //routingTable.updateView();
         //forwardingTable.updateView();

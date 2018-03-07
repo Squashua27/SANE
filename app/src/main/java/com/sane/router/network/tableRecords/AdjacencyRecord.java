@@ -1,4 +1,4 @@
-package com.sane.router.network.table.tableRecords;
+package com.sane.router.network.tableRecords;
 
 import com.sane.router.network.Constants;
 import com.sane.router.support.IPAddressGetter;

@@ -1,6 +1,7 @@
 package com.sane.router.network.table;
 
-import com.sane.router.network.table.tableRecords.Record;
+import com.sane.router.network.tableRecords.Record;
+import com.sane.router.network.tableRecords.TableRecord;
 import com.sane.router.support.LabException;
 
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class Table extends Observable implements TableInterface
      */
     public List<Record> getTableAsList()
     {
-        return table;
+        synchronized (table) {return table;}
     }
     /**
      * Adds a TableRecord to the Table, throws exception on failure
@@ -63,11 +64,14 @@ public class Table extends Observable implements TableInterface
      */
     public Record addItem(Record recordToAdd)
     {
-        if (!table.add(recordToAdd))
-            new LabException("Failed to perform Record.addItem(recordToAdd)");
-        updateDisplay();
+        synchronized (table)
+        {
+            if (!table.add(recordToAdd))
+                new LabException("Failed to perform Record.addItem(recordToAdd)");
+            updateDisplay();
 
-        return recordToAdd;
+            return recordToAdd;
+        }
     }
     /**
      * Returns a Record matching the specified item, throws exception on failure
@@ -78,17 +82,19 @@ public class Table extends Observable implements TableInterface
      */
     public Record getItem(Record recordToGet)
     {
-        Iterator<Record> recordIterator = table.iterator();
-        Record targetRecord;
-
-        while (recordIterator.hasNext())
+        synchronized (table)
         {
-            targetRecord = recordIterator.next();
-            if (targetRecord == recordToGet)
-                return targetRecord;
+            Iterator<Record> recordIterator = table.iterator();
+            Record targetRecord;
+
+            while (recordIterator.hasNext()) {
+                targetRecord = recordIterator.next();
+                if (targetRecord == recordToGet)
+                    return targetRecord;
+            }
+            new LabException("Failed to perform Record.getItem(recordToGet)");
+            return null;
         }
-        new LabException("Failed to perform Record.getItem(recordToGet)");
-        return null;
     }
     /**
      * Finds and returns a record matching the given record key,
@@ -100,19 +106,22 @@ public class Table extends Observable implements TableInterface
      */
     public Record getItem(Integer recordKey)
     {
-        Iterator<Record> recordIterator = table.iterator();
-        Record targetRecord;
-
-        while (recordIterator.hasNext())
+        synchronized (table)
         {
-            targetRecord = recordIterator.next();
-            if (targetRecord.getKey() == recordKey)
+            Iterator<Record> recordIterator = table.iterator();
+            Record targetRecord;
+
+            while (recordIterator.hasNext())
             {
-                return targetRecord;
+                targetRecord = recordIterator.next();
+                if (targetRecord.getKey() == recordKey)
+                {
+                    return targetRecord;
+                }
             }
+            new LabException("Failed to perform Record.getItem(recordKey)");
+            return null;
         }
-        new LabException("Failed to perform Record.getItem(recordKey)");
-        return null;
     }
     /**
      * Removes from table and returns a record matching a given key
@@ -121,7 +130,7 @@ public class Table extends Observable implements TableInterface
      *
      * @return Record -  the removed record, null if key not found
      */
-    public Record removeItem(Integer recordKey)
+    public Record removeItem(Integer recordKey)//TODO: synch
     {
         Iterator<Record> recordIterator = table.iterator();
         Record targetRecord;
@@ -139,6 +148,7 @@ public class Table extends Observable implements TableInterface
         new LabException("Failed to perform Record.removeItem(recordKey)");
         return null;
     }
+
     /**
      * Removes from table and returns a record matching a given record
      *
@@ -146,7 +156,7 @@ public class Table extends Observable implements TableInterface
      *
      * @return Record -  the removed record, null if Record not found
      */
-    public Record removeItem(Record recordToRemove)
+    public Record removeItem(TableRecord recordToRemove)
     {
         Iterator<Record> recordIterator = table.iterator();
         Record targetRecord;

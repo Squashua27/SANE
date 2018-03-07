@@ -1,4 +1,4 @@
-package com.sane.router.network.table.tableRecords;
+package com.sane.router.network.tableRecords;
 
 import com.sane.router.network.Constants;
 
@@ -38,7 +38,7 @@ public class ARPRecord extends Record
     {
         return "LL2P Address: " + getLL2PAsString()
             + " | LL3P Address: " + getLL3PAsString()
-            + " | age: " + Integer.toString(getAgeInSeconds());
+            + " | age: " + getAgeInSeconds();
     }
     public String getLL2PAsString()
     {

@@ -10,7 +10,7 @@ import com.sane.router.network.daemons.LL1Daemon;
 import com.sane.router.network.daemons.LL2Daemon;
 import com.sane.router.network.datagram.LL2PFrame;
 import com.sane.router.network.table.TableInterface;
-import com.sane.router.network.table.tableRecords.AdjacencyRecord;
+import com.sane.router.network.tableRecords.AdjacencyRecord;
 
 /**
  * An extension of the SingleTableUI Class to handle the unique purpose

@@ -1,6 +1,7 @@
 package com.sane.router.network.daemons;
 
 import com.sane.router.UI.TableUI;
+import com.sane.router.UI.UIManager;
 import com.sane.router.network.Constants;
 
 import java.util.Observable;
@@ -26,7 +27,7 @@ public class Scheduler implements Observer
     //Fields
     private ScheduledThreadPoolExecutor threadManager;//manages pool of threads
     private ARPDaemon arpDaemon; //for private access to ARP services
-    //private LRPDaemon lrpDeamon; //TODO: creaate this class
+    //private RPDaemon lrpDeamon; //TODO: creaate this class
     private TableUI tableUI; //private tableUI reference to keep tables updated
 
     //Methods
@@ -40,10 +41,10 @@ public class Scheduler implements Observer
     @Override public void update(Observable observable, Object object)
     {
         threadManager = new ScheduledThreadPoolExecutor(Constants.THREAD_COUNT);
-        threadManager.scheduleAtFixedRate(tableUI,
-                Constants.ROUTER_BOOT_TIME,
-                Constants.UI_UPDATE_INTERVAL,
-                TimeUnit.SECONDS);
+        arpDaemon = ARPDaemon.getInstance();
+        tableUI = UIManager.getInstance().getTableUI();
 
+        threadManager.scheduleAtFixedRate(tableUI, Constants.ROUTER_BOOT_TIME, Constants.UI_UPDATE_INTERVAL, TimeUnit.SECONDS);
+        threadManager.scheduleAtFixedRate(arpDaemon, Constants.ROUTER_BOOT_TIME, Constants.ARP_UPDATE_INTERVAL, TimeUnit.SECONDS);
     }
 }

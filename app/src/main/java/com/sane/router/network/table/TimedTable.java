@@ -3,8 +3,8 @@ package com.sane.router.network.table;
 import android.util.Log;
 
 import com.sane.router.network.Constants;
-import com.sane.router.network.table.tableRecords.Record;
-import com.sane.router.network.table.tableRecords.TableRecord;
+import com.sane.router.network.tableRecords.Record;
+import com.sane.router.network.tableRecords.TableRecord;
 import com.sane.router.support.LabException;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class TimedTable extends Table
         }
 
         for (TableRecord recordToRemove: removedRecordList)
-            table.remove(recordToRemove);//remove target
+            removeItem(recordToRemove);//remove target
 
         return removedRecordList;
     }

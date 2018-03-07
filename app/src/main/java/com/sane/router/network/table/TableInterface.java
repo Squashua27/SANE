@@ -1,6 +1,6 @@
 package com.sane.router.network.table;
 
-import com.sane.router.network.table.tableRecords.Record;
+import com.sane.router.network.tableRecords.Record;
 
 import java.util.List;
 

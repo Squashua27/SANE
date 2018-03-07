@@ -6,7 +6,7 @@ import android.widget.ListView;
 
 import com.sane.router.network.table.Table;
 import com.sane.router.network.table.TableInterface;
-import com.sane.router.network.table.tableRecords.Record;
+import com.sane.router.network.tableRecords.Record;
 
 import java.util.List;
 import java.util.Observable;
@@ -71,6 +71,5 @@ public class SingleTableUI implements Observer
         {// a mini-Runnable class’s run method:
             @Override public void run(){arrayAdapter.notifyDataSetChanged();}
         });
-
     }
 }

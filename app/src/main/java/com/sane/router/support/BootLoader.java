@@ -8,9 +8,10 @@ import com.sane.router.network.Constants;
 import com.sane.router.network.daemons.ARPDaemon;
 import com.sane.router.network.daemons.LL1Daemon;
 import com.sane.router.network.daemons.LL2Daemon;
+import com.sane.router.network.daemons.Scheduler;
 import com.sane.router.network.datagram.LL2PFrame;
 import com.sane.router.network.table.Table;
-import com.sane.router.network.table.tableRecords.AdjacencyRecord;
+import com.sane.router.network.tableRecords.AdjacencyRecord;
 import com.sane.router.support.factories.TableRecordFactory;
 
 import java.util.Observable;
@@ -45,14 +46,14 @@ public class BootLoader extends Observable
         UIManager uiManager = UIManager.getInstance();
 
         //Create_Observer_List____________________
-        addObserver(UIManager.getInstance());
+        addObserver(uiManager);
         addObserver(FrameLogger.getInstance());
         addObserver(LL1Daemon.getInstance());
         addObserver(LL2Daemon.getInstance());
         addObserver(ARPDaemon.getInstance());
         addObserver(uiManager.getTableUI());
         addObserver(uiManager.getSnifferUI());
-        addObserver(ARPDaemon.getInstance());
+        addObserver(Scheduler.getInstance());
 
         //Misc_Router_Setup____________________
         //(place holder)
