@@ -101,7 +101,7 @@ public class LL2PFrame implements Datagram
     {
         return type;
     }
-    public DatagramPayloadField getPayload()
+    public DatagramPayloadField getPayloadField()
     {
         return payload;
     }

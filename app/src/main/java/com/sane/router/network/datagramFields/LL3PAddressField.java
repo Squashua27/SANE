@@ -26,8 +26,7 @@ public class LL3PAddressField implements HeaderField
                         2*Constants.LL3P_ADDRESS_NETWORK_LENGTH),16);
 
         hostID = Integer.parseInt(ll3p.substring
-                (2*Constants.LL3P_ADDRESS_HOST_OFFSET,
-                        2*Constants.LL3P_ADDRESS_HOST_LENGTH),16);
+                (2*Constants.LL3P_ADDRESS_HOST_OFFSET),16);
 
         isSource = source;
     }

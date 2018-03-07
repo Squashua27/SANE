@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Creates an object responsible for the scheduling of tasks
- * that recur at after a regular time interval
+ * that occur at a regular time interval, spins off these tasks as threads
  *
  * @author Joshua Johnston
  */
@@ -19,10 +19,8 @@ public class Scheduler implements Observer
 {
     //Singleton Implementation
     private static final Scheduler ourInstance = new Scheduler();
-    public static Scheduler getInstance() {
-        return ourInstance;
-    }
-    private Scheduler(){}
+    public static Scheduler getInstance(){return ourInstance;}
+    private Scheduler(){} //empty constructor
 
     //Fields
     private ScheduledThreadPoolExecutor threadManager;//manages pool of threads
@@ -33,7 +31,7 @@ public class Scheduler implements Observer
     //Methods
 
     /**
-     * Required method of the Observer Class, Ensures non-operation until bootLoader prompt
+     * Required method of the Observer Interface, Ensures non-operation until bootLoader prompt
      *
      * @param observable - The observed object
      * @param object     - An object passed in by the triggering observable

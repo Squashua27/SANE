@@ -59,14 +59,13 @@ public class LL2Daemon implements Observer
             if (type.toHexString().equalsIgnoreCase(Constants.LL2P_TYPE_ARP_REQUEST_HEX))
             {
                 arpDemon.processARPRequest(source.getAddress(),
-                        ((ARPDatagram) frame.getPayload().getPayload()));
-                sendARPReply(source.getAddress());
-
+                        ((ARPDatagram) frame.getPayloadField().getPayload()));
+                //sendARPReply(source.getAddress());
             }
             if (type.toHexString().equalsIgnoreCase(Constants.LL2P_TYPE_ARP_REPLY_HEX))
             {
                 arpDemon.processARPReply(source.getAddress(),
-                        ((ARPDatagram) frame.getPayload().getPayload()));
+                        ((ARPDatagram) frame.getPayloadField().getPayload()));
             }
         }
     }
@@ -92,6 +91,8 @@ public class LL2Daemon implements Observer
                 + Constants.LL3P_ADDRESS
                 + "CC");
 
+        frame.getPayloadField().setPacket(new ARPDatagram(Constants.LL3P_ADDRESS,true));
+
         lesserDemon.sendFrame(frame);
     }
 
@@ -103,6 +104,8 @@ public class LL2Daemon implements Observer
                 + Constants.LL2P_TYPE_ARP_REPLY_HEX
                 + Constants.LL3P_ADDRESS
                 + "CC");
+
+        frame.getPayloadField().setPacket(new ARPDatagram(Constants.LL3P_ADDRESS,true));
 
         lesserDemon.sendFrame(frame);
     }

@@ -15,7 +15,7 @@ import com.sane.router.support.factories.HeaderFieldFactory;
 public class ARPDatagram implements Datagram
 {
     //Field
-    private LL3PAddressField ll3PAddressField;
+    private LL3PAddressField ll3PAddressField;//the only field of an ARP Datagram
 
     //Methods
     public ARPDatagram(String ll3p, boolean isSource)//Constructor
@@ -28,7 +28,7 @@ public class ARPDatagram implements Datagram
         ll3PAddressField = HeaderFieldFactory.getInstance().getItem(type,ll3p);
     }
 
-    public int getLL3PAddress(){return ll3PAddressField.getLL3PAddress();}
+    public int getLL3PAddress(){return ll3PAddressField.getLL3PAddress();}//typical getter
 
     //Datagram Interface Implementation
     @Override public String toHexString() {return ll3PAddressField.toHexString();}

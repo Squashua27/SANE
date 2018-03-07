@@ -17,8 +17,9 @@ public class Constants
 {
     public static final String IP_ADDRESS;//IP address in dotted decimal notation
     public static final String LL2P_ADDRESS = "B1A5ED";
-//    public static final int LL2P_ADDRESS_int = 127;
+    public static final int LL2P_ADDRESS_INT = 0xB1A5ED;
     public static final String LL3P_ADDRESS = "0901";
+    public static final int LL3P_ADDRESS_HEX = 0x0901;
     public static final int UDP_PORT = 49999;//our chosen port for communication
 
     //used in debugging messages or messages sent to the log file.
@@ -27,10 +28,10 @@ public class Constants
 
     //Schedule Management (times in seconds)
     public static final int THREAD_COUNT = 3;
-    public static final int ROUTER_BOOT_TIME = 3;
+    public static final int ROUTER_BOOT_TIME = 5;
     public static final int UI_UPDATE_INTERVAL = 1;
     public static final int ARP_UPDATE_INTERVAL = 5;
-    public static final int ARP_RECORD_TTL = 19;
+    public static final int ARP_RECORD_TTL = 10;
 
     //Datagram Constants (lengths and offsets in bytes)
     //Lengths (in bytes)

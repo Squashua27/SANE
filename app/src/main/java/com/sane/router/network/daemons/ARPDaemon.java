@@ -54,6 +54,12 @@ public class ARPDaemon extends Observable implements Observer, Runnable
     public Table getARPTable(){return  arpTable;}//standard getter
     public List<Record> getArpTableAsList(){return arpTable.getTableAsList();}//standard getter
 
+    /**
+     * Adds an ARP Record to the table, if the record already exists: touch() it
+     *
+     * @param ll2p - the layer 2 address of the record to add
+     * @param ll3p - the layer 3 address of the record to add
+     */
     private void addARPRecord(int ll2p, int ll3p)
     {
         Log.i(Constants.LOG_TAG, "\n\nAdding ARP Record, checking for matching key...\n\n");
@@ -77,6 +83,11 @@ public class ARPDaemon extends Observable implements Observer, Runnable
         notifyObservers();
     }
 
+    /**
+     * Returns the list of attached layer 3 addresses
+     *
+     * @return nodeList - the list of attached LL3P address nodes
+     */
     public List<Integer> getAttachedNodes()
     {
         List<Integer> nodeList = Collections.synchronizedList(new ArrayList<Integer>());
@@ -86,9 +97,17 @@ public class ARPDaemon extends Observable implements Observer, Runnable
         return nodeList;
     }
 
+    /**
+     * Processes an ARP request,
+     *
+     * @param ll2pAddress - sender layer 2 address
+     * @param arpDatagram - the datagram to process
+     */
     public void processARPRequest(int ll2pAddress, ARPDatagram arpDatagram)
     {
         addARPRecord(ll2pAddress,arpDatagram.getLL3PAddress());
+
+        ll2Demon.sendARPReply(ll2pAddress);
     }
 
     /**
@@ -128,10 +147,12 @@ public class ARPDaemon extends Observable implements Observer, Runnable
         arpTable.touch(27);
 
         arpTable.expireRecords(10);
+
+        ll2Demon.sendARPRequest(Constants.LL2P_ADDRESS_INT);
     }
 
     /**
-     * Required method of the Observer Class, Ensures non-operation until bootLoader prompt
+     * Required method of the Observer Interface, Ensures non-operation until bootLoader prompt
      *
      * @param observable - The observed object
      * @param object     - An object passed in by the triggering observable
@@ -144,6 +165,10 @@ public class ARPDaemon extends Observable implements Observer, Runnable
             factory = TableRecordFactory.getInstance();
         }
     }
+
+    /**
+     * Definitive method of the Runnable Interface, removes expired records at set interval
+     */
     @Override public void run()
     {
         List<Record> removedRecords = arpTable.expireRecords(Constants.ARP_RECORD_TTL);
