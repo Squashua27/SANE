@@ -38,7 +38,6 @@ public class LL2PAddressField implements HeaderField
         address = Integer.parseInt(newAddress,16);
         isSourceAddress = isSource;
     }
-
     /**
      * Typical getter method
      * @return int - the address as an integer
@@ -46,7 +45,6 @@ public class LL2PAddressField implements HeaderField
     public int getAddress() {
         return address;
     }
-
     /**
      * Returns the contents of the isSourceAddress field
      *
@@ -78,15 +76,6 @@ public class LL2PAddressField implements HeaderField
     public String toHexString()//the hex address field, pre-padding
     {
         return Integer.toHexString(address);
-
-        //char[] bytes = string.toCharArray();
-        //StringBuilder sb = new StringBuilder();
-        //for (int i = 0; i+2 < string.length(); i+=2)
-        //{
-        //    sb.append(String.format("%02X ", bytes[i]));
-        //}
-
-        //return sb.toString();
     }
     public String explainSelf()//the LL2P Address Field explains itself
     {
@@ -97,5 +86,4 @@ public class LL2PAddressField implements HeaderField
     {
         return Integer.toString(address).toUpperCase();
     }
-
 }

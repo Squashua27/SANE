@@ -23,7 +23,6 @@ public interface TableInterface
      * Adds a Record to the Table, throws exception on failure
      *
      * @param recordToAdd - Record to be added
-     *
      * @return TableRecord - the Record added
      */
     Record addItem(Record recordToAdd);
@@ -31,7 +30,6 @@ public interface TableInterface
      * Returns a Record matching the specified item, throws exception on failure
      *
      * @param recordToGet - the Record to search for and return
-     *
      * @return TableRecord - the found Record to be returned
      */
     Record getItem(Record recordToGet);
@@ -39,7 +37,6 @@ public interface TableInterface
      * Removes from table and returns a record matching a given key
      *
      * @param recordKey - key of the record to be removed
-     *
      * @return TableRecord -  the removed record, null if key not found
      */
     Record removeItem(Integer recordKey);

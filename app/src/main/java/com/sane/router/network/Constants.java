@@ -9,7 +9,7 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 /**
- * Contains universal constants
+ * Contains Universal Constants
  *
  * @author Joshua Johnston
  */
@@ -52,7 +52,6 @@ public class Constants
     public static final int LL3P_ADDRESS_NETWORK_OFFSET = 0;
     public static final int LL3P_ADDRESS_HOST_OFFSET = 1;
 
-
     //LL2P Type Designations
     public static final int LL2P_TYPE_LL3P = 0x8001;
     public static final int LL2P_TYPE_RESERVED = 0x8002;
@@ -83,7 +82,6 @@ public class Constants
     public static final int LL3P_DEST_DATAGRAM_PAYLOAD_FIELD = 6;
     public static final int LL3P_SOURCE_DATAGRAM_PAYLOAD_FIELD = 7;
     public static final int CRC_FIELD = 8;
-
     //Table Record Factory:
     public static final int RECORD = 0;
     public static final int ADJACENCY_RECORD = 1;
@@ -116,14 +114,12 @@ public class Constants
                 NetworkInterface intf = en.nextElement();
                 for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
                     InetAddress inetAddress = enumIpAddr.nextElement();
-                    if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
+                    if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address)
                         return inetAddress.getHostAddress();
-                    }
                 }
             }
-        } catch (SocketException ex) {
-            ex.printStackTrace();
         }
+        catch (SocketException ex) {ex.printStackTrace();}
         return null;
     }
 

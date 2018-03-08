@@ -24,7 +24,6 @@ public class AdjacencyTableUI extends SingleTableUI
     private LL1Daemon myPersonalDemon;//reference to the LL1 Daemon
 
     //Methods
-
     /**
      * A constructor, constructs Adjacency Table User Interface
      *
@@ -56,9 +55,7 @@ public class AdjacencyTableUI extends SingleTableUI
                     (recordToSend.getLL2PAddressAsTransmissionString()
                     + Constants.LL2P_ADDRESS
                     + Constants.LL2P_TYPE_ECHO_REQUEST_HEX
-                    + "(Echo request payload)" + "CC");
-
-            //myPersonalDemon.sendFrame(echoRequest); //send an echo request LL2P frame
+                    + "(Echo request payload)" + "CCCC");
 
             LL2Daemon.getInstance().sendEchoRequest(recordToSend.getLL2PAddressAsTransmissionString());
 
@@ -67,7 +64,6 @@ public class AdjacencyTableUI extends SingleTableUI
                     + echoRequest.toProtocolExplanationString() + " \n \n");
         }
     };
-
     /**
      * Allows a user to remove an Adjacency Record by long clicking
      * on the User Interface Adjacency Table

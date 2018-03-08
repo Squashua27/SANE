@@ -23,16 +23,17 @@ public class HeaderFieldFactory implements Factory<HeaderField, String>
     public static HeaderFieldFactory getInstance() {return ourInstance;}
     private HeaderFieldFactory(){}
 
+    //Methods
     /**
      * Interface factory method to create Header Field Objects
      *
      * @param type - the type to create (tracked as arbitrary Constants)
      * @param data - the data used to create the Header Field
-     *
      * @return <U extends HeaderField> - a nonspecific HeaderField created
      */
     public <U extends HeaderField> U getItem(int type, String data)
     {
+        Log.i(Constants.LOG_TAG, "\n\nGettin Type "+type+" HeaderField with data:"+data+"\n\n");
         if (type == Constants.LL2P_DEST_ADDRESS_FIELD)
             return (U) new LL2PAddressField(data, false);
         else if (type == Constants.LL2P_SOURCE_ADDRESS_FIELD)

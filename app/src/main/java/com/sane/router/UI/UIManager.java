@@ -25,19 +25,16 @@ public class UIManager implements Observer
 
     //Singleton_Implementation____________________
     private static final UIManager uiManager = new UIManager();//creates single instance
-    /**
-     * Constructor, constructs the objects managed by the UI Manager
-     */
-    private UIManager()
+    public static UIManager getInstance() {return uiManager;}//typical get method
+    private UIManager()//Constructor, builds UI elements to Manage
     {
         tableUI = new TableUI();
         snifferUI = new SnifferUI();
     }
-    public TableUI getTableUI(){return tableUI;} //Standard getter
-    public SnifferUI getSnifferUI(){return snifferUI;}//Standard getter
-    public static UIManager getInstance() {return uiManager;}//typical get method
 
     //Methods____________________
+    public TableUI getTableUI(){return tableUI;} //Standard getter
+    public SnifferUI getSnifferUI(){return snifferUI;}//Standard getter
     /**
      * displays a message
      *
@@ -47,7 +44,6 @@ public class UIManager implements Observer
     {
         displayMessage(message, Toast.LENGTH_LONG);
     }
-
     /**
      * displays a message for a duration
      *
@@ -58,12 +54,12 @@ public class UIManager implements Observer
     {
         Toast.makeText(context, message, duration).show();
     }
-
     /**
      * allows use of widgets, currently a place holder
      */
     private void setUpWidgets() {}
 
+    //Interface Implementation
     /**
      * necessary method of Observer class, sets up UI operations after notified to do so
      *

@@ -35,14 +35,10 @@ public class AddAdjacencyDialog extends DialogFragment
     }
 
     //Methods
-    /**
-     * The constructor: empty
-     */
-    public AddAdjacencyDialog()
+    public AddAdjacencyDialog()//Empty Constructor
     {
         Log.i(Constants.LOG_TAG,"\n \n Called AddAdjacencyDialog constructor... \n ");
     }
-
     /**
      * An Override of the required method - executed on creation of a view,
      * inflates a view and ties layout fields to corresponding Java classes
@@ -100,10 +96,8 @@ public class AddAdjacencyDialog extends DialogFragment
                 dismiss();
             }
         });
-
         return rootView;
     }
-
     /**
      * Override of the required method - executed on dialog creation, calls constructor
      *
@@ -113,10 +107,6 @@ public class AddAdjacencyDialog extends DialogFragment
     @Override public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         Log.i(Constants.LOG_TAG,"\n \n Creating AddAdjacency Dialog... \n ");
-
-        //AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        //builder.setTitle("Add Adjacency Dialog");
-        //builder.create();
         return super.onCreateDialog(savedInstanceState);
     }
 }

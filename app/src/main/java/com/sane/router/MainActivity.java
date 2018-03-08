@@ -12,7 +12,7 @@ import com.sane.router.network.Constants;
 import com.sane.router.support.BootLoader;
 
 /**
- * the main activity
+ * The main activity
  *
  * @author Joshua Johnston
  */
@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity implements AddAdjacencyDialo
         setContentView(R.layout.activity_main);
         new BootLoader(this); //loads classes to begin router operation
     }
-
     /**
      * override of the standard Java method - executed when the options menu is created
      *
@@ -36,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements AddAdjacencyDialo
         inflater.inflate(R.menu.main_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
     /**
      * override of the standard Java method - executes when an options menu item is selected
      *
@@ -55,8 +53,5 @@ public class MainActivity extends AppCompatActivity implements AddAdjacencyDialo
         }
         return super.onOptionsItemSelected(item);
     }
-    public void onFinishedEditDialog(String string1, String string2)
-    {
-        //ToDo: call LL1Daemon's addAdjacency method
-    }
+    public void onFinishedEditDialog(String string1, String string2){}
 }

@@ -29,17 +29,11 @@ public class ARPRecord extends Record
     }
     public ARPRecord(){ super(); }//null constructor
 
+    //Getters, Setters
     public int getLL2PAddress(){return ll2pAddress;}//standard getter
     public int getLL3PAddress(){return ll3pAddress;}//standard getter
     public void setLL2PAddress(int ll2p){ll2pAddress=ll2p;}//standard setter
     public void setLL3PAddress(int ll3p){ll3pAddress=ll3p;}//standard setter
-
-    public String toString()
-    {
-        return "LL2P Address: " + getLL2PAsString()
-            + " | LL3P Address: " + getLL3PAsString()
-            + " | age: " + getAgeInSeconds();
-    }
     public String getLL2PAsString()
     {
         return Integer.toHexString(ll2pAddress);
@@ -48,11 +42,18 @@ public class ARPRecord extends Record
     {
         return Integer.toHexString(ll3pAddress);
     }
+
+    //Interface Implementation
+    public String toString()
+    {
+        return "LL2P Address: " + getLL2PAsString()
+            + " | LL3P Address: " + getLL3PAsString()
+            + " | age: " + getAgeInSeconds();
+    }
     public String explainSelf()
     {
         return "\nLL2P Address:  " + getLL2PAsString()
                 + "\nLL3P Address:  " + getLL3PAsString()+"\n";
     }
-
     public int getKey(){return ll2pAddress;}//typical getter
 }

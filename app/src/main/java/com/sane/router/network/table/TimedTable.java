@@ -22,7 +22,6 @@ public class TimedTable extends Table
 {
     //Methods
     public TimedTable(){super();}//Constructor
-
     /**
      * Removes (expires) all table entries older than a given maximum age
      *
@@ -47,7 +46,6 @@ public class TimedTable extends Table
 
         return removedRecordList;
     }
-
     /**
      * Updates the age of the record matching a given key,
      * making the record 0 seconds old (Record.lastTimeTouched = 0)
@@ -70,7 +68,7 @@ public class TimedTable extends Table
         }
         //If no record matching the passed key is found, throw exception:
         new LabException("Failed to perform TimedTable.touch(key)");
-        Log.i(Constants.LOG_TAG, "\nRecord touching failure...\n\n");
+        Log.e(Constants.LOG_TAG, "\nRecord touching failure...\n\n");
         return false;
     }
 }

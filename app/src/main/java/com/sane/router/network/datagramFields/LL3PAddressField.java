@@ -1,10 +1,16 @@
 package com.sane.router.network.datagramFields;
 
 import com.sane.router.network.Constants;
+import com.sane.router.support.Utilities;
 
 /**
  * The LL3P Address Class of the HeaderField Interface,
- * holds an LL3P address, knows whether it is a source address
+ * holds an LL3P address, knows whether it is a source address,
+ * In transmission, looks like this:
+ *
+ *        _______________________________________
+ * offset|_________0_________|_________1_________|
+ *  0x00 |__Network_Address__|___Host_Address____|
  *
  * @author Joshua Johnston
  */
@@ -32,18 +38,26 @@ public class LL3PAddressField implements HeaderField
     }
     public int getLL3PAddress(){return address;}//Standard getter
 
-    //HeaderField Interface Implementation
+    //Interface Implementation
     @Override public String toTransmissionString()
     {
-        return Integer.toHexString(address);
+        return toHexString();
+    }
+    public String networkToHex()
+    {
+        return Utilities.padHexString(Integer.toHexString(hostID), Constants.LL3P_ADDRESS_HOST_LENGTH);
+    }
+    public String hostToHex()
+    {
+        return Utilities.padHexString(Integer.toHexString(networkID), Constants.LL3P_ADDRESS_NETWORK_LENGTH);
     }
     @Override public String toHexString()
     {
-        return Integer.toHexString(address);
+        return Utilities.padHexString(Integer.toHexString(address), Constants.LL3P_ADDRESS_LENGTH);
     }
     @Override public String explainSelf()
     {
-        return "LL3P Address: 0x" + Integer.toHexString(address)
+        return "LL3P Address: 0x" + toTransmissionString()
                 + "\nSource Address: " + isSource.toString();
     }
     @Override public String toASCIIString()

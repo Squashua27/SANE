@@ -29,7 +29,6 @@ public class Table extends Observable implements TableInterface
     {
         table = Collections.synchronizedList(new ArrayList<Record>());
     }
-
     @Override public String toString()
     {
         Iterator<Record> recordIterator = table.iterator();
@@ -41,7 +40,6 @@ public class Table extends Observable implements TableInterface
         new LabException("Failed to perform Record.getItem(recordToGet)");
         return returnString;
     }
-
     /**
      * Notifies observers of a change, called by all methods that touch the table
      */
@@ -50,7 +48,6 @@ public class Table extends Observable implements TableInterface
         setChanged();//notify Java of change
         notifyObservers();//trigger update method in observers
     }
-
     /**
      * Returns complete Table contents as a list of Records
      *
@@ -67,7 +64,6 @@ public class Table extends Observable implements TableInterface
      *
      * @return TableRecord - the TableRecord added
      */
-
     public Record addItem(Record recordToAdd)
     {
         synchronized (table)
@@ -79,7 +75,6 @@ public class Table extends Observable implements TableInterface
             return recordToAdd;
         }
     }
-
     /**
      * Returns a Record matching the specified item, throws exception on failure
      *
@@ -103,7 +98,6 @@ public class Table extends Observable implements TableInterface
             return null;
         }
     }
-
     /**
      * Finds and returns a record matching the given record key,
      * throws an exception if matching key is not found
@@ -131,7 +125,6 @@ public class Table extends Observable implements TableInterface
             return null;
         }
     }
-
     /**
      * Removes from table and returns a record matching a given key
      *
@@ -159,7 +152,6 @@ public class Table extends Observable implements TableInterface
             return null;
         }
     }
-
     /**
      * Removes from table and returns a record matching a given record
      *
@@ -187,7 +179,6 @@ public class Table extends Observable implements TableInterface
             return null;
         }
     }
-
     /**
      * Clears a Table, removes all TableRecords
      */

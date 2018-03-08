@@ -28,10 +28,10 @@ public class Scheduler implements Observer
     //private RPDaemon lrpDeamon; //TODO: creaate this class
     private TableUI tableUI; //private tableUI reference to keep tables updated
 
-    //Methods
-
+    //Interface Implementation
     /**
-     * Required method of the Observer Interface, Ensures non-operation until bootLoader prompt
+     * Required method of the Observer Interface, Ensures non-operation until bootLoader prompt,
+     * spins off schedule-controlled threads
      *
      * @param observable - The observed object
      * @param object     - An object passed in by the triggering observable

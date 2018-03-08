@@ -25,7 +25,6 @@ import java.util.Observer;
  *
  * @author Joshua Johnston
  */
-
 public class LL1Daemon extends Observable implements Observer
 {
     //Fields
@@ -83,15 +82,17 @@ public class LL1Daemon extends Observable implements Observer
      * Creates an AdjacencyRecord given an LL2P and an IP address,
      * adds the Record to the adjacency Table
      *
-     * @param LL2PAddress - LL2P address of the record to create
+     * @param ll2p - LL2P address of the record to create
      * @param ipAddress - IP address of the record to create
      */
-    public void addAdjacency(String LL2PAddress, String ipAddress)
+    public void addAdjacency(String ll2p, String ipAddress)
     {
         AdjacencyRecord newRecord = factory.getItem //create an Adjacency Record
-                (Constants.ADJACENCY_RECORD,LL2PAddress+ipAddress);
+                (Constants.ADJACENCY_RECORD,ll2p+ipAddress);
 
         adjacencyTable.addItem(newRecord); //add record to adjacency table
+
+        greaterDemon.sendARPRequest(Integer.valueOf(ll2p,16));
 
         setChanged();//notify observers of change to the adjacency list
         notifyObservers(newRecord);
@@ -111,7 +112,7 @@ public class LL1Daemon extends Observable implements Observer
 
         return adjacencyTable;
     }
-    public Table removeAdjacency(String ll2pAddress)
+    public Table removeAdjacency(String ll2pAddress) //^overload
     {
         adjacencyTable.removeItem(Integer.valueOf(ll2pAddress,16));
 
@@ -128,6 +129,7 @@ public class LL1Daemon extends Observable implements Observer
      */
     public void sendFrame(LL2PFrame ll2pFrame)
     {
+        Log.i(Constants.LOG_TAG, "\n\nSending Frame...\n\n");
         //Construct the DatagramPacket Type object to be sent by argument
         byte[] packet = ll2pFrame.toTransmissionString().getBytes();
         int packetLength = ll2pFrame.toTransmissionString().length();
@@ -141,6 +143,8 @@ public class LL1Daemon extends Observable implements Observer
                 (packet, packetLength, IPAddress, Constants.UDP_PORT);
 
         new SendLayer1Frame().execute(sendPacket);//spin off thread using SendLayer1Frame
+
+        Log.i(Constants.LOG_TAG, "\n\n... Frame sent.\n\n");
 
         setChanged();//notify observers of change to frame data
         notifyObservers(ll2pFrame);//send the frame so that observers know what changed

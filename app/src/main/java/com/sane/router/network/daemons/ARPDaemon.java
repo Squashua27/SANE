@@ -38,6 +38,12 @@ public class ARPDaemon extends Observable implements Observer, Runnable
     }
 
     //Methods
+    /**
+     * Performs a Table look-up of an LL2P Address
+     *
+     * @param ll3p - The associated layer 3 address
+     * @return ll3p address - the located LL2P(MAC) address
+     */
     public int getMacAddress(int ll3p)
     {
         for (Record arpRecord : arpTable.getTableAsList())
@@ -50,10 +56,8 @@ public class ARPDaemon extends Observable implements Observer, Runnable
         }
         return -1;
     }
-
     public Table getARPTable(){return  arpTable;}//standard getter
     public List<Record> getArpTableAsList(){return arpTable.getTableAsList();}//standard getter
-
     /**
      * Adds an ARP Record to the table, if the record already exists: touch() it
      *
@@ -82,7 +86,6 @@ public class ARPDaemon extends Observable implements Observer, Runnable
         setChanged();//notify observers of change to the adjacency list
         notifyObservers();
     }
-
     /**
      * Returns the list of attached layer 3 addresses
      *
@@ -96,31 +99,30 @@ public class ARPDaemon extends Observable implements Observer, Runnable
 
         return nodeList;
     }
-
     /**
-     * Processes an ARP request,
+     * Processes an ARP request, adding (or touching) a Table Record and sending a reply
      *
      * @param ll2pAddress - sender layer 2 address
      * @param arpDatagram - the datagram to process
      */
     public void processARPRequest(int ll2pAddress, ARPDatagram arpDatagram)
     {
+        Log.i(Constants.LOG_TAG, "\n\nARP Daemon processing request...\n\n");
         addARPRecord(ll2pAddress,arpDatagram.getLL3PAddress());
 
         ll2Demon.sendARPReply(ll2pAddress);
     }
-
     /**
-     * Processes an ARP Reply
+     * Processes an ARP Reply, updating the Record Table
      *
      * @param ll2pAddress - the LL2P Address to touch/add
      * @param arpDatagram - contains the related LL3P address
      */
     public void processARPReply(int ll2pAddress, ARPDatagram arpDatagram)
     {
+        Log.i(Constants.LOG_TAG, "\n\nARP Daemon processing reply...\n\n");
         addARPRecord(ll2pAddress,arpDatagram.getLL3PAddress());
     }
-
     /**
      * A function to test the fields and methods of classes pertaining to the
      * Address Resolution Protocol, called from the BootLoader while debugging
@@ -150,7 +152,7 @@ public class ARPDaemon extends Observable implements Observer, Runnable
 
         ll2Demon.sendARPRequest(Constants.LL2P_ADDRESS_INT);
     }
-
+    //Interface Implementation
     /**
      * Required method of the Observer Interface, Ensures non-operation until bootLoader prompt
      *
@@ -165,7 +167,6 @@ public class ARPDaemon extends Observable implements Observer, Runnable
             factory = TableRecordFactory.getInstance();
         }
     }
-
     /**
      * Definitive method of the Runnable Interface, removes expired records at set interval
      */

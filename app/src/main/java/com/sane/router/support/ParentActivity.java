@@ -10,8 +10,10 @@ import android.app.Activity;
  */
 public class ParentActivity
 {
+    //Fields
     private static Activity parentActivity; //the reference to the parent activity
 
+    //Methods
     /**
      * typical get method, returns parentActivity
      *
@@ -21,7 +23,6 @@ public class ParentActivity
     {
         return parentActivity;
     }
-
     /**
      * typical set method, sets parentActivity
      *

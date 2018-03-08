@@ -54,14 +54,15 @@ public class AdjacencyRecord extends Record
     public String getIPAddressAsTransmissionString()
     {
         return IPAddress.toString();
-    }
+    }//Getter
     public void setIPAddress(InetAddress ipaddress)
     {
         IPAddress = ipaddress;
-    }
-
+    }//Setter
     /**
      * Overridden method, outputs a single-line summary of
+     *
+     * @return String - A descriptive string
      */
     @Override public String toString()
     {
@@ -81,7 +82,6 @@ public class AdjacencyRecord extends Record
     {
         return LL2PAddress;
     }
-
     /**
      * Overridden Interface method,
      * Age not applicable to Adjacency Records, return 0

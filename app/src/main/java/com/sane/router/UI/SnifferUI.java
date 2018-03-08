@@ -43,7 +43,6 @@ public class SnifferUI implements Observer
 
     //Methods
     public SnifferUI() {} //empty constructor
-
     /**
      * sets up adaptor, ListView and TextViews
      */
@@ -58,7 +57,6 @@ public class SnifferUI implements Observer
         frameListView.setOnItemClickListener(showClickedFrame);
 
     }
-
     private AdapterView.OnItemClickListener showClickedFrame = new AdapterView.OnItemClickListener()
     {
         @Override public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
@@ -74,6 +72,7 @@ public class SnifferUI implements Observer
         }
     };
 
+    //Interface Implementation
     /**
      * The necessary method of the Observer interface, constructs class at the
      * prompting of the boot loader, updates UI when triggered by the frame logger
@@ -114,7 +113,6 @@ public class SnifferUI implements Observer
     private class SnifferFrameListAdapter extends ArrayAdapter<LL2PFrame>
     {
         private ArrayList<LL2PFrame> frameList;//the ArrayList displayed by ListView rows.
-
         /*
         *  The constructor is passed the context and the arrayList.
         *  the arrayList is assigned to the local variable so its contents can be
@@ -128,6 +126,7 @@ public class SnifferUI implements Observer
         /**
          * Here is where the work is performed to adapt a specific row in the arrayList to
          * a row on the screen.
+         *
          * @param position  - position in the array we're working with
          * @param convertView - a row View that passed in – has a view to use or a null object
          * @param parent - the main view that contains the rows.  Note that is is the ListView object.
@@ -141,8 +140,8 @@ public class SnifferUI implements Observer
             ViewHolder viewHolder;
 
             /**
-             * If convertView is null then we didn't get a recycled View, we have to create from scratch.
-             * We do that here.
+             * If convertView is null then we didn't get a recycled View,
+             * we have to create from scratch.  We do that here.
              */
             if (convertView == null)
             {
@@ -159,6 +158,5 @@ public class SnifferUI implements Observer
             viewHolder.packetSummaryString.setText(frameList.get(position).toSummaryString());
             return convertView;
         }
-
     }
 }

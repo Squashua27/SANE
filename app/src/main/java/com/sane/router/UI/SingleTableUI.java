@@ -27,7 +27,6 @@ public class SingleTableUI implements Observer
     private ArrayAdapter arrayAdapter; //adapts the table for the ListView widget
 
     //Methods
-
     /**
      * Single Table UI Constructor, constructs Table management objects and connects
      * them to their corresponding Table User Interface widgets, keeps connected objects
@@ -53,6 +52,7 @@ public class SingleTableUI implements Observer
         table.addObserver(this);//Tells the table to observe (this o) for calls to update
     }
 
+    //Interface Implementation
     /**
      * Required method of the observer class, called by table object upon
      * change to table data
@@ -61,7 +61,6 @@ public class SingleTableUI implements Observer
      * @param object - an object passed by the triggering observed object
      */
     @Override public void update(Observable observable, Object object) {updateView();}
-
     /**
      * Reloads the array and updates the on-screen table
      */

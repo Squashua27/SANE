@@ -11,7 +11,6 @@ public class TextDatagram implements Datagram
     private String payload;
 
     //Methods
-
     /**
      * Typical constructor method, creates a Text datagram given text
      *
@@ -27,12 +26,12 @@ public class TextDatagram implements Datagram
     public TextDatagram()
     {
         payload = "(Text Datagram)";
-    }
+    } //the default Text Datagram
     public String getPayload() //Typical get method
     {
         return payload;
     }
-    public String setPayload(String text) //Typical set method
+    public String setTextPayload(String text) //Typical set method
     {
         payload = text;
         return null;

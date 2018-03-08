@@ -61,10 +61,8 @@ public class IPAddressGetter
         {
             returnAddress = thread.get(2000, TimeUnit.MILLISECONDS);
             Log.d(Constants.LOG_TAG, " -- Results received.  return address = "+returnAddress.toString());
-        } catch (Exception e)
-        {
-            e.printStackTrace();
         }
+        catch (Exception e) {e.printStackTrace();}
         return returnAddress;
     }
 
@@ -78,21 +76,15 @@ public class IPAddressGetter
      *
      * @author Pat Smith, professor of Oklahoma Christian University
      */
-    private class ThreadedNameServer extends AsyncTask<String, Void, InetAddress> {
-
-        /*
-     *   The doInBackground is where the work is done. All of this is simply
-    *    to call the getByName off the UI thread!
-         */
-        @Override
-        protected InetAddress doInBackground(String... name) {
+    private class ThreadedNameServer extends AsyncTask<String, Void, InetAddress>
+    {
+        //The doInBackground is where the work is done. All of this is simply
+        //to call the getByName off the UI thread!
+        @Override protected InetAddress doInBackground(String... name)
+        {
             InetAddress address = null;
-            try {
-
-                address = InetAddress.getByName(name[0]);
-            } catch (UnknownHostException e){
-                e.printStackTrace();
-            }
+            try {address = InetAddress.getByName(name[0]);}
+            catch (UnknownHostException e){e.printStackTrace();}
             return address;
         }
     }

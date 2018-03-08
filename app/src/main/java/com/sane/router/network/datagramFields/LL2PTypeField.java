@@ -1,5 +1,7 @@
 package com.sane.router.network.datagramFields;
 
+import android.util.Log;
+
 import com.sane.router.network.Constants;
 import com.sane.router.support.Utilities;
 
@@ -23,6 +25,7 @@ public class LL2PTypeField implements HeaderField
     public LL2PTypeField(int typeValue)
     {
         type = typeValue;
+        Log.i(Constants.LOG_TAG, "\n\n"+ explainSelf() +"\n\n");
     }
     /**
      * A typical constructor
@@ -34,7 +37,7 @@ public class LL2PTypeField implements HeaderField
         type = Integer.parseInt(string, 16);
     }
     /**
-     * Sets an explanation descriptive of this class
+     * Sets an explanation descriptive of the Type Field content and implications
      */
     private void setExplanation()
     {

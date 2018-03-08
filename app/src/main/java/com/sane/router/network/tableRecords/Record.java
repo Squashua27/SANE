@@ -3,7 +3,7 @@ package com.sane.router.network.tableRecords;
 import com.sane.router.support.Utilities;
 
 /**
- * The base class of all table classes,
+ * The base class of all table Class objects,
  * implements the TableRecord interface
  *
  * @author Joshua Johnston

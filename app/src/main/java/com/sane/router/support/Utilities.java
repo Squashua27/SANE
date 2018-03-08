@@ -30,7 +30,6 @@ public class Utilities
         }
         return string;// return zero-padded string
     }
-
     /**
      * Formats a hex string for output to a hex dump display
      *

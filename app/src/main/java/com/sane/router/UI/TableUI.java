@@ -28,12 +28,12 @@ public class TableUI implements Runnable, Observer
     //private SingleTableUI forwardingUI;
 
     //Methods
-
     /**
      * Empty constructor, UI objects are built after the router is booted
      */
     public void TableUI(){}
 
+    //Interface Implementation
     /**
      * Runs once per second to keep tables current
      */
@@ -43,7 +43,6 @@ public class TableUI implements Runnable, Observer
         //routingTable.updateView();
         //forwardingTable.updateView();
     }
-
     /**
      * Suspends operation until the update call is received from the bootLoader
      *

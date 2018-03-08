@@ -1,4 +1,6 @@
 package com.sane.router.network.datagram;
+import android.util.Log;
+
 import com.sane.router.network.Constants;
 import com.sane.router.network.datagramFields.CRCField;
 import com.sane.router.network.datagramFields.DatagramPayloadField;
@@ -37,7 +39,7 @@ public class LL2PFrame implements Datagram
      */
     public LL2PFrame()
     {
-        makeFrame("F1A5C0B1A5ED8008(text datagram)CC");
+        makeFrame("F1A5C0B1A5ED8008(text datagram)CCCC");
     }
     /**
      * The constructor generally used to make an LL2PFrame
@@ -46,58 +48,72 @@ public class LL2PFrame implements Datagram
      */
     public LL2PFrame(String frame)
     {
+        Log.i(Constants.LOG_TAG, "\n\nConstructing a frame with default text payload...\n\n");
         makeFrame(frame);
         makePayloadField(frame);
     }
-
+    /**
+     * Constructor to frame a preconstructed datagram
+     *
+     * @param frame - The data with with to construct a frame
+     * @param packet - The packet to frame
+     */
     public LL2PFrame(String frame, Datagram packet)
     {
+        Log.i(Constants.LOG_TAG, "\n\nConstructing a frame with around input packet...\n\n");
         makeFrame(frame);
-        payload.setPacket(packet);
+        payload = new DatagramPayloadField(packet);
     }
     /**
-     * Method of the constructor, general and default
+     * Method of the constructor, constructs the simpler fields - all but the payload
      *
-     * @param frame - a frame of the LL2P
+     * @param data - The data with which to construct the frame
      */
-    private void makeFrame(String frame)
+    private void makeFrame(String data)
     {
         destinationAddress = HeaderFieldFactory.getInstance().getItem
                 (Constants.LL2P_DEST_ADDRESS_FIELD,
-                frame.substring(2*Constants.LL2P_DEST_ADDRESS_OFFSET,
+                data.substring(2*Constants.LL2P_DEST_ADDRESS_OFFSET,
                 2*Constants.LL2P_DEST_ADDRESS_OFFSET + 2*Constants.LL2P_ADDRESS_LENGTH));
 
         sourceAddress = HeaderFieldFactory.getInstance().getItem
                 (Constants.LL2P_SOURCE_ADDRESS_FIELD,
-                frame.substring(2*Constants.LL2P_SOURCE_ADDRESS_OFFSET,
+                data.substring(2*Constants.LL2P_SOURCE_ADDRESS_OFFSET,
                 2*Constants.LL2P_SOURCE_ADDRESS_OFFSET + 2*Constants.LL2P_ADDRESS_LENGTH));
 
         type = HeaderFieldFactory.getInstance().getItem
                 (Constants.LL2P_TYPE_FIELD,
-                frame.substring(2*Constants.LL2P_TYPE_FIELD_OFFSET,
+                data.substring(2*Constants.LL2P_TYPE_FIELD_OFFSET,
                 2*Constants.LL2P_TYPE_FIELD_OFFSET + 2*Constants.LL2P_TYPE_FIELD_LENGTH));
 
         crc = HeaderFieldFactory.getInstance().getItem
                 (Constants.CRC_FIELD,
-                frame.substring(frame.length() - Constants.LL2P_CRC_FIELD_LENGTH));
+                data.substring(data.length() - Constants.LL2P_CRC_FIELD_LENGTH*2));
     }
     /**
-     * Makes a datagram payload field
+     * Constructs and populates the payload field when the constructor is given a string
      *
      * @return DatagramPayloadField - the payload of a datagram
      */
     private DatagramPayloadField makePayloadField(String frame)
     {
-        payload = HeaderFieldFactory.getInstance().getItem
-                (Constants.LL2P_TEXT_PAYLOAD_FIELD,
-                frame.substring
+        String data = frame.substring
                 (2*Constants.LL2P_PAYLOAD_OFFSET,
-                frame.length()
-                - Constants.LL2P_CRC_FIELD_LENGTH));
+                frame.length() - 2*Constants.LL2P_CRC_FIELD_LENGTH);
+
+        if (type.toTransmissionString().equalsIgnoreCase(Constants.LL2P_TYPE_ARP_REQUEST_HEX)
+                || type.toTransmissionString().equalsIgnoreCase(Constants.LL2P_TYPE_ARP_REPLY_HEX))
+        {
+            //TODO: How do I know whether I'm sending a reply or request?
+            payload = HeaderFieldFactory.getInstance().getItem(Constants.LL3P_SOURCE_DATAGRAM_PAYLOAD_FIELD,data);
+        }
+        else
+            payload = HeaderFieldFactory.getInstance().getItem(Constants.LL2P_TEXT_PAYLOAD_FIELD,data);
 
         return payload;
     }
-    //Getters (We know what these do.)
+
+    //Getters
     public LL2PAddressField getDestinationAddress()
     {
         return destinationAddress;

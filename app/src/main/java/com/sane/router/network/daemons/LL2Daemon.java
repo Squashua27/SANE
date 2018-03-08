@@ -1,5 +1,7 @@
 package com.sane.router.network.daemons;
 
+import android.util.Log;
+
 import com.sane.router.UI.UIManager;
 import com.sane.router.network.Constants;
 import com.sane.router.network.datagram.ARPDatagram;
@@ -11,9 +13,10 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * Created by Joshua Johnston on 2/20/2018.
+ * The Layer 2 Daemon, responsible for framing and node-to-node frame transmission
+ *
+ * @author Joshua Johnston
  */
-
 public class LL2Daemon implements Observer
 {
     //Fields
@@ -29,7 +32,6 @@ public class LL2Daemon implements Observer
     private LL2Daemon(){}
 
     //Methods
-
     /**
      * Receives an LL2P Frame and responds in accordance with the frame type
      *
@@ -37,77 +39,94 @@ public class LL2Daemon implements Observer
      */
     public void processLL2PFrame(LL2PFrame frame)
     {
+        Log.i(Constants.LOG_TAG, "\n\nProcessing LL2P frame...\n\n");
         LL2PTypeField type = frame.getType();
         LL2PAddressField dest = frame.getDestinationAddress();
         LL2PAddressField source = frame.getSourceAddress();
 
         if (dest.toString().equalsIgnoreCase(Constants.LL2P_ADDRESS)) //Is this frame for me?
         {
+            Log.i(Constants.LOG_TAG, "\n\n... It's for me!\n\n");
             //TODO: check CRCField
-
-            if (type.toHexString().equalsIgnoreCase(Constants.LL2P_TYPE_ECHO_REQUEST_HEX) ||
-                    type.toHexString().equalsIgnoreCase(Constants.LL2P_TYPE_TEXT_HEX) )
+            if (type.toHexString().equalsIgnoreCase(Constants.LL2P_TYPE_ECHO_REQUEST_HEX))
             {
+                Log.i(Constants.LOG_TAG, "\n\nProcessing LL2P Echo Request...\n\n");
                 LL2PFrame echoReply = new LL2PFrame
                         (source.toTransmissionString()
                         + Constants.LL2P_ADDRESS
                         + Constants.LL2P_TYPE_ECHO_REPLY_HEX
-                        + "CC");
+                        + "CCCC");
 
                 lesserDemon.sendFrame(echoReply);
             }
             if (type.toHexString().equalsIgnoreCase(Constants.LL2P_TYPE_ARP_REQUEST_HEX))
             {
+                Log.i(Constants.LOG_TAG, "\n\nProcessing LL2P ARP Request...\n\n");
                 arpDemon.processARPRequest(source.getAddress(),
-                        ((ARPDatagram) frame.getPayloadField().getPayload()));
+                        ((ARPDatagram) (frame.getPayloadField().getPayload())));
                 //sendARPReply(source.getAddress());
             }
             if (type.toHexString().equalsIgnoreCase(Constants.LL2P_TYPE_ARP_REPLY_HEX))
             {
+                Log.i(Constants.LOG_TAG, "\n\nProcessing LL2P ARP Reply...\n\n");
                 arpDemon.processARPReply(source.getAddress(),
-                        ((ARPDatagram) frame.getPayloadField().getPayload()));
+                        ((ARPDatagram) (frame.getPayloadField().getPayload())));
             }
         }
     }
-
-    public void sendEchoRequest(String LL2PAddress)
+    /**
+     * Builds and sends an Echo Request Text Frame
+     *
+     * @param ll2p - The destination address
+     */
+    public void sendEchoRequest(String ll2p)
     {
         LL2PFrame echoRequest = new LL2PFrame
-                (LL2PAddress
+                (ll2p
                 + Constants.LL2P_ADDRESS
-                + Constants.LL2P_TYPE_TEXT_HEX
+                + Constants.LL2P_TYPE_ECHO_REQUEST_HEX
                 + "This sentence is a text payload."
-                + "CC");
+                + "CCCC");
 
         lesserDemon.sendFrame(echoRequest);
     }
-
+    /**
+     * Builds an ARP request frame around an ARP Datagram and sends it
+     *
+     * @param ll2p - The destination address
+     */
     public void sendARPRequest(int ll2p)
     {
+        Log.i(Constants.LOG_TAG, "\n\nSending ARP Request to address"+Integer.toHexString(ll2p)+"...\n\n");
         LL2PFrame frame = new LL2PFrame
                 (Integer.toHexString(ll2p)
                 + Constants.LL2P_ADDRESS
                 + Constants.LL2P_TYPE_ARP_REQUEST_HEX
                 + Constants.LL3P_ADDRESS
-                + "CC",
+                + "CCCC",
                 new ARPDatagram(Constants.LL3P_ADDRESS, true));
 
         lesserDemon.sendFrame(frame);
     }
-
+    /**
+     * Builds an ARP Reply frame around an ARP Datagram and sends it
+     *
+     * @param ll2p - The destination address
+     */
     public void sendARPReply(int ll2p)
     {
+        Log.i(Constants.LOG_TAG, "\n\nSending ARP Reply to address"+Integer.toHexString(ll2p)+"...\n\n");
         LL2PFrame frame = new LL2PFrame
                 (Integer.toHexString(ll2p)
                 + Constants.LL2P_ADDRESS
                 + Constants.LL2P_TYPE_ARP_REPLY_HEX
                 + Constants.LL3P_ADDRESS
-                + "CC",
+                + "CCCC",
                 new ARPDatagram(Constants.LL3P_ADDRESS, true));
 
         lesserDemon.sendFrame(frame);
     }
-
+    //Interface Implementation
     /**
      * Required method of Observer classes, triggered by bootLoader, constructs self
      *

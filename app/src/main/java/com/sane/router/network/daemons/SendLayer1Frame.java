@@ -23,6 +23,8 @@ public class SendLayer1Frame extends AsyncTask<DatagramPacket,Void,Void>
     //Methods
     /**
      * The background activity of the SendLayer1Frame class
+     *
+     * @param arg0 - The Datagram object to transmit
      */
     @Override protected Void doInBackground(DatagramPacket...arg0)
     {

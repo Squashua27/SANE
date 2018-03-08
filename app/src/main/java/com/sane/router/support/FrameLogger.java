@@ -29,7 +29,6 @@ public class FrameLogger extends Observable implements Observer
 
     //Methods
     public ArrayList<LL2PFrame> getFrameList(){return frameList;}//standard getter
-
     /**
      * The necessary Observer method, becomes Observable on bootLoader prompt,
      * notifies own Observers of change upon receiving & adding LL2P frame
@@ -48,5 +47,4 @@ public class FrameLogger extends Observable implements Observer
             notifyObservers();
         }
     }
-
 }

@@ -17,13 +17,13 @@ import com.sane.router.support.factories.TableRecordFactory;
 import java.util.Observable;
 
 /**
- * creates classes, notifies classes when to begin operations
+ * Creates Classes, notifies classes when to begin operations (Boots router)
  *
  * @author Joshua Johnston
  */
 public class BootLoader extends Observable
 {
-    //METHODS____________________
+    //Methods
     /**
      * constructor, calls "bootRouter"
      *
@@ -33,7 +33,6 @@ public class BootLoader extends Observable
     {
         bootRouter(parentActivity); //boots the router
     }
-
     /**
      * instantiates other Router classes, adds them as observers, and notifies them to operate
      *
@@ -41,11 +40,11 @@ public class BootLoader extends Observable
      */
     private void bootRouter(Activity parentActivity)
     {
-        //Instantiate_Router_Classes____________________
+        //Instantiate Router Classes
         ParentActivity.setParentActivity(parentActivity);
         UIManager uiManager = UIManager.getInstance();
 
-        //Create_Observer_List____________________
+        //Create Observer List
         addObserver(uiManager);
         addObserver(FrameLogger.getInstance());
         addObserver(LL1Daemon.getInstance());
@@ -55,30 +54,26 @@ public class BootLoader extends Observable
         addObserver(uiManager.getSnifferUI());
         addObserver(Scheduler.getInstance());
 
-        //Misc_Router_Setup____________________
-        //(place holder)
-
-        //Notify_Observers____________________
+        //Notify Observers
         setChanged();//notify Java of change
         notifyObservers();//trigger update method in observers
 
-        //Output____________________
+        //Output
         uiManager.displayMessage(Constants.ROUTER_NAME + " is up and running!");
 
-        //Testing____________________
-        test();
-        ARPDaemon.getInstance().testARP();
+        //Testing
+        test(); //Test of BootLoader and other early classes
+        ARPDaemon.getInstance().testARP(); //Test of ARP structures and methods
     }
-
     /**
-     * Runs testing for debugging and quality control
+     * Runs various tests for debugging and quality control
      */
     private void test()
     {
-        //Lab_3_Test____________________
+        //Test: Lab 3
         /**
         //Test: Create an LL2P frame, tests Classes and Header Factory
-        LL2PFrame packet = new LL2PFrame("F1A5C0B1A5ED8008(text datagram)CC");
+        LL2PFrame packet = new LL2PFrame("F1A5C0B1A5ED8008(text datagram)CCCC");
         Log.i(Constants.LOG_TAG," \n \n"+packet.toProtocolExplanationString()+" \n \n");
 
         //Test: Create an adjacency record, tests Classes and Table Record Factory
@@ -91,7 +86,7 @@ public class BootLoader extends Observable
         Log.i(Constants.LOG_TAG, " \n" + record.toString() + " \n \n");
          */
 
-        //Lab_4_Test____________________
+        //Test: Lab 4
         //Test: Create various adjacency records
         Log.i(Constants.LOG_TAG,"\n \n Test: Adjacency Record Class~~~~~~~~~~~~~~~~~~~~\n ");
         AdjacencyRecord record0 = TableRecordFactory.getInstance().getItem
@@ -139,10 +134,11 @@ public class BootLoader extends Observable
                 + myPersonalDemon.getAdjacencyTable().toString());
 
         //Test: Use the mirror
+        Log.i(Constants.LOG_TAG, "\n\nTesting with mirror...\n\n");
+        Log.i(Constants.LOG_TAG, "\n\nJust kidding... Only talking to myself...\n\n");
         myPersonalDemon.addAdjacency("112233","10.30.92.154");
-        LL2PFrame frame = new LL2PFrame("112233B1A5ED8008(text datagram)CC");
+        LL2PFrame frame = new LL2PFrame("112233B1A5ED8008(text datagram)CCCC");
         //Send a packet to the mirror:
         myPersonalDemon.sendFrame(frame);
     }
 }
-

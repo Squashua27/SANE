@@ -12,7 +12,7 @@ import com.sane.router.support.Utilities;
 public class CRCField implements HeaderField
 {
     //Fields
-    private String CRCValue; //CRCField stored as ASCII
+    private String crcValue; //CRCField stored as HEX
 
     //Methods
     /**
@@ -22,34 +22,38 @@ public class CRCField implements HeaderField
      */
     public CRCField(String typeValueString)
     {
-        CRCValue = typeValueString.substring(0, Constants.LL2P_CRC_FIELD_LENGTH);
+        crcValue = typeValueString.substring(0, Constants.LL2P_CRC_FIELD_LENGTH*2);
     }
-
     //Interface Implementation (see interface documentation)
     @Override public String toString()//returns CRCField value as is
     {
-        return CRCValue;
+        return crcValue;
     }
     public String toTransmissionString()//what the CRCField field looks like in transit
     {
-        return Utilities.padHexString(CRCValue, Constants.LL2P_CRC_FIELD_LENGTH);
+        return toHexString();
     }
     public String toHexString()//the hex CRCField field, pre-padding
     {
-        String returnString = "";
-        StringBuilder builder = new StringBuilder();
-        for (int index = 0; index < CRCValue.length(); index++)
-        {
-            builder.append(Integer.toHexString(CRCValue.charAt(index)));
-        }
-        return builder.toString();
+        return Utilities.padHexString(crcValue, Constants.LL2P_CRC_FIELD_LENGTH);
     }
     public String explainSelf()//the CRCField Field explains itself
     {
-        return "CRCField Value: " + CRCValue;
+        return "CRCField Value: " + crcValue;
     }
     public String toASCIIString()//necessary interface function, not very useful here
     {
-        return CRCValue;
+        String hex = crcValue;
+        StringBuilder ASCII = new StringBuilder();
+        //formatting per ASCII char
+        for (int i = 0; i < hex.length(); i+=2)
+        {
+            String str = hex.substring(i, i+2);
+            if (32<=Integer.parseInt(str,16) && Integer.parseInt(str,16)<=126)
+                ASCII.append((char)Integer.parseInt(str, 16));
+            else
+                ASCII.append(".");
+        }
+        return ASCII.toString();
     }
 }

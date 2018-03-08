@@ -15,18 +15,19 @@ import com.sane.router.network.tableRecords.TableRecord;
  */
 public class TableRecordFactory implements Factory<TableRecord, String>
 {
+    //Singleton Implementation
     private static final TableRecordFactory ourInstance = new TableRecordFactory();
     public static TableRecordFactory getInstance() {
         return ourInstance;
     }
     private TableRecordFactory(){}
 
+    //Methods
     /**
      * Interface factory method to create Header Field Objects
      *
      * @param type - the type to create (tracked as arbitrary Constants)
      * @param data - the data used to create a Table Record
-     *
      * @return <U extends TableRecord> - nonspecific created TableRecord
      */
     public <U extends TableRecord> U getItem(int type, String data)
@@ -41,5 +42,4 @@ public class TableRecordFactory implements Factory<TableRecord, String>
         Log.e(Constants.LOG_TAG, "Error in TableRecordFactory");
         return null;
     }
-
 }

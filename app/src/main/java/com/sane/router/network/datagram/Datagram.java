@@ -1,26 +1,26 @@
 package com.sane.router.network.datagram;
 
 /**
- * Interface to be implemented by all datagrams
+ * Interface to be implemented by all Datagram classes
  *
  * @author Joshua Johnston
  */
 public interface Datagram
 {
     /**
-     * Returns datagram field contents as string suitable for transmission
+     * Returns datagram field contents as a string
      *
-     * @return String - datagram contents as string
+     * @return String - datagram contents as a string
      */
     @Override String toString();
     /**
-     * Returns datagram field contents as hex string - often used by snifferUI
+     * Returns Datagram field contents as a hex string - often used by snifferUI
      *
-     * @return String - datagram contents as hex string
+     * @return String - datagram contents as a hex string
      */
     String toHexString();
     /**
-     * Returns a string containing a complete description of all datagram fields,
+     * Returns a string containing a complete description of all Datagram Fields,
      * also displays encapsulated datagrams as applicable
      *
      * @return String - datagram explanation as a string
@@ -40,7 +40,4 @@ public interface Datagram
      * @return String - complete datagram ready for transmission
      */
     String toTransmissionString();
-
-
-
 }
