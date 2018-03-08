@@ -47,6 +47,13 @@ public class LL2PFrame implements Datagram
     public LL2PFrame(String frame)
     {
         makeFrame(frame);
+        makePayloadField(frame);
+    }
+
+    public LL2PFrame(String frame, Datagram packet)
+    {
+        makeFrame(frame);
+        payload.setPacket(packet);
     }
     /**
      * Method of the constructor, general and default
@@ -70,11 +77,6 @@ public class LL2PFrame implements Datagram
                 frame.substring(2*Constants.LL2P_TYPE_FIELD_OFFSET,
                 2*Constants.LL2P_TYPE_FIELD_OFFSET + 2*Constants.LL2P_TYPE_FIELD_LENGTH));
 
-        payload = HeaderFieldFactory.getInstance().getItem
-                (Constants.LL2P_PAYLOAD_FIELD,
-                frame.substring(2*Constants.LL2P_PAYLOAD_OFFSET,
-                frame.length() - Constants.LL2P_CRC_FIELD_LENGTH));
-
         crc = HeaderFieldFactory.getInstance().getItem
                 (Constants.CRC_FIELD,
                 frame.substring(frame.length() - Constants.LL2P_CRC_FIELD_LENGTH));
@@ -84,9 +86,16 @@ public class LL2PFrame implements Datagram
      *
      * @return DatagramPayloadField - the payload of a datagram
      */
-    private DatagramPayloadField makePayloadField()
+    private DatagramPayloadField makePayloadField(String frame)
     {
-        return new DatagramPayloadField(new LL2PFrame("frame"));
+        payload = HeaderFieldFactory.getInstance().getItem
+                (Constants.LL2P_TEXT_PAYLOAD_FIELD,
+                frame.substring
+                (2*Constants.LL2P_PAYLOAD_OFFSET,
+                frame.length()
+                - Constants.LL2P_CRC_FIELD_LENGTH));
+
+        return payload;
     }
     //Getters (We know what these do.)
     public LL2PAddressField getDestinationAddress()

@@ -89,9 +89,8 @@ public class LL2Daemon implements Observer
                 + Constants.LL2P_ADDRESS
                 + Constants.LL2P_TYPE_ARP_REQUEST_HEX
                 + Constants.LL3P_ADDRESS
-                + "CC");
-
-        frame.getPayloadField().setPacket(new ARPDatagram(Constants.LL3P_ADDRESS,true));
+                + "CC",
+                new ARPDatagram(Constants.LL3P_ADDRESS, true));
 
         lesserDemon.sendFrame(frame);
     }
@@ -103,9 +102,8 @@ public class LL2Daemon implements Observer
                 + Constants.LL2P_ADDRESS
                 + Constants.LL2P_TYPE_ARP_REPLY_HEX
                 + Constants.LL3P_ADDRESS
-                + "CC");
-
-        frame.getPayloadField().setPacket(new ARPDatagram(Constants.LL3P_ADDRESS,true));
+                + "CC",
+                new ARPDatagram(Constants.LL3P_ADDRESS, true));
 
         lesserDemon.sendFrame(frame);
     }

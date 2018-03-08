@@ -79,8 +79,10 @@ public class Constants
     public static final int LL3P_DEST_ADDRESS_FIELD = 2;
     public static final int LL3P_SOURCE_ADDRESS_FIELD = 3;
     public static final int LL2P_TYPE_FIELD = 4;
-    public static final int LL2P_PAYLOAD_FIELD = 5;
-    public static final int CRC_FIELD = 6;
+    public static final int LL2P_TEXT_PAYLOAD_FIELD = 5;
+    public static final int LL3P_DEST_DATAGRAM_PAYLOAD_FIELD = 6;
+    public static final int LL3P_SOURCE_DATAGRAM_PAYLOAD_FIELD = 7;
+    public static final int CRC_FIELD = 8;
 
     //Table Record Factory:
     public static final int RECORD = 0;
