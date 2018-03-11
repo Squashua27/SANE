@@ -43,6 +43,8 @@ public class Constants
     public static final int LL3P_ADDRESS_NETWORK_LENGTH = 1;
     public static final int LL3P_ADDRESS_HOST_LENGTH = 1;
 
+    public static final int LL3P_DISTANCE_LENGTH = 1;
+
     //Offsets (in bytes)
     public static final int LL2P_DEST_ADDRESS_OFFSET = 0;
     public static final int LL2P_SOURCE_ADDRESS_OFFSET = 3;

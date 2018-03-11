@@ -18,7 +18,7 @@ public class LRPSequenceNumber implements HeaderField
     public LRPSequenceNumber(String string)
     {
         sequenceNumber = Integer.valueOf(string,16);
-    }
+    }//Constructor
 
     //Interface Implementation
     @Override public String toTransmissionString()
