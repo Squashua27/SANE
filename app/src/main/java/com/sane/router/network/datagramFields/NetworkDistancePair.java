@@ -20,6 +20,8 @@ public class NetworkDistancePair implements HeaderField
         network = Integer.valueOf(pair.substring(0, 2*Constants.LL3P_ADDRESS_NETWORK_LENGTH));
         distance = Integer.valueOf(pair.substring(2*Constants.LL3P_ADDRESS_NETWORK_LENGTH));
     }
+    public Integer getNetwork(){return network;}
+    public Integer getDistance(){return distance;}
 
     //Private to-string methods to simplify interface methods
     private String networkToString()

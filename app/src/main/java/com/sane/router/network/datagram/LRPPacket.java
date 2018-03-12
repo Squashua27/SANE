@@ -6,10 +6,8 @@ import com.sane.router.network.datagramFields.LRPCount;
 import com.sane.router.network.datagramFields.LRPSequenceNumber;
 import com.sane.router.network.datagramFields.NetworkDistancePair;
 import com.sane.router.support.factories.HeaderFieldFactory;
-import com.sane.router.support.factories.TableRecordFactory;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * A Lab Routing Protocol Datagram:
@@ -19,7 +17,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *  0x03 |___Net_#1__|__Dist_#1__|___Net_#2__|__Dist_#2__|
  *  0x07 |___Net_#3__|__Dist_#3__|___Net_#4__|__Dist_#4__|
  *  0x0B |___Net_#5__|__Dist_#5__|___Net_#6__|__Dist_#6__|
- *  0X0F |___Net_#7__|__Dist_#7__|...max_15_Net/Dist_Pairs
+ *  0X0F |___Net_#7__|__Dist_#7__|...max_15_NetDistPairs_|
  *
  * @author Joshua Johnston
  */
@@ -87,7 +85,7 @@ public class LRPPacket implements Datagram
     public LRPSequenceNumber getSequenceNumber(){return sequenceNumber;} //typical getter
     public LRPCount getCount(){return count;} //typical getter
     public List<NetworkDistancePair> getRoutes(){return routes;} //typical getter
-    public int getRouteCount(){ return routes.size(); }
+    public int getRouteCount(){ return routes.size(); }//gets the number of routes
     /**
      * Gets the LRPPacket as a byte array suitable for transmission
      *
