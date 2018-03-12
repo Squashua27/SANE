@@ -25,6 +25,8 @@ public class LL3PAddressField implements HeaderField
     //Methods
     public LL3PAddressField(String ll3p, Boolean source)//Constructor
     {
+        ll3p = Utilities.padHexString(ll3p, Constants.LL3P_ADDRESS_LENGTH);
+
         address = Integer.parseInt(ll3p,16);
 
         networkID = Integer.parseInt(ll3p.substring

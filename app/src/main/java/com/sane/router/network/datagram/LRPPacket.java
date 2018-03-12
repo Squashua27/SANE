@@ -6,8 +6,10 @@ import com.sane.router.network.datagramFields.LRPCount;
 import com.sane.router.network.datagramFields.LRPSequenceNumber;
 import com.sane.router.network.datagramFields.NetworkDistancePair;
 import com.sane.router.support.factories.HeaderFieldFactory;
+import com.sane.router.support.factories.TableRecordFactory;
 
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * A Lab Routing Protocol Datagram:
@@ -32,8 +34,10 @@ public class LRPPacket implements Datagram
     private HeaderFieldFactory factory;//factory for creation  of header fields
 
     //Methods
-    public LRPPacket(String data)//Constructor
+    public LRPPacket(String data)//Constructor used when deconstructing a received packet
     {
+        factory = HeaderFieldFactory.getInstance();
+
         sourceLL3P = factory.getItem
                 (2*Constants.LL3P_SOURCE_ADDRESS_FIELD,
                 data.substring(2*Constants.LL3P_SOURCE_OFFSET,
@@ -60,24 +64,81 @@ public class LRPPacket implements Datagram
                     2*Constants.LL3P_LIST_OFFSET+2*(pairIndex*Constants.LL3P_ADDRESS_LENGTH+1))));
         }
     }
+    public LRPPacket(int ll3p, int seqNum, int cnt, List<NetworkDistancePair> pairs)
+    {
+        factory = HeaderFieldFactory.getInstance();
+
+        sourceLL3P = factory.getItem
+                (Constants.LL3P_SOURCE_ADDRESS_FIELD,
+                Integer.toHexString(ll3p));
+
+        sequenceNumber = factory.getItem
+                (Constants.LRP_SEQUENCE_NUMBER,
+                Integer.toHexString(seqNum));
+
+        count = factory.getItem(Constants.LRP_COUNT, Integer.toHexString(cnt));
+
+        for (NetworkDistancePair route : pairs)
+            routes.add((NetworkDistancePair) factory.getItem
+                    (Constants.NETWORK_DISTANCE_PAIR,
+                    route.toTransmissionString()));
+    }//Constructor used when creating an packet by field value to send to another router
+    public LL3PAddressField getSourceLL3P(){return sourceLL3P;} //typical getter
+    public LRPSequenceNumber getSequenceNumber(){return sequenceNumber;} //typical getter
+    public LRPCount getCount(){return count;} //typical getter
+    public List<NetworkDistancePair> getRoutes(){return routes;} //typical getter
+    public int getRouteCount(){ return routes.size(); }
+    /**
+     * Gets the LRPPacket as a byte array suitable for transmission
+     *
+     * @return byte[] - the transmission string as a byte array
+     */
+    public byte[] getBytes() { return toTransmissionString().getBytes(); }
 
     //Interface Implementation
-
     @Override public String toHexString()
     {
-        return null;
+        String hexString = sourceLL3P.toHexString()
+                + sequenceNumber.toHexString()
+                + count.toHexString();
+
+        for (NetworkDistancePair route : routes)
+            hexString += route.toHexString();
+
+        return hexString;
+
     }
-    @Override
-    public String toProtocolExplanationString()
+    @Override public String toProtocolExplanationString()
     {
-        return null;
+        String explanation = "Source LLP: " + sourceLL3P.toHexString()
+                + " \nSequence Number: " + sequenceNumber.toTransmissionString()
+                + " \nCount: " + count.toTransmissionString() + " \nRoutes: ";
+
+        for (NetworkDistancePair route : routes)
+            explanation += route.toTransmissionString() + " \n        ";
+
+        return explanation;
     }
     @Override public String toSummaryString()
     {
-        return null;
+        String summary = "Source LLP: " + sourceLL3P.toHexString()
+                + " \nSequence Number: " + sequenceNumber.toTransmissionString()
+                + " \nCount: " + count.toTransmissionString() + " \nRoutes: ";
+
+        for (NetworkDistancePair route : routes)
+            summary += route.toTransmissionString() + " \n        ";
+
+        return summary;
     }
     @Override public String toTransmissionString()
     {
-        return null;
+        String packet = sourceLL3P.toTransmissionString()
+                + sequenceNumber.toTransmissionString()
+                + count.toTransmissionString();
+
+        for (NetworkDistancePair route : routes)
+            packet += route.toTransmissionString();
+
+        return packet;
     }
 }
