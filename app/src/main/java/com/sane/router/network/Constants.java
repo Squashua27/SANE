@@ -42,8 +42,10 @@ public class Constants
     public static final int LL3P_ADDRESS_LENGTH = 2;
     public static final int LL3P_ADDRESS_NETWORK_LENGTH = 1;
     public static final int LL3P_ADDRESS_HOST_LENGTH = 1;
-
     public static final int LL3P_DISTANCE_LENGTH = 1;
+    public static final int LL3P_SEQ_AND_COUNT_LENGTH = 1;
+    public static final int LL3P_PAIR_LENGTH = 2;
+    public static final int LL3P_NETWORK_LENGTH = 1;
 
     //Offsets (in bytes)
     public static final int LL2P_DEST_ADDRESS_OFFSET = 0;
@@ -53,6 +55,10 @@ public class Constants
 
     public static final int LL3P_ADDRESS_NETWORK_OFFSET = 0;
     public static final int LL3P_ADDRESS_HOST_OFFSET = 1;
+
+    public static final int LL3P_SOURCE_OFFSET = 0;
+    public static final int LL3P_SEQ_AND_COUNT_OFFSET = 2;
+    public static final int LL3P_LIST_OFFSET = 3;
 
     //LL2P Type Designations
     public static final int LL2P_TYPE_LL3P = 0x8001;
@@ -84,6 +90,9 @@ public class Constants
     public static final int LL3P_DEST_DATAGRAM_PAYLOAD_FIELD = 6;
     public static final int LL3P_SOURCE_DATAGRAM_PAYLOAD_FIELD = 7;
     public static final int CRC_FIELD = 8;
+    public static final int LRP_COUNT = 9;
+    public static final int LRP_SEQUENCE_NUMBER = 10;
+    public static final int NETWORK_DISTANCE_PAIR = 11;
     //Table Record Factory:
     public static final int RECORD = 0;
     public static final int ADJACENCY_RECORD = 1;

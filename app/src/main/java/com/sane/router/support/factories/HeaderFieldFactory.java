@@ -10,6 +10,9 @@ import com.sane.router.network.datagramFields.LL2PAddressField;
 import com.sane.router.network.datagramFields.LL2PTypeField;
 import com.sane.router.network.datagramFields.HeaderField;
 import com.sane.router.network.datagramFields.LL3PAddressField;
+import com.sane.router.network.datagramFields.LRPCount;
+import com.sane.router.network.datagramFields.LRPSequenceNumber;
+import com.sane.router.network.datagramFields.NetworkDistancePair;
 
 /**
  * A factory to create Header Field Objects
@@ -52,7 +55,12 @@ public class HeaderFieldFactory implements Factory<HeaderField, String>
             return (U) new DatagramPayloadField(new ARPDatagram(data, true));
         else if (type == Constants.CRC_FIELD)
             return (U) new CRCField(data);
-        else
+        else if (type == Constants.LRP_COUNT)
+            return (U) new LRPCount(data);
+        else if (type == Constants.LRP_SEQUENCE_NUMBER)
+            return (U) new LRPSequenceNumber(data);
+        else if (type == Constants.NETWORK_DISTANCE_PAIR)
+            return (U) new NetworkDistancePair(data);
             Log.e(Constants.LOG_TAG, "Error creating HeaderField");
         return null;
     }

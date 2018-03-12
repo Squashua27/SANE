@@ -2,7 +2,7 @@ package com.sane.router.network.datagramFields;
 
 /**
  * Header Field Containing the count number of an LRP packet,
- * which determines packet count in a series of LRP packets
+ * tracks number of hops from source
  *
  * @author Joshua Johnston
  */
