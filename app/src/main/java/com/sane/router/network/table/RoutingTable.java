@@ -3,14 +3,12 @@ package com.sane.router.network.table;
 import android.util.Log;
 
 import com.sane.router.network.Constants;
-import com.sane.router.network.tableRecords.ARPRecord;
 import com.sane.router.network.tableRecords.Record;
 import com.sane.router.network.tableRecords.RoutingRecord;
-import com.sane.router.network.tableRecords.TableRecord;
-import com.sane.router.support.Utilities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
-
 
 public class RoutingTable extends TimedTable implements Observable
 {
@@ -31,19 +29,85 @@ public class RoutingTable extends TimedTable implements Observable
         {
             Log.i(Constants.LOG_TAG, "Matching key not found, creating record...\n\n");
 
-            table.add(newRoute); //add new record to ARP table
+            ((Table)table).addItem(newRoute); //add new record to ARP table
             Log.i(Constants.LOG_TAG, "Record added to table: "
                     + newRoute.toString() + "\n\n\n");
         }
         setChanged();//notify observers of change to the adjacency list
         notifyObservers();
     }
-
-    public void removeItem(Record toRemove)
+    /**
+     * Removes a Routing Record from the Routing Table
+     *
+     * @param recordToRemove - the Routing Record to remove
+     */
+    public void removeItem(Record recordToRemove)
     {
         Log.i(Constants.LOG_TAG, "\n\nRemoving RoutingTable Record, checking for key...\n\n");
-        if (((TimedTable)table).touch(toRemove.getKey()))
+        if (((TimedTable) table).touch(recordToRemove.getKey()))
+        {
             Log.i(Constants.LOG_TAG, "Matching key found, deleting record: "
-                    + ((RoutingRecord)((TimedTable)table).getItem(toRemove.getKey())).toString() + "\n\n");
+                    + ((RoutingRecord) ((TimedTable) table).getItem(recordToRemove.getKey())).toString() + "\n\n");
+
+            ((TimedTable) table).removeItem(recordToRemove.getKey());
+            Log.i(Constants.LOG_TAG, " \n ...Record deleted.");
+        }
+    }
+    /**
+     * Returns the LL3P address of the next hop given a network number
+     *
+     * @param network - the network to retrieve the next hop of
+     */
+    public Integer getNextHop(Integer network) //TODO: CHECK
+    {
+        Log.i(Constants.LOG_TAG, "\n\nGetting next hop, checking for key...\n\n");
+
+        for (Record record : table)
+        {
+            if ( ( (int)(record.getKey()) ) ==
+                    ( (int)(network*256*256+((RoutingRecord)record).getNextHop()) ) )
+            {
+                Log.i(Constants.LOG_TAG, "key matching network found," +
+                        " returning next hop of record: "
+                        + record.toString() + "\n\n");
+
+                return ((RoutingRecord) record).getNextHop();
+            }
+        }
+        return -1;
+    }
+    /**
+     * Returns a list of all Table Records EXCEPT those from the passed LL3P address
+     *
+     * @param ll3p - the address not to return records from
+     * @return List - the returned list of RoutingRecords
+     */
+    public List<RoutingRecord> getRoutesExcluding(Integer ll3p)//
+    {
+        List<RoutingRecord> routes = new ArrayList<RoutingRecord>();
+        Log.i(Constants.LOG_TAG, "\n \nGetting routes excluding: "+ll3p+"...\n \n");
+
+        for (Record record : table)
+            if ( !( ((int) ll3p) == ((int)(((RoutingRecord)record).getNetworkNumber())) ) )
+                ((Table)routes).addItem( (RoutingRecord) record );
+        return routes;
+    }
+
+    /**
+     * Removes all routes through a particular node after the node's death
+     *
+     * @param ll3p - the LL3P address of the dead none
+     */
+    public void removeRoutesFrom(Integer ll3p)
+    {
+        List<RoutingRecord> routesToRemove = new ArrayList<RoutingRecord>();
+        Log.i(Constants.LOG_TAG, "\n \nGetting routes excluding: "+ll3p+"...\n \n");
+
+        for (Record record : table)
+            if ( !( ((int) ll3p) == ((int)(((RoutingRecord)record).getNextHop())) ) )
+                ((Table)routesToRemove).addItem( (RoutingRecord) record );
+
+        for (Record route : routesToRemove)
+            ((Table)table).removeItem( route.getKey() );
     }
 }
