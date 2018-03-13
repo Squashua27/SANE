@@ -43,31 +43,31 @@ public class RoutingTable extends TimedTable implements Observable
      */
     public void removeItem(Record recordToRemove)
     {
-        Log.i(Constants.LOG_TAG, "\n\nRemoving RoutingTable Record, checking for key...\n\n");
-        if (((TimedTable) table).touch(recordToRemove.getKey()))
-        {
-            Log.i(Constants.LOG_TAG, "Matching key found, deleting record: "
-                    + ((RoutingRecord) ((TimedTable) table).getItem(recordToRemove.getKey())).toString() + "\n\n");
-
-            ((TimedTable) table).removeItem(recordToRemove.getKey());
-            Log.i(Constants.LOG_TAG, " \n ...Record deleted.");
-        }
+//        Log.i(Constants.LOG_TAG, "\n\nRemoving RoutingTable Record, checking for key...\n\n");
+//        if (((TimedTable) table).touch(recordToRemove.getKey()))
+//        {
+//            Log.i(Constants.LOG_TAG, "Matching key found, deleting record: "
+//                    + ((RoutingRecord) ((TimedTable) table).getItem(recordToRemove.getKey())).toString() + "\n\n");
+//
+//            ((TimedTable) table).removeItem(recordToRemove.getKey());
+//            Log.i(Constants.LOG_TAG, " \n ...Record deleted.");
+//        }
+        removeItem(recordToRemove.getKey());
     }
     /**
      * Returns the LL3P address of the next hop given a network number
      *
      * @param network - the network to retrieve the next hop of
      */
-    public Integer getNextHop(Integer network) //TODO: CHECK
+    public Integer getNextHop(Integer network)
     {
         Log.i(Constants.LOG_TAG, "\n\nGetting next hop, checking for key...\n\n");
 
         for (Record record : table)
         {
-            if ( ( (int)(record.getKey()) ) ==
-                    ( (int)(network*256*256+((RoutingRecord)record).getNextHop()) ) )
+            if (network.equals(((RoutingRecord)record).getNetworkNumber()))
             {
-                Log.i(Constants.LOG_TAG, "key matching network found," +
+                Log.i(Constants.LOG_TAG, "Matching network found," +
                         " returning next hop of record: "
                         + record.toString() + "\n\n");
 
@@ -84,13 +84,15 @@ public class RoutingTable extends TimedTable implements Observable
      */
     public List<RoutingRecord> getRoutesExcluding(Integer ll3p)//
     {
-        List<RoutingRecord> routes = new ArrayList<RoutingRecord>();
-        Log.i(Constants.LOG_TAG, "\n \nGetting routes excluding: "+ll3p+"...\n \n");
+        synchronized (table) {
+            List<RoutingRecord> routes = new ArrayList<RoutingRecord>();
+            Log.i(Constants.LOG_TAG, "\n \nGetting routes excluding: " + ll3p + "...\n \n");
 
-        for (Record record : table)
-            if ( !( ((int) ll3p) == ((int)(((RoutingRecord)record).getNetworkNumber())) ) )
-                ((Table)routes).addItem( (RoutingRecord) record );
-        return routes;
+            for (Record record : table)
+                if (ll3p.equals(((RoutingRecord) record).getNetworkNumber()))
+                    routes.add((RoutingRecord) record);
+            return routes;
+        }
     }
 
     /**
@@ -100,14 +102,16 @@ public class RoutingTable extends TimedTable implements Observable
      */
     public void removeRoutesFrom(Integer ll3p)
     {
-        List<RoutingRecord> routesToRemove = new ArrayList<RoutingRecord>();
-        Log.i(Constants.LOG_TAG, "\n \nGetting routes excluding: "+ll3p+"...\n \n");
+        synchronized (table) {
+            List<RoutingRecord> routesToRemove = new ArrayList<RoutingRecord>();
+            Log.i(Constants.LOG_TAG, "\n \nGetting routes excluding: " + ll3p + "...\n \n");
 
-        for (Record record : table)
-            if ( !( ((int) ll3p) == ((int)(((RoutingRecord)record).getNextHop())) ) )
-                ((Table)routesToRemove).addItem( (RoutingRecord) record );
+            for (Record record : table)
+                if (!(((int) ll3p) == ((int) (((RoutingRecord) record).getNextHop()))))
+                    ((Table) routesToRemove).addItem((RoutingRecord) record);
 
-        for (Record route : routesToRemove)
-            ((Table)table).removeItem( route.getKey() );
+            for (Record route : routesToRemove)
+                ((Table) table).removeItem(route.getKey());
+        }
     }
 }
