@@ -14,8 +14,8 @@ import com.sane.router.support.factories.HeaderFieldFactory;
 public class RoutingRecord extends Record
 {
     //Fields
-    public NetworkDistancePair networkDistancePair;//a remote network and distance to it
-    public Integer nextHop;//the source of the route, and the next hop on the route to it
+    private NetworkDistancePair networkDistancePair;//a remote network and distance to it
+    private Integer nextHop;//the source of the route, and the next hop on the route to it
     private Integer key; //key used to locate records (= network*256*256 + nextHop)
 
     //Methods
@@ -38,9 +38,9 @@ public class RoutingRecord extends Record
 
         key = netNum*256*256 + nextHop;
     }
-    public int getNetworkNumber(){return networkDistancePair.getNetwork();}
-    public int getDistance(){return networkDistancePair.getDistance();}
-    public int getNextHop(){return nextHop;}
+    public Integer getNetworkNumber(){return networkDistancePair.getNetwork();}
+    public Integer getDistance(){return networkDistancePair.getDistance();}
+    public Integer getNextHop(){return nextHop;}
 
     //Interface Implementation
     public int getKey(){return key;}

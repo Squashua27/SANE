@@ -5,12 +5,12 @@ import android.util.Log;
 import com.sane.router.network.Constants;
 import com.sane.router.network.tableRecords.Record;
 import com.sane.router.network.tableRecords.RoutingRecord;
+import com.sane.router.support.LabException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
-public class RoutingTable extends TimedTable implements Observable
+public class RoutingTable extends TimedTable
 {
     //Methods
     public RoutingTable() { super(); } //Constructor
@@ -84,7 +84,8 @@ public class RoutingTable extends TimedTable implements Observable
      */
     public List<RoutingRecord> getRoutesExcluding(Integer ll3p)//
     {
-        synchronized (table) {
+        synchronized (table)
+        {
             List<RoutingRecord> routes = new ArrayList<RoutingRecord>();
             Log.i(Constants.LOG_TAG, "\n \nGetting routes excluding: " + ll3p + "...\n \n");
 
@@ -102,7 +103,8 @@ public class RoutingTable extends TimedTable implements Observable
      */
     public void removeRoutesFrom(Integer ll3p)
     {
-        synchronized (table) {
+        synchronized (table)
+        {
             List<RoutingRecord> routesToRemove = new ArrayList<RoutingRecord>();
             Log.i(Constants.LOG_TAG, "\n \nGetting routes excluding: " + ll3p + "...\n \n");
 
@@ -113,5 +115,110 @@ public class RoutingTable extends TimedTable implements Observable
             for (Record route : routesToRemove)
                 ((Table) table).removeItem(route.getKey());
         }
+    }
+
+    /**
+     * Gets a best route for each unique Network number in table
+     *
+     * @return bestRoutes - the set of best routes (least distance)
+     */
+    public List<RoutingRecord> getBestRoutes()
+    {
+        Log.i(Constants.LOG_TAG, "\n \nGetting best routes... \n \n");
+        List<RoutingRecord> bestRoutes = new ArrayList<RoutingRecord>();
+        List<Integer> networks = getAllNetworks();
+
+        for (Integer network : networks)
+            bestRoutes.add(getBestRoute(network));
+
+        return bestRoutes;
+    }
+
+    /**
+     * Gets all network numbers from the table, ignoring duplicates
+     *
+     * @return networks - the list of network numbers
+     */
+    private List<Integer> getAllNetworks()
+    {
+        List<Integer> networks = new ArrayList<Integer>();
+        synchronized (table)
+        {
+            for (Record record : table)
+                if (!networks.contains(((RoutingRecord) record).getNetworkNumber()))
+                    networks.add(((RoutingRecord) record).getNetworkNumber());
+        }
+        return networks;
+    }
+    /**
+     * Gets the best route to take to a given network
+     *
+     * @param network - The network to find the best route to
+     * @return bestRoute - A record holding the best route to the given network
+     */
+    public RoutingRecord getBestRoute(Integer network)
+    {
+        int bestRouteDistance = 999;
+        RoutingRecord bestRoute = new RoutingRecord(0,15,0);
+
+        synchronized (table)
+        {
+            for (Record record : table)
+                if (((RoutingRecord) record).getNetworkNumber().equals(network))
+                    if (((RoutingRecord) record).getDistance() < bestRouteDistance)
+                    {
+                        bestRoute = (RoutingRecord) record;
+                        bestRouteDistance = ((RoutingRecord) record).getDistance();
+                    }
+        }
+
+        if (bestRouteDistance == 999)
+            new LabException("Failed to perform RoutingTable.getBestRoute(network)");
+        return bestRoute;
+    }
+
+    /**
+     * Adds each Route from a set to the table if that Route is shorter than any
+     * existing route of the same key
+     *
+     * @param newRoutes - The List of new Routes with which to update table
+     */
+    public void addRoutes(List<RoutingRecord> newRoutes)
+    {
+        boolean duplicate;
+        boolean betterRoute;
+        for(RoutingRecord route : newRoutes)//Iterate New Routes
+        {
+            duplicate = false;
+            betterRoute = false;
+
+            synchronized (table)
+            {
+                for( Record record : table )//Iterate Old Routes
+                    if (route.getKey() == record.getKey())//Check if new route already known
+                    {
+                        duplicate = true;
+                        if (route.getDistance() < ((RoutingRecord) record).getDistance())//check if new route is better
+                            betterRoute = true;
+                    }
+
+                if (duplicate)
+                {
+                    if (betterRoute)// If a route was already known but the new one is shorter
+                    {
+                        removeItem(route.getKey());
+                        addNewRoute(route);
+                    }
+                    else// if an old route is shorter than the new one
+                        touch(route.getKey());
+                }
+                else// if the route is new
+                    addNewRoute(route);
+            }
+        }
+    }
+    public void expireRoutes(int routeTTL)
+    {
+        ((TimedTable)table).expireRecords(routeTTL);
     }
 }

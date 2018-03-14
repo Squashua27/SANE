@@ -10,8 +10,10 @@ import com.sane.router.network.daemons.LL1Daemon;
 import com.sane.router.network.daemons.LL2Daemon;
 import com.sane.router.network.daemons.Scheduler;
 import com.sane.router.network.datagram.LL2PFrame;
+import com.sane.router.network.table.RoutingTable;
 import com.sane.router.network.table.Table;
 import com.sane.router.network.tableRecords.AdjacencyRecord;
+import com.sane.router.network.tableRecords.RoutingRecord;
 import com.sane.router.support.factories.TableRecordFactory;
 
 import java.util.Observable;
@@ -140,5 +142,15 @@ public class BootLoader extends Observable
         LL2PFrame frame = new LL2PFrame("112233B1A5ED8008(text datagram)CCCC");
         //Send a packet to the mirror:
         myPersonalDemon.sendFrame(frame);
+
+        //Test: Test Routing Table
+        Log.i(Constants.LOG_TAG, " \n \nTesting Routing Table... \n \n");
+        RoutingTable routingTable = new RoutingTable();
+        //routingTable.addNewRoute(new RoutingRecord(1,2,3));
+        //Log.i(Constants.LOG_TAG, " \n \nRouting table, first Record added:"+routingTable.toString());
+        //routingTable.addNewRoute(new RoutingRecord(4,5,6));
+        //routingTable.getBestRoute(1);
+
+        //UIManager.getInstance().displayMessage("Best Routes: "+routingTable.getBestRoutes());
     }
 }

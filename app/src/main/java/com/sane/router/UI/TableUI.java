@@ -24,7 +24,7 @@ public class TableUI implements Runnable, Observer
     //Fields
     private AdjacencyTableUI adjacencyTableUI;
     private SingleTableUI arpTableUI;
-    //private SingleTableUI routingTable;
+    private SingleTableUI routingTable;
     //private SingleTableUI forwardingUI;
 
     //Methods
@@ -40,7 +40,7 @@ public class TableUI implements Runnable, Observer
     @Override public void run()
     {
         arpTableUI.updateView();
-        //routingTable.updateView();
+        routingTable.updateView();
         //forwardingTable.updateView();
     }
     /**
@@ -64,6 +64,10 @@ public class TableUI implements Runnable, Observer
             arpTableUI = new SingleTableUI(activity,
                     R.id.ARPTable,
                     ARPDaemon.getInstance().getARPTable());
+
+            /*routingTable = new SingleTableUI(activity,
+                    R.id.routingTable,
+                    routingTable.table);//TODO:change daemon*/
         }
     }
 }
