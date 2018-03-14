@@ -24,19 +24,13 @@ public class RoutingTable extends TimedTable
         synchronized (table)
         {
             Log.i(Constants.LOG_TAG, " \n \nAdding RoutingTable Record, checking for key... \n \n");
-            //if (((TimedTable) table.).touch(newRoute.getKey()))
-            //    Log.i(Constants.LOG_TAG, "Matching key found: "
-            //            + ((((RoutingTable) table)).getItem(newRoute.getKey())).getKey() + " \n \n");
-            //else
-                {
-                Log.i(Constants.LOG_TAG, "Matching key not found, creating record... \n \n");
-                table.add(newRoute); //add new record to ARP table
-                Log.i(Constants.LOG_TAG, "Record added to table: "
-                        + newRoute.toString() + " \n \n");
-                }
-            setChanged();//notify observers of change to the adjacency list
-            notifyObservers();
+            removeItem(newRoute);
+            table.add(newRoute); //add new record to ARP table
+            Log.i(Constants.LOG_TAG, "Record added to table: "
+                    + newRoute.toString() + " \n \n");
         }
+        setChanged();//notify observers of change to the adjacency list
+        notifyObservers();
     }
     /**
      * Removes a Routing Record from the Routing Table
@@ -260,6 +254,6 @@ public class RoutingTable extends TimedTable
      */
     public List<Record> expireRoutes(int routeTTL)
     {
-        return ((TimedTable)table).expireRecords(routeTTL);
+        return ((TimedTable) table).expireRecords(routeTTL);
     }
 }

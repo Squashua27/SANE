@@ -151,6 +151,8 @@ public class BootLoader extends Observable
         routingTable.addNewRoute(new RoutingRecord(4,5,6));
         routingTable.getBestRoute(1);
 
+        routingTable.expireRoutes(10);
+
         UIManager.getInstance().displayMessage("Best Routes: "+routingTable.getBestRoutes());
     }
 }

@@ -41,6 +41,11 @@ public class RoutingRecord extends Record
     public Integer getNetworkNumber(){return networkDistancePair.getNetwork();}
     public Integer getDistance(){return networkDistancePair.getDistance();}
     public Integer getNextHop(){return nextHop;}
+    public String toString()
+    {
+        return "Network Distance Pair: "+ networkDistancePair +" |  Next hop";
+    }
+
 
     //Interface Implementation
     public int getKey(){return key;}
