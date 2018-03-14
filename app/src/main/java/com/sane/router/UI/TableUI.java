@@ -7,7 +7,10 @@ import com.sane.router.R;
 import com.sane.router.network.Constants;
 import com.sane.router.network.daemons.ARPDaemon;
 import com.sane.router.network.daemons.LL1Daemon;
+import com.sane.router.network.table.RoutingTable;
+import com.sane.router.network.table.TableInterface;
 import com.sane.router.network.table.TimedTable;
+import com.sane.router.network.tableRecords.RoutingRecord;
 import com.sane.router.support.BootLoader;
 import com.sane.router.support.ParentActivity;
 
@@ -24,8 +27,8 @@ public class TableUI implements Runnable, Observer
     //Fields
     private AdjacencyTableUI adjacencyTableUI;
     private SingleTableUI arpTableUI;
-    private SingleTableUI routingTable;
-    //private SingleTableUI forwardingUI;
+    private SingleTableUI routingTableUI;
+    private SingleTableUI forwardingTableUI;
 
     //Methods
     /**
@@ -40,8 +43,8 @@ public class TableUI implements Runnable, Observer
     @Override public void run()
     {
         arpTableUI.updateView();
-        routingTable.updateView();
-        //forwardingTable.updateView();
+        routingTableUI.updateView();
+        forwardingTableUI.updateView();
     }
     /**
      * Suspends operation until the update call is received from the bootLoader
@@ -65,9 +68,18 @@ public class TableUI implements Runnable, Observer
                     R.id.ARPTable,
                     ARPDaemon.getInstance().getARPTable());
 
-            /*routingTable = new SingleTableUI(activity,
+            RoutingTable routingTable = new RoutingTable();
+            RoutingTable forwardingTable = new RoutingTable();
+
+            routingTableUI = new SingleTableUI(activity,
                     R.id.routingTable,
-                    routingTable.table);//TODO:change daemon*/
+                    (TableInterface) routingTable); //TODO: get table from demon here
+
+            forwardingTableUI = new SingleTableUI(activity,
+                    R.id.routingTable,
+                    (TableInterface) routingTable); //TODO: get table from demon here
+
+            routingTableUI.table.addItem(new RoutingRecord(7,7,7));//TODO: not this
         }
     }
 }

@@ -146,11 +146,11 @@ public class BootLoader extends Observable
         //Test: Test Routing Table
         Log.i(Constants.LOG_TAG, " \n \nTesting Routing Table... \n \n");
         RoutingTable routingTable = new RoutingTable();
-        //routingTable.addNewRoute(new RoutingRecord(1,2,3));
-        //Log.i(Constants.LOG_TAG, " \n \nRouting table, first Record added:"+routingTable.toString());
-        //routingTable.addNewRoute(new RoutingRecord(4,5,6));
-        //routingTable.getBestRoute(1);
+        routingTable.addNewRoute(new RoutingRecord(1,2,3));
+        Log.i(Constants.LOG_TAG, " \n \nRouting table, first Record added:"+routingTable.toString());
+        routingTable.addNewRoute(new RoutingRecord(4,5,6));
+        routingTable.getBestRoute(1);
 
-        //UIManager.getInstance().displayMessage("Best Routes: "+routingTable.getBestRoutes());
+        UIManager.getInstance().displayMessage("Best Routes: "+routingTable.getBestRoutes());
     }
 }

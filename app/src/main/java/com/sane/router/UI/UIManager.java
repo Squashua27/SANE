@@ -31,7 +31,6 @@ public class UIManager implements Observer
         tableUI = new TableUI();
         snifferUI = new SnifferUI();
     }
-
     //Methods____________________
     public TableUI getTableUI(){return tableUI;} //Standard getter
     public SnifferUI getSnifferUI(){return snifferUI;}//Standard getter
@@ -57,8 +56,7 @@ public class UIManager implements Observer
     /**
      * allows use of widgets, currently a place holder
      */
-    private void setUpWidgets() {}
-
+    private void setUpWidgets(){}
     //Interface Implementation
     /**
      * necessary method of Observer class, sets up UI operations after notified to do so

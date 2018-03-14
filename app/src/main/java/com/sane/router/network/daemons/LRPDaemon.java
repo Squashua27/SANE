@@ -2,10 +2,8 @@ package com.sane.router.network.daemons;
 
 import com.sane.router.network.Constants;
 import com.sane.router.network.table.RoutingTable;
-import com.sane.router.network.table.TimedTable;
 import com.sane.router.network.tableRecords.Record;
 import com.sane.router.support.BootLoader;
-import com.sane.router.support.factories.TableRecordFactory;
 
 import java.util.List;
 import java.util.Observable;
@@ -44,6 +42,9 @@ public class LRPDaemon extends Observable implements Observer, Runnable
     {
         List<Record> removedRecords = routingTable.expireRoutes(Constants.LRP_RECORD_TTL);
         if (!removedRecords.isEmpty())
+        {
+            setChanged();
             notifyObservers(removedRecords);
+        }
     }
 }

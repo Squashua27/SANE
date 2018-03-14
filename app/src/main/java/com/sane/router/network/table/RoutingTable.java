@@ -21,22 +21,22 @@ public class RoutingTable extends TimedTable
      */
     public void addNewRoute(RoutingRecord newRoute)
     {
-
-
-        Log.i(Constants.LOG_TAG, "\n\nAdding RoutingTable Record, checking for key...\n\n");
-        if (((TimedTable)table).touch(newRoute.getKey()))
-            Log.i(Constants.LOG_TAG, "Matching key found, record updated: "
-                    + ((RoutingRecord)((TimedTable)table).getItem(newRoute.getKey())).toString() + "\n\n");
-        else
+        synchronized (table)
         {
-            Log.i(Constants.LOG_TAG, "Matching key not found, creating record...\n\n");
-
-            ((Table)table).addItem(newRoute); //add new record to ARP table
-            Log.i(Constants.LOG_TAG, "Record added to table: "
-                    + newRoute.toString() + "\n\n\n");
+            Log.i(Constants.LOG_TAG, " \n \nAdding RoutingTable Record, checking for key... \n \n");
+            //if (((TimedTable) table.).touch(newRoute.getKey()))
+            //    Log.i(Constants.LOG_TAG, "Matching key found: "
+            //            + ((((RoutingTable) table)).getItem(newRoute.getKey())).getKey() + " \n \n");
+            //else
+                {
+                Log.i(Constants.LOG_TAG, "Matching key not found, creating record... \n \n");
+                table.add(newRoute); //add new record to ARP table
+                Log.i(Constants.LOG_TAG, "Record added to table: "
+                        + newRoute.toString() + " \n \n");
+                }
+            setChanged();//notify observers of change to the adjacency list
+            notifyObservers();
         }
-        setChanged();//notify observers of change to the adjacency list
-        notifyObservers();
     }
     /**
      * Removes a Routing Record from the Routing Table
@@ -161,7 +161,7 @@ public class RoutingTable extends TimedTable
     public RoutingRecord getBestRoute(Integer network)
     {
         int bestRouteDistance = 999;
-        RoutingRecord bestRoute = new RoutingRecord(0,15,0);
+        RoutingRecord bestRoute = new RoutingRecord(0,0,0);
 
         synchronized (table)
         {
@@ -173,7 +173,6 @@ public class RoutingTable extends TimedTable
                         bestRouteDistance = ((RoutingRecord) record).getDistance();
                     }
         }
-
         if (bestRouteDistance == 999)
             new LabException("Failed to perform RoutingTable.getBestRoute(network)");
         return bestRoute;
