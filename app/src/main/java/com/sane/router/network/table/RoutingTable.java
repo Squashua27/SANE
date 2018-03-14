@@ -21,6 +21,8 @@ public class RoutingTable extends TimedTable
      */
     public void addNewRoute(RoutingRecord newRoute)
     {
+
+
         Log.i(Constants.LOG_TAG, "\n\nAdding RoutingTable Record, checking for key...\n\n");
         if (((TimedTable)table).touch(newRoute.getKey()))
             Log.i(Constants.LOG_TAG, "Matching key found, record updated: "
@@ -217,8 +219,48 @@ public class RoutingTable extends TimedTable
             }
         }
     }
-    public void expireRoutes(int routeTTL)
+
+    /**
+     * Adds a new Route if none exists, replacing an old record if the new one is shorter
+     *
+     * @param newRoute - The new Routing Record to be added
+     */
+    public void addOrReplace(RoutingRecord newRoute)
     {
-        ((TimedTable)table).expireRecords(routeTTL);
+        Boolean duplicate = false;
+        Boolean betterRoute = false;
+        synchronized (table)
+        {
+            for( Record record : table )//Iterate Old Routes
+                if (newRoute.getKey() == record.getKey())//Check if new route already known
+                {
+                    duplicate = true;
+                    if (newRoute.getDistance() < ((RoutingRecord) record).getDistance())//check if new route is better
+                        betterRoute = true;
+                }
+
+            if (duplicate)
+            {
+                if (betterRoute)// If a route was already known but the new one is shorter
+                {
+                    removeItem(newRoute.getKey());
+                    addNewRoute(newRoute);
+                }
+                else// if an old route is shorter than the new one
+                    touch(newRoute.getKey());
+            }
+            else// if the route is new
+                addNewRoute(newRoute);
+        }
+    }
+
+    /**
+     * Expires routes, removing the ones that are past their expiration date
+     *
+     * @param routeTTL - The Time To Live of Routing Records
+     */
+    public List<Record> expireRoutes(int routeTTL)
+    {
+        return ((TimedTable)table).expireRecords(routeTTL);
     }
 }
