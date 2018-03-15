@@ -17,8 +17,8 @@ public class NetworkDistancePair implements HeaderField
     //Methods
     public NetworkDistancePair(String pair)
     {
-        network = Integer.valueOf(pair.substring(0, 2*Constants.LL3P_ADDRESS_NETWORK_LENGTH));
-        distance = Integer.valueOf(pair.substring(2*Constants.LL3P_ADDRESS_NETWORK_LENGTH));
+        network = Integer.valueOf(pair.substring(0, 2*Constants.LL3P_ADDRESS_NETWORK_LENGTH),16);
+        distance = Integer.valueOf(pair.substring(2*Constants.LL3P_ADDRESS_NETWORK_LENGTH),16);
     }
     public Integer getNetwork(){return network;}
     public Integer getDistance(){return distance;}

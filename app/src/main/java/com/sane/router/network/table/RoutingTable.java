@@ -30,8 +30,7 @@ public class RoutingTable extends TimedTable
             Log.i(Constants.LOG_TAG, "Record added to table: "
                     + newRoute.toString() + " \n \n");
         }
-        setChanged();//notify observers of change to the adjacency list
-        notifyObservers();
+        updateDisplay();
     }
     /**
      * Removes a Routing Record from the Routing Table
@@ -51,15 +50,17 @@ public class RoutingTable extends TimedTable
     {
         Log.i(Constants.LOG_TAG, "\n\nGetting next hop, checking for key...\n\n");
 
-        for (Record record : table)
+        synchronized (table)
         {
-            if (network.equals(((RoutingRecord)record).getNetworkNumber()))
+            for (Record record : table)
             {
-                Log.i(Constants.LOG_TAG, "Matching network found," +
-                        " returning next hop of record: "
-                        + record.toString() + "\n\n");
-
-                return ((RoutingRecord) record).getNextHop();
+                if (network.equals(((RoutingRecord)record).getNetworkNumber()))
+                {
+                    Log.i(Constants.LOG_TAG, "Matching network found,"
+                            + " returning next hop of record: "
+                            + record.toString() + "\n\n");
+                    return ((RoutingRecord) record).getNextHop();
+                }
             }
         }
         return -1;
@@ -94,15 +95,16 @@ public class RoutingTable extends TimedTable
         synchronized (table)
         {
             List<RoutingRecord> routesToRemove = new ArrayList<RoutingRecord>();
-            Log.i(Constants.LOG_TAG, "\n \nGetting routes excluding: " + ll3p + "...\n \n");
+            Log.i(Constants.LOG_TAG, "\n \nRemoving routes from LL3P Address: " + ll3p + "...\n \n");
 
             for (Record record : table)
-                if (!(((int) ll3p) == ((int) (((RoutingRecord) record).getNextHop()))))
-                    ((Table) routesToRemove).addItem((RoutingRecord) record);
+                if (((int) ll3p) == ((int) (((RoutingRecord) record).getNetworkNumber())))
+                    routesToRemove.add((RoutingRecord) record);
 
-            for (Record route : routesToRemove)
-                ((Table) table).removeItem(route.getKey());
+            for (RoutingRecord route : routesToRemove)
+                table.remove(route);
         }
+        updateDisplay();
     }
 
     /**
@@ -172,34 +174,36 @@ public class RoutingTable extends TimedTable
      */
     public void addRoutes(List<RoutingRecord> newRoutes)
     {
-        boolean duplicate;
-        boolean betterRoute;
+        int removalKey;
+        int touchKey;
         for(RoutingRecord route : newRoutes)//Iterate New Routes
         {
-            duplicate = false;
-            betterRoute = false;
+            removalKey = 0;
+            touchKey = 0;
             synchronized (table)
             {
                 for( Record record : table )//Iterate Old Routes
-                    if (route.getKey() == record.getKey())//Check if new route already known
+                    if (route.getNetworkNumber() == ((RoutingRecord)record).getNetworkNumber())//Check if new route already known
                     {
-                        duplicate = true;
+                        touchKey = ((RoutingRecord)record).getKey();
                         if (route.getDistance() < ((RoutingRecord) record).getDistance())//check if new route is better
-                            betterRoute = true;
+                        {
+                            removalKey = ((RoutingRecord)record).getKey();
+                        }
                     }
-                if (duplicate)
-                {
-                    if (betterRoute)// If a route was already known but the new one is shorter
+                if (!(touchKey==0))//There is an old record
+                    if(!(removalKey==0))//The new record is better than an old
                     {
+                        removeItem(removalKey);
                         addNewRoute(route);
                     }
-                    else// if an old route is shorter than the new one
-                        touch(route.getKey());
-                }
-                else// if the route is new
+                    else//there is an old record better than the new one
+                        touch(touchKey);
+                else//There is no old record
                     addNewRoute(route);
             }
         }
+        updateDisplay();
     }
 
     /**
@@ -233,5 +237,6 @@ public class RoutingTable extends TimedTable
             else// if the route is new
                 addNewRoute(newRoute);
         }
+        updateDisplay();
     }
 }

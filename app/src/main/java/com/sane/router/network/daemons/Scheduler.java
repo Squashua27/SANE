@@ -17,16 +17,16 @@ import java.util.concurrent.TimeUnit;
  */
 public class Scheduler implements Observer
 {
+    //Fields
+    private ScheduledThreadPoolExecutor threadManager;//manages pool of threads
+    private ARPDaemon arpDaemon; //for private knowledge of ARP activity
+    private LRPDaemon lrpDeamon; //for private knowledge of LRP activity
+    private TableUI tableUI; //private tableUI reference to keep tables updated
+
     //Singleton Implementation
     private static final Scheduler ourInstance = new Scheduler();
     public static Scheduler getInstance(){return ourInstance;}
     private Scheduler(){} //empty constructor
-
-    //Fields
-    private ScheduledThreadPoolExecutor threadManager;//manages pool of threads
-    private ARPDaemon arpDaemon; //for private access to ARP services
-    private LRPDaemon lrpDeamon; //TODO: creaate this class
-    private TableUI tableUI; //private tableUI reference to keep tables updated
 
     //Interface Implementation
     /**
@@ -34,7 +34,7 @@ public class Scheduler implements Observer
      * spins off schedule-controlled threads
      *
      * @param observable - The observed object
-     * @param object     - An object passed in by the triggering observable
+     * @param object - An object passed in by the triggering observable
      */
     @Override public void update(Observable observable, Object object)
     {
@@ -44,6 +44,6 @@ public class Scheduler implements Observer
 
         threadManager.scheduleAtFixedRate(tableUI, Constants.ROUTER_BOOT_TIME, Constants.UI_UPDATE_INTERVAL, TimeUnit.SECONDS);
         threadManager.scheduleAtFixedRate(arpDaemon, Constants.ROUTER_BOOT_TIME, Constants.ARP_UPDATE_INTERVAL, TimeUnit.SECONDS);
-        threadManager.scheduleAtFixedRate(lrpDeamon, Constants.ROUTER_BOOT_TIME, Constants.LRP_UPDATE_INTERVAL, TimeUnit.SECONDS);
+        //threadManager.scheduleAtFixedRate(lrpDeamon, Constants.ROUTER_BOOT_TIME, Constants.LRP_UPDATE_INTERVAL, TimeUnit.SECONDS);
     }
 }

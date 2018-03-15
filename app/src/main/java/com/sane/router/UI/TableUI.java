@@ -78,8 +78,6 @@ public class TableUI implements Runnable, Observer
             forwardingTableUI = new SingleTableUI(activity,
                     R.id.routingTable,
                     (TableInterface) routingTable); //TODO: get table from demon here
-
-            routingTableUI.table.addItem(new RoutingRecord(7,7,7));//TODO: not this
         }
     }
 }

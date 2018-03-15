@@ -86,7 +86,6 @@ public class BootLoader extends Observable
 
         Log.i(Constants.LOG_TAG, record.toString());
         Log.i(Constants.LOG_TAG, " \n" + record.toString() + " \n \n");
-         */
 
         //Test: Lab 4
         //Test: Create various adjacency records
@@ -141,9 +140,9 @@ public class BootLoader extends Observable
         myPersonalDemon.addAdjacency("112233","10.30.92.154");
         LL2PFrame frame = new LL2PFrame("112233B1A5ED8008(text datagram)CCCC");
         //Send a packet to the mirror:
-        myPersonalDemon.sendFrame(frame);
+        myPersonalDemon.sendFrame(frame);*/
 
-        //Test: Test Routing Table
+        //Test: Test Routing and Forwarding Table
         Log.i(Constants.LOG_TAG, " \n \nTesting Routing Table... \n \n");
         RoutingTable routingTable = new RoutingTable();
         RoutingTable forwardingTable = new RoutingTable();
@@ -176,7 +175,7 @@ public class BootLoader extends Observable
         Log.i(Constants.LOG_TAG, " \n \n5.  Check: Re-adding an existing route updates TTL... \n \n");
         routingTable.addNewRoute(new RoutingRecord(1,4,5));
 //RoutingRecord(1,4,5) should be the only freshly created record
-
+        routingTable.clear();
         Log.i(Constants.LOG_TAG, " \n \n6.  Check: Removing all routes from one source... \n \n");
         routingTable.addNewRoute(new RoutingRecord(4,1,2));
         routingTable.addNewRoute(new RoutingRecord(4,3,4));
@@ -192,9 +191,9 @@ public class BootLoader extends Observable
 
         routingTable.removeRoutesFrom(5);
 //Should return 3 routes from net 4, and 3 from 6
-        routingTable.clear();
 
         Log.i(Constants.LOG_TAG, " \n \n7.  Check: Get best routes for forwarding table... \n \n");
+        routingTable.clear();
         routingTable.addNewRoute(new RoutingRecord(10,2,7));
         routingTable.addNewRoute(new RoutingRecord(10,3,4));
         routingTable.addNewRoute(new RoutingRecord(10,5,6));
@@ -216,10 +215,8 @@ public class BootLoader extends Observable
         routingTable.addNewRoute(new RoutingRecord(12,3,4));
 
         forwardingTable.addRoutes(routingTable.getBestRoutes());
+        routingTable.clear();
 //Now all forwarding table routes go through next hop: 4
-
-
-
 
     }
 }
