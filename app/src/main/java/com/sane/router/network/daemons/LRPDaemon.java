@@ -40,11 +40,6 @@ public class LRPDaemon extends Observable implements Observer, Runnable
      */
     @Override public void run()
     {
-        List<Record> removedRecords = routingTable.expireRoutes(Constants.LRP_RECORD_TTL);
-        if (!removedRecords.isEmpty())
-        {
-            setChanged();
-            notifyObservers(removedRecords);
-        }
+        routingTable.expireRecords(Constants.LRP_RECORD_TTL);
     }
 }

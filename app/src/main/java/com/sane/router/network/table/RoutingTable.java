@@ -23,6 +23,7 @@ public class RoutingTable extends TimedTable
     {
         synchronized (table)
         {
+
             Log.i(Constants.LOG_TAG, " \n \nAdding RoutingTable Record, checking for key... \n \n");
             removeItem(newRoute);
             table.add(newRoute); //add new record to ARP table
@@ -39,15 +40,6 @@ public class RoutingTable extends TimedTable
      */
     public void removeItem(Record recordToRemove)
     {
-//        Log.i(Constants.LOG_TAG, "\n\nRemoving RoutingTable Record, checking for key...\n\n");
-//        if (((TimedTable) table).touch(recordToRemove.getKey()))
-//        {
-//            Log.i(Constants.LOG_TAG, "Matching key found, deleting record: "
-//                    + ((RoutingRecord) ((TimedTable) table).getItem(recordToRemove.getKey())).toString() + "\n\n");
-//
-//            ((TimedTable) table).removeItem(recordToRemove.getKey());
-//            Log.i(Constants.LOG_TAG, " \n ...Record deleted.");
-//        }
         removeItem(recordToRemove.getKey());
     }
     /**
@@ -186,7 +178,6 @@ public class RoutingTable extends TimedTable
         {
             duplicate = false;
             betterRoute = false;
-
             synchronized (table)
             {
                 for( Record record : table )//Iterate Old Routes
@@ -196,12 +187,10 @@ public class RoutingTable extends TimedTable
                         if (route.getDistance() < ((RoutingRecord) record).getDistance())//check if new route is better
                             betterRoute = true;
                     }
-
                 if (duplicate)
                 {
                     if (betterRoute)// If a route was already known but the new one is shorter
                     {
-                        removeItem(route.getKey());
                         addNewRoute(route);
                     }
                     else// if an old route is shorter than the new one
@@ -236,7 +225,6 @@ public class RoutingTable extends TimedTable
             {
                 if (betterRoute)// If a route was already known but the new one is shorter
                 {
-                    removeItem(newRoute.getKey());
                     addNewRoute(newRoute);
                 }
                 else// if an old route is shorter than the new one
@@ -245,15 +233,5 @@ public class RoutingTable extends TimedTable
             else// if the route is new
                 addNewRoute(newRoute);
         }
-    }
-
-    /**
-     * Expires routes, removing the ones that are past their expiration date
-     *
-     * @param routeTTL - The Time To Live of Routing Records
-     */
-    public List<Record> expireRoutes(int routeTTL)
-    {
-        return ((TimedTable) table).expireRecords(routeTTL);
     }
 }

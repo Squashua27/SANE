@@ -25,7 +25,7 @@ public class Scheduler implements Observer
     //Fields
     private ScheduledThreadPoolExecutor threadManager;//manages pool of threads
     private ARPDaemon arpDaemon; //for private access to ARP services
-    //private RPDaemon lrpDeamon; //TODO: creaate this class
+    private LRPDaemon lrpDeamon; //TODO: creaate this class
     private TableUI tableUI; //private tableUI reference to keep tables updated
 
     //Interface Implementation
@@ -44,6 +44,6 @@ public class Scheduler implements Observer
 
         threadManager.scheduleAtFixedRate(tableUI, Constants.ROUTER_BOOT_TIME, Constants.UI_UPDATE_INTERVAL, TimeUnit.SECONDS);
         threadManager.scheduleAtFixedRate(arpDaemon, Constants.ROUTER_BOOT_TIME, Constants.ARP_UPDATE_INTERVAL, TimeUnit.SECONDS);
-        threadManager.scheduleAtFixedRate(tableUI, Constants.ROUTER_BOOT_TIME, Constants.LRP_UPDATE_INTERVAL, TimeUnit.SECONDS);
+        threadManager.scheduleAtFixedRate(lrpDeamon, Constants.ROUTER_BOOT_TIME, Constants.LRP_UPDATE_INTERVAL, TimeUnit.SECONDS);
     }
 }

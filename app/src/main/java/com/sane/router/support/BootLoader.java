@@ -146,13 +146,80 @@ public class BootLoader extends Observable
         //Test: Test Routing Table
         Log.i(Constants.LOG_TAG, " \n \nTesting Routing Table... \n \n");
         RoutingTable routingTable = new RoutingTable();
+        RoutingTable forwardingTable = new RoutingTable();
+
+        Log.i(Constants.LOG_TAG, " \n \n1.  Adding a route... \n \n");
         routingTable.addNewRoute(new RoutingRecord(1,2,3));
-        Log.i(Constants.LOG_TAG, " \n \nRouting table, first Record added:"+routingTable.toString());
+        routingTable.expireRecords(5); //make sure route is not immediately expired
+//table should contain a record
+        Log.i(Constants.LOG_TAG, " \n \n2.  Waiting for record to expire... \n \n");
+        routingTable.expireRecords(2); //this should expire the route
+//table should be empty (if you waited 2 seconds in debugging)
+        Log.i(Constants.LOG_TAG, " \n \n3.  Check: Newer route added over faster route... \n \n");
+        routingTable.addNewRoute(new RoutingRecord(1,3,1));
+        routingTable.addNewRoute(new RoutingRecord(1,4,1));
+//table should contain only one record
+        routingTable.clear();
+        Log.i(Constants.LOG_TAG, " \n \n4.  Check: getBestRoutes() returns single best route for each network... \n \n");
+
+        routingTable.addNewRoute(new RoutingRecord(1,4,5));
+        routingTable.addNewRoute(new RoutingRecord(1,3,7));
+        routingTable.addNewRoute(new RoutingRecord(1,5,6));
+
+        routingTable.addNewRoute(new RoutingRecord(2,8,1));
+        routingTable.addNewRoute(new RoutingRecord(2,7,2));
+        routingTable.addNewRoute(new RoutingRecord(2,6,7));
+
+        routingTable.getBestRoutes();
+//next hop 7 should be the best next hop for both networks.
+
+        Log.i(Constants.LOG_TAG, " \n \n5.  Check: Re-adding an existing route updates TTL... \n \n");
+        routingTable.addNewRoute(new RoutingRecord(1,4,5));
+//RoutingRecord(1,4,5) should be the only freshly created record
+
+        Log.i(Constants.LOG_TAG, " \n \n6.  Check: Removing all routes from one source... \n \n");
+        routingTable.addNewRoute(new RoutingRecord(4,1,2));
+        routingTable.addNewRoute(new RoutingRecord(4,3,4));
         routingTable.addNewRoute(new RoutingRecord(4,5,6));
-        routingTable.getBestRoute(1);
 
-        routingTable.expireRoutes(10);
+        routingTable.addNewRoute(new RoutingRecord(5,1,2));
+        routingTable.addNewRoute(new RoutingRecord(5,3,4));
+        routingTable.addNewRoute(new RoutingRecord(5,5,6));
 
-        UIManager.getInstance().displayMessage("Best Routes: "+routingTable.getBestRoutes());
+        routingTable.addNewRoute(new RoutingRecord(6,1,2));
+        routingTable.addNewRoute(new RoutingRecord(6,3,4));
+        routingTable.addNewRoute(new RoutingRecord(6,5,6));
+
+        routingTable.removeRoutesFrom(5);
+//Should return 3 routes from net 4, and 3 from 6
+        routingTable.clear();
+
+        Log.i(Constants.LOG_TAG, " \n \n7.  Check: Get best routes for forwarding table... \n \n");
+        routingTable.addNewRoute(new RoutingRecord(10,2,7));
+        routingTable.addNewRoute(new RoutingRecord(10,3,4));
+        routingTable.addNewRoute(new RoutingRecord(10,5,6));
+
+        routingTable.addNewRoute(new RoutingRecord(11,9,2));
+        routingTable.addNewRoute(new RoutingRecord(11,4,7));
+        routingTable.addNewRoute(new RoutingRecord(11,6,6));
+
+        routingTable.addNewRoute(new RoutingRecord(12,6,2));
+        routingTable.addNewRoute(new RoutingRecord(12,9,4));
+        routingTable.addNewRoute(new RoutingRecord(12,5,7));
+
+        forwardingTable.addRoutes(routingTable.getBestRoutes());
+//Forwarding table should contain 3 records, next hops should all be 7
+
+        Log.i(Constants.LOG_TAG, " \n \n8.  Check: Add more, better routes to routing table, update forwarding table... \n \n");
+        routingTable.addNewRoute(new RoutingRecord(10,1,4));
+        routingTable.addNewRoute(new RoutingRecord(11,2,4));
+        routingTable.addNewRoute(new RoutingRecord(12,3,4));
+
+        forwardingTable.addRoutes(routingTable.getBestRoutes());
+//Now all forwarding table routes go through next hop: 4
+
+
+
+
     }
 }
