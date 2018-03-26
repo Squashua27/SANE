@@ -3,8 +3,10 @@ package com.sane.router.network.daemons;
 import com.sane.router.network.Constants;
 import com.sane.router.network.table.RoutingTable;
 import com.sane.router.network.tableRecords.Record;
+import com.sane.router.network.tableRecords.RoutingRecord;
 import com.sane.router.support.BootLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -35,14 +37,38 @@ public class LRPDaemon extends Observable implements Observer, Runnable
         sequenceNumber = 0;
     }
 
+    //Methods
+
+    public RoutingTable getRoutingTable() {return routingTable;}
+    public ArrayList<Record> getRoutingTableAsList()
+    {
+        return (ArrayList<Record>) routingTable.getTableAsList();
+    }
+    public RoutingTable getForwardingTable() {return forwardingTable;}
+    public ArrayList<Record> getForwardingTableAsList()
+    {
+        return (ArrayList<Record>) forwardingTable.getTableAsList();
+    }
+
     //Interface Implementation
+    /**
+     * Definitive method of the Observer Interface
+     */
     @Override public void update(Observable observable, Object object)
     {
-        if (observable instanceof BootLoader)
+        if (observable instanceof BootLoader)//Get references on clear signal from BootLoader
         {
             ll2Daemon = LL2Daemon.getInstance();
             arpDaemon = ARPDaemon.getInstance();
             arpDaemon.addObserver(this); //adds self as ARPDaemon observer (to watch ARP table)
+        }
+        else if (object instanceof List)//Removes outdated routes when triggered by ARPDaemon
+        {
+            for(Record record : (List<Record>) object)
+            {
+                routingTable.removeRoutesFrom(((RoutingRecord)record).getNetworkNumber());
+                forwardingTable.removeRoutesFrom(((RoutingRecord)record).getNetworkNumber());
+            }
         }
     }
     /**
