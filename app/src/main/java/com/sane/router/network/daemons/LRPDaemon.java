@@ -17,14 +17,22 @@ import java.util.Observer;
 public class LRPDaemon extends Observable implements Observer, Runnable
 {
     //Fields
-    RoutingTable routingTable;
+    private RoutingTable routingTable;//The table containing ALL known routes
+    private RoutingTable forwardingTable;//The table containing the BEST known route /network
+    private int sequenceNumber;//Used in sequencing LRP packets, number 0-15
+    private LL2Daemon ll2Daemon;//Reference for the sending of LRP packets
+    public ARPDaemon arpDaemon;//Reference to the ARP daemon, which knows about adjacent networks
 
     //Singleton Implementation
     private static final LRPDaemon ourInstance = new LRPDaemon();
     public static LRPDaemon getInstance() {
         return ourInstance;
     }
-    private LRPDaemon() {routingTable = new RoutingTable();
+    private LRPDaemon()
+    {
+        routingTable = new RoutingTable();
+        forwardingTable = new RoutingTable();
+        sequenceNumber = 0;
     }
 
     //Interface Implementation
@@ -32,7 +40,9 @@ public class LRPDaemon extends Observable implements Observer, Runnable
     {
         if (observable instanceof BootLoader)
         {
-            routingTable = new RoutingTable();
+            ll2Daemon = LL2Daemon.getInstance();
+            arpDaemon = ARPDaemon.getInstance();
+            arpDaemon.addObserver(this); //adds self as ARPDaemon observer (to watch ARP table)
         }
     }
     /**

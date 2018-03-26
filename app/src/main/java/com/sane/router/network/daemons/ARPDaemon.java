@@ -19,14 +19,16 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
+ * The ARP (Address Resolution Protocol) Daemon, the daemonic manager of the ARP Table
+ *
  * @author Joshua Johnston
  */
 public class ARPDaemon extends Observable implements Observer, Runnable
 {
     //Fields
-    private TimedTable arpTable; //THE ARP table
+    private TimedTable arpTable; //ARP table - the table managed by this daemon
     private LL2Daemon ll2Demon;//private instance used to send ARP frames
-    private TableRecordFactory factory; //
+    private TableRecordFactory factory; //instance to factory for TableRecord building
 
     //Singleton Implementation
     private static final ARPDaemon ourInstance = new ARPDaemon();
