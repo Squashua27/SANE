@@ -1,13 +1,18 @@
 package com.sane.router.network.daemons;
 
+import com.sane.router.UI.UIManager;
 import com.sane.router.network.Constants;
+import com.sane.router.network.datagram.LRPPacket;
+import com.sane.router.network.datagramFields.NetworkDistancePair;
 import com.sane.router.network.table.RoutingTable;
+import com.sane.router.network.tableRecords.ARPRecord;
 import com.sane.router.network.tableRecords.Record;
 import com.sane.router.network.tableRecords.RoutingRecord;
 import com.sane.router.support.BootLoader;
 import com.sane.router.support.factories.TableRecordFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -36,6 +41,8 @@ public class LRPDaemon extends Observable implements Observer, Runnable
         routingTable = new RoutingTable();
         forwardingTable = new RoutingTable();
         sequenceNumber = 0;
+
+        addObserver(UIManager.getInstance());
     }
 
     //Methods
@@ -52,21 +59,27 @@ public class LRPDaemon extends Observable implements Observer, Runnable
     }
 
     /**
-     * A Lab Routing Protocol Datagram:
-     *        _______________________________________________
-     * offset|_____0_____|_____1_____|_____2_____|_____3_____|
-     *  0x00 |______Source_LL3P______|Seq#_|Count|/\/\/\/\/\/|
-     *  0x03 |___Net_#1__|__Dist_#1__|___Net_#2__|__Dist_#2__|
-     *  0x07 |___Net_#3__|__Dist_#3__|___Net_#4__|__Dist_#4__|
-     *  0x0B |___Net_#5__|__Dist_#5__|___Net_#6__|__Dist_#6__|
-     *  0X0F |___Net_#7__|__Dist_#7__|...max_15_NetDistPairs_|
+     * Called when an LRP Packet is received by the L2 Daemon, touches ARP entry to keep
+     * Layer 2 addresses current, Processes LRP packet to update Routing&Forwarding tables
+     *
+     * @param lrpPacket - the received packet, data with which to make the packet object
+     * @param ll2pSource - the source ll2p address or next hop
      */
     public void receiveNewLRP(byte[] lrpPacket, Integer ll2pSource)
     {
-        //TODO: touch packet with matching LL2P
-        String packet = new String(lrpPacket);
+        //arpDaemon.getARPTable()?
+        //TODO: touch ARP Entry with matching LL2P
+        String packetData = new String(lrpPacket);
+        LRPPacket packet = new LRPPacket(packetData);
+        List<RoutingRecord> routes = Collections.synchronizedList(new ArrayList<RoutingRecord>());
 
+        for(NetworkDistancePair pair: packet.getRoutes())
+            routes.add(new RoutingRecord(pair.getNetwork(), pair.getDistance(), ll2pSource))
 
+        routingTable.addRoutes(routes);
+        forwardingTable.addOrReplaceRoutes(routes);
+        setChanged();
+        notifyObservers();
     }
 
     //Interface Implementation
@@ -90,11 +103,28 @@ public class LRPDaemon extends Observable implements Observer, Runnable
             }
         }
     }
+
+    private void updateRoutes()
+    {
+        routingTable.expireRecords(Constants.LRP_RECORD_TTL);
+        forwardingTable.expireRecords(Constants.LRP_RECORD_TTL);
+
+        routingTable.addNewRoute(new RoutingRecord(Integer.parseInt(Constants.LL2P_ADDRESS,16),0,Integer.parseInt(Constants.LL2P_ADDRESS,16)));
+
+        List<RoutingRecord> routes = Collections.synchronizedList(new ArrayList<RoutingRecord>());
+        for( Record adjacency: arpDaemon.getARPTable().getTableAsList())
+            routes.add(new RoutingRecord(((ARPRecord) adjacency).getLL2PAddress(), 1, ((ARPRecord) adjacency).getLL2PAddress()));
+
+
+        routingTable.addRoutes(routes);
+    }
+
     /**
      * Definitive method of the Runnable Interface, removes expired records at set interval
      */
     @Override public void run()
     {
-        routingTable.expireRecords(Constants.LRP_RECORD_TTL);
+        //TODO: Force work onto the UI thread?
+        updateRoutes();
     }
 }

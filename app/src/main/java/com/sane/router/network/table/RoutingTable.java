@@ -206,6 +206,40 @@ public class RoutingTable extends TimedTable
         updateDisplay();
     }
 
+    public void addOrReplaceRoutes(List<RoutingRecord> newRoutes)
+    {
+        int removalKey;
+        int touchKey;
+        for(RoutingRecord route : newRoutes)//Iterate New Routes
+        {
+            removalKey = 0;
+            touchKey = 0;
+            synchronized (table)
+            {
+                for( Record record : table )//Iterate Old Routes
+                    if (route.getNetworkNumber() == ((RoutingRecord)record).getNetworkNumber())//Check if new route already known
+                    {
+                        touchKey = ((RoutingRecord)record).getKey();
+                        if (route.getDistance() < ((RoutingRecord) record).getDistance())//check if new route is better
+                        {
+                            removalKey = ((RoutingRecord)record).getKey();
+                        }
+                    }
+                if (!(touchKey==0))//There is an old record
+                    if(!(removalKey==0))//The new record is better than an old
+                    {
+                        removeItem(removalKey);
+                        addOrReplace(route);
+                    }
+                    else//there is an old record better than the new one
+                        touch(touchKey);
+                else//There is no old record
+                    addOrReplace(route);
+            }
+        }
+        updateDisplay();
+    }
+
     /**
      * Adds a new Route if none exists, replacing an old record if the new one is shorter
      *

@@ -5,8 +5,11 @@ import com.sane.router.network.datagramFields.LL3PAddressField;
 import com.sane.router.network.datagramFields.LRPCount;
 import com.sane.router.network.datagramFields.LRPSequenceNumber;
 import com.sane.router.network.datagramFields.NetworkDistancePair;
+import com.sane.router.network.tableRecords.Record;
 import com.sane.router.support.factories.HeaderFieldFactory;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -56,6 +59,7 @@ public class LRPPacket implements Datagram
 
         for (int pairIndex = 0; pairIndex < pairCount; pairIndex++)
         {
+            routes = Collections.synchronizedList(new ArrayList<NetworkDistancePair>());
             routes.add( (NetworkDistancePair) factory.getItem
                     (Constants.NETWORK_DISTANCE_PAIR,
                     data.substring(2*Constants.LL3P_LIST_OFFSET+2*pairIndex*Constants.LL3P_ADDRESS_LENGTH,
@@ -76,6 +80,7 @@ public class LRPPacket implements Datagram
 
         count = factory.getItem(Constants.LRP_COUNT, Integer.toHexString(cnt));
 
+        pairs = Collections.synchronizedList(new ArrayList<NetworkDistancePair>());
         for (NetworkDistancePair route : pairs)
             routes.add((NetworkDistancePair) factory.getItem
                     (Constants.NETWORK_DISTANCE_PAIR,
