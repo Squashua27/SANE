@@ -5,6 +5,7 @@ import com.sane.router.network.table.RoutingTable;
 import com.sane.router.network.tableRecords.Record;
 import com.sane.router.network.tableRecords.RoutingRecord;
 import com.sane.router.support.BootLoader;
+import com.sane.router.support.factories.TableRecordFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,24 @@ public class LRPDaemon extends Observable implements Observer, Runnable
     public ArrayList<Record> getForwardingTableAsList()
     {
         return (ArrayList<Record>) forwardingTable.getTableAsList();
+    }
+
+    /**
+     * A Lab Routing Protocol Datagram:
+     *        _______________________________________________
+     * offset|_____0_____|_____1_____|_____2_____|_____3_____|
+     *  0x00 |______Source_LL3P______|Seq#_|Count|/\/\/\/\/\/|
+     *  0x03 |___Net_#1__|__Dist_#1__|___Net_#2__|__Dist_#2__|
+     *  0x07 |___Net_#3__|__Dist_#3__|___Net_#4__|__Dist_#4__|
+     *  0x0B |___Net_#5__|__Dist_#5__|___Net_#6__|__Dist_#6__|
+     *  0X0F |___Net_#7__|__Dist_#7__|...max_15_NetDistPairs_|
+     */
+    public void receiveNewLRP(byte[] lrpPacket, Integer ll2pSource)
+    {
+        //TODO: touch packet with matching LL2P
+        String packet = new String(lrpPacket);
+
+
     }
 
     //Interface Implementation

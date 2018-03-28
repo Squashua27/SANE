@@ -37,12 +37,10 @@ public class SendLayer1Frame extends AsyncTask<DatagramPacket,Void,Void>
         DatagramPacket packet = arg0[0];
         try {
             sendSocket.send(packet); //Send the frame
-            Log.i(Constants.LOG_TAG, " \n \n>>>>>>>>>Sent frame: "
-                    + new String(packet.getData()) + " \n \n");
+            Log.i(Constants.LOG_TAG, " \n \n>>>>>>>>>Sent frame: "+new String(packet.getData())+" \n \n");
             }
         catch (IOException e) {e.printStackTrace();}
 
         return null;
     }
 }
-
