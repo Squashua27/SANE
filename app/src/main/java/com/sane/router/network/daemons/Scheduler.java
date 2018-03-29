@@ -40,8 +40,9 @@ public class Scheduler implements Observer
     {
         //Instantiate object fields
         threadManager = new ScheduledThreadPoolExecutor(Constants.THREAD_COUNT);
-        arpDaemon = ARPDaemon.getInstance();
         tableUI = UIManager.getInstance().getTableUI();
+        arpDaemon = ARPDaemon.getInstance();
+        lrpDeamon = LRPDaemon.getInstance();
 
         //Begin scheduled thread activity for Record management
         threadManager.scheduleAtFixedRate(tableUI, Constants.ROUTER_BOOT_TIME, Constants.UI_UPDATE_INTERVAL, TimeUnit.SECONDS);

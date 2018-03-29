@@ -88,6 +88,7 @@ public class LL2Daemon implements Observer
      */
     public void sendEchoRequest(String ll2p)
     {
+        Log.i(Constants.LOG_TAG, " \n \nSending Echo Request frame to address: 0x"+ll2p+"... \n \n");
         LL2PFrame echoRequest = new LL2PFrame
                 (ll2p
                 + Constants.LL2P_ADDRESS
@@ -104,7 +105,7 @@ public class LL2Daemon implements Observer
      */
     public void sendARPRequest(int ll2p)
     {
-        Log.i(Constants.LOG_TAG, "\n\nSending ARP Request to address"+Integer.toHexString(ll2p)+"...\n\n");
+        Log.i(Constants.LOG_TAG, " \n \nSending ARP Request frame to address: 0x"+Integer.toHexString(ll2p)+"... \n \n");
         LL2PFrame frame = new LL2PFrame
                 (Integer.toHexString(ll2p)
                 + Constants.LL2P_ADDRESS
@@ -122,7 +123,7 @@ public class LL2Daemon implements Observer
      */
     public void sendARPReply(int ll2p)
     {
-        Log.i(Constants.LOG_TAG, "\n\nSending ARP Reply to address"+Integer.toHexString(ll2p)+"...\n\n");
+        Log.i(Constants.LOG_TAG, " \n \nSending ARP Reply frame to address: 0x"+Integer.toHexString(ll2p)+"... \n \n");
         LL2PFrame frame = new LL2PFrame
                 (Integer.toHexString(ll2p)
                 + Constants.LL2P_ADDRESS
@@ -133,9 +134,25 @@ public class LL2Daemon implements Observer
 
         lesserDemon.sendFrame(frame);
     }
+
+    /**
+     * Frames and sends an LRP update
+     *
+     * @param lrpPacket - the packet to send
+     * @param ll2p - the Layer 2 Address of the packet to send
+     */
     public void sendLRPUpdate(LRPPacket lrpPacket, int ll2p)
     {
+        Log.i(Constants.LOG_TAG, " \n \nSending LRP Update frame to address: 0x"+Integer.toHexString(ll2p)+"... \n \n");
+        LL2PFrame frame = new LL2PFrame
+                (Integer.toHexString(ll2p)
+                        + Constants.LL2P_ADDRESS
+                        + Constants.LL2P_TYPE_LRP_HEX
+                        + Constants.LL3P_ADDRESS
+                        + "CCCC",
+                        lrpPacket);
 
+        lesserDemon.sendFrame(frame);
     }
     //Interface Implementation
     /**

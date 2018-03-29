@@ -27,7 +27,7 @@ public class ARPDatagram implements Datagram
     //Methods
     public ARPDatagram(String ll3p, boolean isSource)//Constructor
     {
-        Log.i(Constants.LOG_TAG, "\n\nConstructing an ARP Datagram...\n\n");
+        Log.i(Constants.LOG_TAG, " \n \nConstructing an ARP Datagram... \n \n");
 
         ll3PAddressField = new LL3PAddressField(ll3p, isSource);
     }
