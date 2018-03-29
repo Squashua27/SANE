@@ -1,5 +1,7 @@
 package com.sane.router.network.daemons;
 
+import android.util.Log;
+
 import com.sane.router.UI.UIManager;
 import com.sane.router.network.Constants;
 import com.sane.router.network.datagram.LRPPacket;
@@ -9,6 +11,7 @@ import com.sane.router.network.tableRecords.ARPRecord;
 import com.sane.router.network.tableRecords.Record;
 import com.sane.router.network.tableRecords.RoutingRecord;
 import com.sane.router.support.BootLoader;
+import com.sane.router.support.Utilities;
 import com.sane.router.support.factories.TableRecordFactory;
 
 import java.util.ArrayList;
@@ -67,8 +70,11 @@ public class LRPDaemon extends Observable implements Observer, Runnable
      */
     public void receiveNewLRP(byte[] lrpPacket, Integer ll2pSource)
     {
-        //arpDaemon.getARPTable()?
-        //TODO: touch ARP Entry with matching LL2P
+        Log.i(Constants.LOG_TAG," \n \n LRP Daemon receiving new packet... \n \n");
+        //TODO: touch ARP Entry with matching LL2P? I think I did this in my addRecord methods
+        //for(Record record: arpDaemon.getARPTable().getTableAsList())
+        //    if(record.getKey() == ll2pSource)
+        //        ((ARPRecord) record).tou?
         String packetData = new String(lrpPacket);
         LRPPacket packet = new LRPPacket(packetData);
         List<RoutingRecord> routes = Collections.synchronizedList(new ArrayList<RoutingRecord>());
@@ -82,9 +88,49 @@ public class LRPDaemon extends Observable implements Observer, Runnable
         notifyObservers();
     }
 
+    /**
+     * Expires old records, adds self and adjacent nodes to Routing Table, updates forwarding table,
+     * and sends the best routes for each network to all neighbor nodes
+     */
+    private void updateRoutes()
+    {
+        Log.i(Constants.LOG_TAG," \n \n LRP Daemon updating routes... \n \n");
+
+        routingTable.expireRecords(Constants.LRP_RECORD_TTL);     //\
+        forwardingTable.expireRecords(Constants.LRP_RECORD_TTL); //Expire old records
+
+        routingTable.addNewRoute(new RoutingRecord(Integer.parseInt(Constants.LL2P_ADDRESS,16),0,Integer.parseInt(Constants.LL2P_ADDRESS,16)));
+
+        List<RoutingRecord> routes = Collections.synchronizedList(new ArrayList<RoutingRecord>());
+        for( Record adjacency: arpDaemon.getARPTable().getTableAsList())
+            routes.add(new RoutingRecord(((ARPRecord) adjacency).getLL2PAddress(), 1, ((ARPRecord) adjacency).getLL2PAddress()));
+
+        routingTable.addRoutes(routes);
+
+        forwardingTable.addRoutes(routingTable.getBestRoutes());
+
+        //LRPPacket(int ll3p, int seqNum, int cnt, List<NetworkDistancePair> pairs)
+
+        String lrpUpdate = Constants.LL3P_ADDRESS
+                + Utilities.padHexString(Integer.toString(sequenceNumber),1)
+                + "01";
+
+        for( Integer dest: arpDaemon.getAttachedNodes())
+        {   //prepare to get unique list /adjacency:
+            lrpUpdate = lrpUpdate.substring(0,2*Constants.LL3P_LIST_OFFSET);
+            for (RoutingRecord route : forwardingTable.getRoutesExcluding(dest))
+            {   //add each network-distance pair as a string
+                lrpUpdate += Utilities.padHexString(Integer.toHexString(route.getNetworkNumber()), Constants.LL3P_NETWORK_LENGTH);
+                lrpUpdate += Utilities.padHexString(Integer.toHexString(route.getDistance()), Constants.LL3P_DISTANCE_LENGTH);
+            }
+            ll2Daemon.sendLRPDatagram(new LRPPacket(lrpUpdate), dest); //send an LRP update
+        }
+    }
+
     //Interface Implementation
     /**
-     * Definitive method of the Observer Interface
+     * Definitive method of the Observer Interface, boots self at the BootLoader's signal,
+     * or removes records to maintain current tables
      */
     @Override public void update(Observable observable, Object object)
     {
@@ -103,24 +149,10 @@ public class LRPDaemon extends Observable implements Observer, Runnable
             }
         }
     }
-
-    private void updateRoutes()
-    {
-        routingTable.expireRecords(Constants.LRP_RECORD_TTL);
-        forwardingTable.expireRecords(Constants.LRP_RECORD_TTL);
-
-        routingTable.addNewRoute(new RoutingRecord(Integer.parseInt(Constants.LL2P_ADDRESS,16),0,Integer.parseInt(Constants.LL2P_ADDRESS,16)));
-
-        List<RoutingRecord> routes = Collections.synchronizedList(new ArrayList<RoutingRecord>());
-        for( Record adjacency: arpDaemon.getARPTable().getTableAsList())
-            routes.add(new RoutingRecord(((ARPRecord) adjacency).getLL2PAddress(), 1, ((ARPRecord) adjacency).getLL2PAddress()));
-
-        routingTable.addRoutes(routes);
-        forwardingTable.addOrReplaceRoutes(routes);
-    }
-
     /**
-     * Definitive method of the Runnable Interface, removes expired records at set interval
+     * Definitive method of the Runnable Interface, removes expired records at set interval,
+     * also periodically communicates routing information with adjacent nodes,
+     * this accomplished through the calling of updateRoutes
      */
     @Override public void run()
     {

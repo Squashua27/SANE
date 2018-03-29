@@ -6,6 +6,7 @@ import com.sane.router.UI.UIManager;
 import com.sane.router.network.Constants;
 import com.sane.router.network.datagram.ARPDatagram;
 import com.sane.router.network.datagram.LL2PFrame;
+import com.sane.router.network.datagram.LRPPacket;
 import com.sane.router.network.datagramFields.LL2PAddressField;
 import com.sane.router.network.datagramFields.LL2PTypeField;
 
@@ -126,6 +127,7 @@ public class LL2Daemon implements Observer
 
         lesserDemon.sendFrame(frame);
     }
+    public void sendLRPDatagram(LRPPacket lrpPacket, int ll2p){}
     //Interface Implementation
     /**
      * Required method of Observer classes, triggered by bootLoader, constructs self
