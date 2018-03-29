@@ -38,13 +38,14 @@ public class Scheduler implements Observer
      */
     @Override public void update(Observable observable, Object object)
     {
+        //Instantiate object fields
         threadManager = new ScheduledThreadPoolExecutor(Constants.THREAD_COUNT);
         arpDaemon = ARPDaemon.getInstance();
         tableUI = UIManager.getInstance().getTableUI();
 
+        //Begin scheduled thread activity for Record management
         threadManager.scheduleAtFixedRate(tableUI, Constants.ROUTER_BOOT_TIME, Constants.UI_UPDATE_INTERVAL, TimeUnit.SECONDS);
         threadManager.scheduleAtFixedRate(arpDaemon, Constants.ROUTER_BOOT_TIME, Constants.ARP_UPDATE_INTERVAL, TimeUnit.SECONDS);
-
-        //threadManager.scheduleAtFixedRate(lrpDeamon, Constants.ROUTER_BOOT_TIME, Constants.LRP_UPDATE_INTERVAL, TimeUnit.SECONDS);
+        threadManager.scheduleAtFixedRate(lrpDeamon, Constants.ROUTER_BOOT_TIME, Constants.LRP_UPDATE_INTERVAL, TimeUnit.SECONDS);
     }
 }

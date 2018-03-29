@@ -31,9 +31,9 @@ public class Constants
     public static final int ROUTER_BOOT_TIME = 5;
     public static final int UI_UPDATE_INTERVAL = 1;
     public static final int ARP_UPDATE_INTERVAL = 5;
+    public static final int LRP_UPDATE_INTERVAL = 10;
     public static final int ARP_RECORD_TTL = 10;
     public static final int LRP_RECORD_TTL = 30;
-    public static final int LRP_UPDATE_INTERVAL = 10;
 
     //Datagram Constants (lengths and offsets in bytes)
     //Lengths (in bytes)

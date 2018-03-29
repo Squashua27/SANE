@@ -12,7 +12,6 @@ import com.sane.router.network.tableRecords.Record;
 import com.sane.router.network.tableRecords.RoutingRecord;
 import com.sane.router.support.BootLoader;
 import com.sane.router.support.Utilities;
-import com.sane.router.support.factories.TableRecordFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,20 +71,23 @@ public class LRPDaemon extends Observable implements Observer, Runnable
     {
         Log.i(Constants.LOG_TAG," \n \n LRP Daemon receiving new packet... \n \n");
         //TODO: touch ARP Entry with matching LL2P? I think I did this in my addRecord methods
-        //for(Record record: arpDaemon.getARPTable().getTableAsList())
-        //    if(record.getKey() == ll2pSource)
-        //        ((ARPRecord) record).tou?
         String packetData = new String(lrpPacket);
         LRPPacket packet = new LRPPacket(packetData);
+
+        processLRPPacket(packet);
+    }
+
+    public void processLRPPacket(LRPPacket packet)
+    {
+        Log.d(Constants.LOG_TAG," \n \n LRP Daemon processing packet... \n \n");
+
         List<RoutingRecord> routes = Collections.synchronizedList(new ArrayList<RoutingRecord>());
 
         for(NetworkDistancePair pair: packet.getRoutes())
-            routes.add(new RoutingRecord(pair.getNetwork(), pair.getDistance(), ll2pSource));
+            routes.add(new RoutingRecord(pair.getNetwork(), pair.getDistance(), arpDaemon.getMacAddress(packet.getSourceLL3P().getLL3PAddress())));
 
         routingTable.addRoutes(routes);
         forwardingTable.addOrReplaceRoutes(routes);
-        setChanged();
-        notifyObservers();
     }
 
     /**
@@ -115,15 +117,15 @@ public class LRPDaemon extends Observable implements Observer, Runnable
                 + Utilities.padHexString(Integer.toString(sequenceNumber),1)
                 + "01";
 
-        for( Integer dest: arpDaemon.getAttachedNodes())
+        for( Integer ll3p: arpDaemon.getAttachedNodes())
         {   //prepare to get unique list /adjacency:
             lrpUpdate = lrpUpdate.substring(0,2*Constants.LL3P_LIST_OFFSET);
-            for (RoutingRecord route : forwardingTable.getRoutesExcluding(dest))
+            for (RoutingRecord route : forwardingTable.getRoutesExcluding(ll3p))
             {   //add each network-distance pair as a string
                 lrpUpdate += Utilities.padHexString(Integer.toHexString(route.getNetworkNumber()), Constants.LL3P_NETWORK_LENGTH);
                 lrpUpdate += Utilities.padHexString(Integer.toHexString(route.getDistance()), Constants.LL3P_DISTANCE_LENGTH);
             }
-            ll2Daemon.sendLRPDatagram(new LRPPacket(lrpUpdate), dest); //send an LRP update
+            ll2Daemon.sendLRPUpdate(new LRPPacket(lrpUpdate), ll3p); //send an LRP update
         }
     }
 

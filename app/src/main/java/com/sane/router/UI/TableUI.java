@@ -2,11 +2,13 @@ package com.sane.router.UI;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import com.sane.router.R;
 import com.sane.router.network.Constants;
 import com.sane.router.network.daemons.ARPDaemon;
 import com.sane.router.network.daemons.LL1Daemon;
+import com.sane.router.network.daemons.LRPDaemon;
 import com.sane.router.network.table.RoutingTable;
 import com.sane.router.network.table.TableInterface;
 import com.sane.router.network.table.TimedTable;
@@ -42,6 +44,7 @@ public class TableUI implements Runnable, Observer
      */
     @Override public void run()
     {
+        adjacencyTableUI.updateView();//TODO: Is this necessary?
         arpTableUI.updateView();
         routingTableUI.updateView();
         forwardingTableUI.updateView();
@@ -54,6 +57,7 @@ public class TableUI implements Runnable, Observer
      */
     @Override public void update(Observable observable, Object o)
     {
+        Log.d(Constants.LOG_TAG," \n \n Booting TableUI... \n \n");
         if (observable instanceof BootLoader)
         {
             Activity activity = ParentActivity.getParentActivity();//get instance of parent
@@ -64,20 +68,17 @@ public class TableUI implements Runnable, Observer
                     LL1Daemon.getInstance().getAdjacencyTable(),
                     LL1Daemon.getInstance());
 
-            arpTableUI = new SingleTableUI(activity,
+            arpTableUI = new SingleTableUI(activity, //instantiate the ARP Table
                     R.id.ARPTable,
                     ARPDaemon.getInstance().getARPTable());
 
-            RoutingTable routingTable = new RoutingTable();
-            RoutingTable forwardingTable = new RoutingTable();
-
-            routingTableUI = new SingleTableUI(activity,
+            routingTableUI = new SingleTableUI(activity, //instantiate the Routing Table
                     R.id.routingTable,
-                    (TableInterface) routingTable); //TODO: get table from demon here
+                    LRPDaemon.getInstance().getRoutingTable());
 
-            forwardingTableUI = new SingleTableUI(activity,
+            forwardingTableUI = new SingleTableUI(activity, //instantiate the Forwarding Table
                     R.id.routingTable,
-                    (TableInterface) routingTable); //TODO: get table from demon here
+                    LRPDaemon.getInstance().getForwardingTable());
         }
     }
 }

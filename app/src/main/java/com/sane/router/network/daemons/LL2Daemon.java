@@ -24,6 +24,7 @@ public class LL2Daemon implements Observer
     private UIManager uiManager; //reference used to interface manager
     private LL1Daemon lesserDemon; //the less experienced daemon
     private ARPDaemon arpDemon; //reference to help manage ARP frames
+    private LRPDaemon lrpDaemon; //reference to the manager of routing records and methods
 
     //Singleton Implementation
     private static final LL2Daemon ourInstance = new LL2Daemon();//empty constructor
@@ -40,18 +41,18 @@ public class LL2Daemon implements Observer
      */
     public void processLL2PFrame(LL2PFrame frame)
     {
-        Log.i(Constants.LOG_TAG, "\n\nProcessing LL2P frame...\n\n");
+        Log.i(Constants.LOG_TAG, " \n \nProcessing LL2P frame... \n \n");
         LL2PTypeField type = frame.getType();
         LL2PAddressField dest = frame.getDestinationAddress();
         LL2PAddressField source = frame.getSourceAddress();
 
         if (dest.toString().equalsIgnoreCase(Constants.LL2P_ADDRESS)) //Is this frame for me?
         {
-            Log.i(Constants.LOG_TAG, "\n\n... It's for me!\n\n");
+            Log.i(Constants.LOG_TAG, " \n \n... It's for me! \n \n");
             //TODO: check CRCField
             if (type.toHexString().equalsIgnoreCase(Constants.LL2P_TYPE_ECHO_REQUEST_HEX))
             {
-                Log.i(Constants.LOG_TAG, "\n\nProcessing LL2P Echo Request...\n\n");
+                Log.i(Constants.LOG_TAG, " \n \nProcessing LL2P Echo Request... \n \n");
                 LL2PFrame echoReply = new LL2PFrame
                         (source.toTransmissionString()
                         + Constants.LL2P_ADDRESS
@@ -62,16 +63,21 @@ public class LL2Daemon implements Observer
             }
             if (type.toHexString().equalsIgnoreCase(Constants.LL2P_TYPE_ARP_REQUEST_HEX))
             {
-                Log.i(Constants.LOG_TAG, "\n\nProcessing LL2P ARP Request...\n\n");
+                Log.i(Constants.LOG_TAG, " \n \nProcessing LL2P ARP Request... \n \n");
                 arpDemon.processARPRequest(source.getAddress(),
                         ((ARPDatagram) (frame.getPayloadField().getPayload())));
                 //sendARPReply(source.getAddress());
             }
             if (type.toHexString().equalsIgnoreCase(Constants.LL2P_TYPE_ARP_REPLY_HEX))
             {
-                Log.i(Constants.LOG_TAG, "\n\nProcessing LL2P ARP Reply...\n\n");
+                Log.i(Constants.LOG_TAG, " \n \nProcessing LL2P ARP Reply... \n \n");
                 arpDemon.processARPReply(source.getAddress(),
                         ((ARPDatagram) (frame.getPayloadField().getPayload())));
+            }
+            if (type.toHexString().equalsIgnoreCase(Constants.LL2P_TYPE_LRP_HEX))
+            {
+                Log.i(Constants.LOG_TAG, " \n \nProcessing LL2P LRP Update... \n \n");
+                lrpDaemon.processLRPPacket((LRPPacket) frame.getPayloadField().getPayload());
             }
         }
     }
@@ -127,7 +133,10 @@ public class LL2Daemon implements Observer
 
         lesserDemon.sendFrame(frame);
     }
-    public void sendLRPDatagram(LRPPacket lrpPacket, int ll2p){}
+    public void sendLRPUpdate(LRPPacket lrpPacket, int ll2p)
+    {
+
+    }
     //Interface Implementation
     /**
      * Required method of Observer classes, triggered by bootLoader, constructs self
