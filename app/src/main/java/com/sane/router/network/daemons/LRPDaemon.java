@@ -74,7 +74,7 @@ public class LRPDaemon extends Observable implements Observer, Runnable
         List<RoutingRecord> routes = Collections.synchronizedList(new ArrayList<RoutingRecord>());
 
         for(NetworkDistancePair pair: packet.getRoutes())
-            routes.add(new RoutingRecord(pair.getNetwork(), pair.getDistance(), ll2pSource))
+            routes.add(new RoutingRecord(pair.getNetwork(), pair.getDistance(), ll2pSource));
 
         routingTable.addRoutes(routes);
         forwardingTable.addOrReplaceRoutes(routes);
@@ -115,8 +115,8 @@ public class LRPDaemon extends Observable implements Observer, Runnable
         for( Record adjacency: arpDaemon.getARPTable().getTableAsList())
             routes.add(new RoutingRecord(((ARPRecord) adjacency).getLL2PAddress(), 1, ((ARPRecord) adjacency).getLL2PAddress()));
 
-
         routingTable.addRoutes(routes);
+        forwardingTable.addOrReplaceRoutes(routes);
     }
 
     /**
