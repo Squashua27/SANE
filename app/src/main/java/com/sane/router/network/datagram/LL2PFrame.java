@@ -60,7 +60,7 @@ public class LL2PFrame implements Datagram
      */
     public LL2PFrame(String frame, Datagram packet)
     {
-        Log.i(Constants.LOG_TAG, "\n\nConstructing a frame with around input packet...\n\n");
+        Log.i(Constants.LOG_TAG, "\n\nConstructing a frame around input packet...\n\n");
         makeFrame(frame);
         payload = new DatagramPayloadField(packet);
     }

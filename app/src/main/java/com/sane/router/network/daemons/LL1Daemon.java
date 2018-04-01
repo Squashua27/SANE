@@ -136,15 +136,24 @@ public class LL1Daemon extends Observable implements Observer
         LL2PAddressField dest = ll2pFrame.getDestinationAddress();
 
         InetAddress IPAddress = null;
-        try{IPAddress=((AdjacencyRecord)adjacencyTable.getItem(dest.getAddress())).getIPAddress();}
-        catch (Exception e) {e.printStackTrace();}
+        try
+        {
+            IPAddress=((AdjacencyRecord)adjacencyTable.getItem(dest.getAddress())).getIPAddress();
 
-        DatagramPacket sendPacket = new DatagramPacket
-                (packet, packetLength, IPAddress, Constants.UDP_PORT);
+            DatagramPacket sendPacket = new DatagramPacket
+                    (packet, packetLength, IPAddress, Constants.UDP_PORT);
 
-        new SendLayer1Frame().execute(sendPacket);//spin off thread using SendLayer1Frame
+            new SendLayer1Frame().execute(sendPacket);//spin off thread using SendLayer1Frame
 
-        Log.i(Constants.LOG_TAG, "\n\n... Frame sent.\n\n");
+            Log.i(Constants.LOG_TAG, " \n \n...Frame sent. \n \n");
+        }
+        catch (Exception e)
+        {
+            Log.e(Constants.LOG_TAG, " \n \n...Frame dropped. \n \n");
+            e.printStackTrace();
+        }
+
+
 
         setChanged();//notify observers of change to frame data
         notifyObservers(ll2pFrame);//send the frame so that observers know what changed
