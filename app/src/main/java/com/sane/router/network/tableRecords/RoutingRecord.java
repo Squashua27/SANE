@@ -43,7 +43,10 @@ public class RoutingRecord extends Record
     public Integer getNextHop(){return nextHop;}
     @Override public String toString()
     {
-        return "Network Distance Pair: "+ networkDistancePair.toHexString() +" |  Next hop: " + Integer.toHexString(nextHop);
+        return "Network: " + Integer.toHexString(networkDistancePair.getNetwork())
+                + " |  Distance: " + Integer.toHexString(networkDistancePair.getDistance())
+                + " |  Next hop: " + Integer.toHexString(nextHop)
+                + " |  Age: " + getAgeInSeconds();
     }
 
     //Interface Implementation

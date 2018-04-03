@@ -20,6 +20,7 @@ public class Constants
     public static final int LL2P_ADDRESS_INT = 0xB1A5ED;
     public static final String LL3P_ADDRESS = "0901";
     public static final int LL3P_ADDRESS_HEX = 0x0901;
+    public static final int LL3P_NETWORK = LL3P_ADDRESS_HEX/256;
     public static final int UDP_PORT = 49999;//our chosen port for communication
 
     //used in debugging messages or messages sent to the log file.
@@ -32,8 +33,8 @@ public class Constants
     public static final int UI_UPDATE_INTERVAL = 1;
     public static final int ARP_UPDATE_INTERVAL = 5;
     public static final int LRP_UPDATE_INTERVAL = 10;
-    public static final int ARP_RECORD_TTL = 10;
-    public static final int LRP_RECORD_TTL = 30;
+    public static final int ARP_RECORD_TTL = 100;
+    public static final int LRP_RECORD_TTL = 300;
 
     //Datagram Constants (lengths and offsets in bytes)
     //Lengths (in bytes)
@@ -95,6 +96,7 @@ public class Constants
     public static final int LRP_COUNT = 9;
     public static final int LRP_SEQUENCE_NUMBER = 10;
     public static final int NETWORK_DISTANCE_PAIR = 11;
+
     //Table Record Factory:
     public static final int RECORD = 0;
     public static final int ADJACENCY_RECORD = 1;

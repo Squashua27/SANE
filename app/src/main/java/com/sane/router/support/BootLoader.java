@@ -67,7 +67,7 @@ public class BootLoader extends Observable
 
         //Testing
         test(); //Test of BootLoader and other early classes
-        ARPDaemon.getInstance().testARP(); //Test of ARP structures and methods
+        //ARPDaemon.getInstance().testARP(); //Test of ARP structures and methods
     }
     /**
      * Runs various tests for debugging and quality control
@@ -142,7 +142,9 @@ public class BootLoader extends Observable
         myPersonalDemon.addAdjacency("112233","10.30.92.154");
         LL2PFrame frame = new LL2PFrame("112233B1A5ED8008(text datagram)CCCC");
         //Send a packet to the mirror:
-        myPersonalDemon.sendFrame(frame);*/
+        myPersonalDemon.sendFrame(frame);
+
+
 
         //Test: Test Routing and Forwarding Table
         Log.i(Constants.LOG_TAG, " \n \nTesting Routing Table... \n \n");
@@ -219,6 +221,8 @@ public class BootLoader extends Observable
         forwardingTable.addRoutes(routingTable.getBestRoutes());
         routingTable.clear();
 //Now all forwarding table routes go through next hop: 4
+*/
 
+        LL1Daemon.getInstance().addAdjacency(Constants.LL2P_ADDRESS, Constants.IP_ADDRESS);
     }
 }

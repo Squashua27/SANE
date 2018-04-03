@@ -77,7 +77,7 @@ public class TableUI implements Runnable, Observer
                     LRPDaemon.getInstance().getRoutingTable());
 
             forwardingTableUI = new SingleTableUI(activity, //instantiate the Forwarding Table
-                    R.id.routingTable,
+                    R.id.forwardingTable,
                     LRPDaemon.getInstance().getForwardingTable());
         }
     }

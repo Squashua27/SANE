@@ -64,6 +64,10 @@ public class LL2PTypeField implements HeaderField
             explanation += " - NOT a valid LL2P Type";
     }
 
+    public int getType() {
+        return type;
+    }
+
     //Interface Implementation (see interface documentation)
     @Override public String toString()//necessary to interface, not very useful here
     {

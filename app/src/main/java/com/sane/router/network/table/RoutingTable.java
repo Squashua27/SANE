@@ -183,16 +183,18 @@ public class RoutingTable extends TimedTable
             synchronized (table)
             {
                 for( Record record : table )//Iterate Old Routes
-                    if (route.getNetworkNumber() == ((RoutingRecord)record).getNetworkNumber())//Check if new route already known
+                {
+                    if (route.getNetworkNumber().equals(((RoutingRecord) record).getNetworkNumber()))//Check if new route already known
                     {
-                        touchKey = ((RoutingRecord)record).getKey();
+                        touchKey = (record).getKey();
                         if (route.getDistance() < ((RoutingRecord) record).getDistance())//check if new route is better
                         {
-                            removalKey = ((RoutingRecord)record).getKey();
+                            removalKey = record.getKey();
                         }
                     }
-                if (!(touchKey==0))//There is an old record
-                    if(!(removalKey==0))//The new record is better than an old
+                }
+                if (touchKey != 0)//There is an old record
+                    if(removalKey != 0)//The new record is better than an old
                     {
                         removeItem(removalKey);
                         addNewRoute(route);
@@ -205,72 +207,33 @@ public class RoutingTable extends TimedTable
         }
         updateDisplay();
     }
-
+    /**
+     * Adds each new Route if none exists, replacing an old record if it exists,
+     * used by Forwarding Table
+     *
+     * @param newRoutes - The new Routing Records to be added
+     */
     public void addOrReplaceRoutes(List<RoutingRecord> newRoutes)
     {
-        int removalKey;
-        int touchKey;
-        for(RoutingRecord route : newRoutes)//Iterate New Routes
-        {
-            removalKey = 0;
-            touchKey = 0;
-            synchronized (table)
-            {
-                for( Record record : table )//Iterate Old Routes
-                    if (route.getNetworkNumber() == ((RoutingRecord)record).getNetworkNumber())//Check if new route already known
-                    {
-                        touchKey = ((RoutingRecord)record).getKey();
-                        if (route.getDistance() < ((RoutingRecord) record).getDistance())//check if new route is better
-                        {
-                            removalKey = ((RoutingRecord)record).getKey();
-                        }
-                    }
-                if (!(touchKey==0))//There is an old record
-                    if(!(removalKey==0))//The new record is better than an old
-                    {
-                        removeItem(removalKey);
-                        addOrReplace(route);
-                    }
-                    else//there is an old record better than the new one
-                        touch(touchKey);
-                else//There is no old record
-                    addOrReplace(route);
-            }
-        }
-        updateDisplay();
+        for(RoutingRecord newRoute : newRoutes)//Iterate New Routes
+            addOrReplace(newRoute);
     }
-
     /**
-     * Adds a new Route if none exists, replacing an old record if the new one is shorter
+     * Adds a new Route if none exists, replacing an old record if it exists,
+     * used by Forwarding Table
      *
      * @param newRoute - The new Routing Record to be added
      */
     public void addOrReplace(RoutingRecord newRoute)
     {
-        Boolean duplicate = false;
-        Boolean betterRoute = false;
         synchronized (table)
         {
-            for( Record record : table )//Iterate Old Routes
-                if (newRoute.getKey() == record.getKey())//Check if new route already known
+            for( Record route : table )//Iterate Old Routes
+                if (newRoute.getNetworkNumber() == ((RoutingRecord)route).getNetworkNumber())//Check if already have route from network
                 {
-                    duplicate = true;
-                    if (newRoute.getDistance() < ((RoutingRecord) record).getDistance())//check if new route is better
-                        betterRoute = true;
+                    removeItem(route.getKey());
                 }
-
-            if (duplicate)
-            {
-                if (betterRoute)// If a route was already known but the new one is shorter
-                {
-                    addNewRoute(newRoute);
-                }
-                else// if an old route is shorter than the new one
-                    touch(newRoute.getKey());
-            }
-            else// if the route is new
-                addNewRoute(newRoute);
+            addNewRoute(newRoute);
         }
-        updateDisplay();
     }
 }

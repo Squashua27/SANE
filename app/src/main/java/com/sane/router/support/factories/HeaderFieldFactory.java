@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.sane.router.network.Constants;
 import com.sane.router.network.datagram.ARPDatagram;
+import com.sane.router.network.datagram.LRPPacket;
+import com.sane.router.network.datagram.TextDatagram;
 import com.sane.router.network.datagramFields.CRCField;
 import com.sane.router.network.datagramFields.DatagramPayloadField;
 import com.sane.router.network.datagramFields.LL2PAddressField;
@@ -49,10 +51,6 @@ public class HeaderFieldFactory implements Factory<HeaderField, String>
             return (U) new LL2PTypeField(data);
         else if (type == Constants.LL2P_TEXT_PAYLOAD_FIELD)
             return (U) new DatagramPayloadField(data);
-        else if (type == Constants.LL3P_DEST_DATAGRAM_PAYLOAD_FIELD)
-            return (U) new DatagramPayloadField(new ARPDatagram(data, false));
-        else if (type == Constants.LL3P_SOURCE_DATAGRAM_PAYLOAD_FIELD)
-            return (U) new DatagramPayloadField(new ARPDatagram(data, true));
         else if (type == Constants.CRC_FIELD)
             return (U) new CRCField(data);
         else if (type == Constants.LRP_COUNT)
@@ -61,7 +59,23 @@ public class HeaderFieldFactory implements Factory<HeaderField, String>
             return (U) new LRPSequenceNumber(data);
         else if (type == Constants.NETWORK_DISTANCE_PAIR)
             return (U) new NetworkDistancePair(data);
+
+        else if (type == Constants.LL3P_DEST_DATAGRAM_PAYLOAD_FIELD)
+            return (U) new DatagramPayloadField(new ARPDatagram(data, false));
+        else if (type == Constants.LL3P_SOURCE_DATAGRAM_PAYLOAD_FIELD)
+            return (U) new DatagramPayloadField(new ARPDatagram(data, true));
+        else if (type == Constants.LL2P_TYPE_LRP)
+            return (U) new DatagramPayloadField(new LRPPacket(data));
+        else if (type == Constants.LL2P_TYPE_ECHO_REQUEST)
+            return (U) new DatagramPayloadField(new TextDatagram(data));
+        else if (type == Constants.LL2P_TYPE_ECHO_REPLY)
+            return (U) new DatagramPayloadField(new TextDatagram(data));
+
+        //else if (type == Constants.LL2P_TYPE_ARP_REQUEST)
+        //    return (U) new DatagramPayloadField(new ARPDatagram(data, true));
+
             Log.e(Constants.LOG_TAG, "Error creating HeaderField");
+
         return null;
     }
 }

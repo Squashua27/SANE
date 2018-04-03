@@ -101,11 +101,11 @@ public class LRPDaemon extends Observable implements Observer, Runnable
         routingTable.expireRecords(Constants.LRP_RECORD_TTL);     //\
         forwardingTable.expireRecords(Constants.LRP_RECORD_TTL); //Expire old records
 
-        routingTable.addNewRoute(new RoutingRecord(Integer.parseInt(Constants.LL2P_ADDRESS,16),0,Integer.parseInt(Constants.LL2P_ADDRESS,16)));
+        routingTable.addNewRoute(new RoutingRecord(Constants.LL3P_NETWORK,0,Constants.LL3P_ADDRESS_HEX));
 
-        List<RoutingRecord> routes = Collections.synchronizedList(new ArrayList<RoutingRecord>());
-        for( Record adjacency: arpDaemon.getARPTable().getTableAsList())
-            routes.add(new RoutingRecord(((ARPRecord) adjacency).getLL2PAddress(), 1, ((ARPRecord) adjacency).getLL2PAddress()));
+        List<RoutingRecord> routes = new ArrayList<>();
+        for( Integer ll3p: arpDaemon.getAttachedNodes())
+            routes.add(new RoutingRecord(ll3p/256, 1, ll3p));
 
         routingTable.addRoutes(routes);
 

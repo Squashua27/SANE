@@ -95,9 +95,9 @@ public class ARPDaemon extends Observable implements Observer, Runnable
      */
     public List<Integer> getAttachedNodes()
     {
-        List<Integer> nodeList = Collections.synchronizedList(new ArrayList<Integer>());
+        List<Integer> nodeList = new ArrayList<>();
         for (Record arpRecord : arpTable.getTableAsList())
-            nodeList.add(((ARPRecord) arpRecord).getLL3PAddress());
+            nodeList.add(arpRecord.getKey());
 
         return nodeList;
     }
