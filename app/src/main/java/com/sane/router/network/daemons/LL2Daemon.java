@@ -78,6 +78,7 @@ public class LL2Daemon implements Observer
             {
                 Log.i(Constants.LOG_TAG, " \n \nProcessing LL2P LRP Update... \n \n");
                 lrpDaemon.processLRPPacket((LRPPacket) frame.getPayloadField().getPayload());
+                //TODO: Maybe recieveNewLRP instead?
             }
         }
     }

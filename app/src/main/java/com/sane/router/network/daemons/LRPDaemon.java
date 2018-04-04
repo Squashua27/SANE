@@ -7,7 +7,6 @@ import com.sane.router.network.Constants;
 import com.sane.router.network.datagram.LRPPacket;
 import com.sane.router.network.datagramFields.NetworkDistancePair;
 import com.sane.router.network.table.RoutingTable;
-import com.sane.router.network.tableRecords.ARPRecord;
 import com.sane.router.network.tableRecords.Record;
 import com.sane.router.network.tableRecords.RoutingRecord;
 import com.sane.router.support.BootLoader;
