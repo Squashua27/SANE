@@ -174,6 +174,7 @@ public class ARPDaemon extends Observable implements Observer, Runnable
      */
     @Override public void run()
     {
+        Log.i(Constants.LOG_TAG, "Running ARP Daemon...");
         List<Record> removedRecords = arpTable.expireRecords(Constants.ARP_RECORD_TTL);
         if (!removedRecords.isEmpty())
             notifyObservers(removedRecords);

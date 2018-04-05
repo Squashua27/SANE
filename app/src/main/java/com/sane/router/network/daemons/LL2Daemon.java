@@ -22,7 +22,7 @@ public class LL2Daemon implements Observer
 {
     //Fields
     private UIManager uiManager; //reference used to interface manager
-    private LL1Daemon lesserDemon; //the less experienced daemon
+    private LL1Daemon ll1Demon; //the less experienced daemon
     private ARPDaemon arpDemon; //reference to help manage ARP frames
     private LRPDaemon lrpDaemon; //reference to the manager of routing records and methods
 
@@ -59,7 +59,7 @@ public class LL2Daemon implements Observer
                         + Constants.LL2P_TYPE_ECHO_REPLY_HEX
                         + "CCCC");
 
-                lesserDemon.sendFrame(echoReply);
+                ll1Demon.sendFrame(echoReply);
             }
             if (type.toHexString().equalsIgnoreCase(Constants.LL2P_TYPE_ARP_REQUEST_HEX))
             {
@@ -97,7 +97,7 @@ public class LL2Daemon implements Observer
                 + "This sentence is a text payload."
                 + "CCCC");
 
-        lesserDemon.sendFrame(echoRequest);
+        ll1Demon.sendFrame(echoRequest);
     }
     /**
      * Builds an ARP request frame around an ARP Datagram and sends it
@@ -115,7 +115,7 @@ public class LL2Daemon implements Observer
                 + "CCCC",
                 new ARPDatagram(Constants.LL3P_ADDRESS, true));
 
-        lesserDemon.sendFrame(frame);
+        ll1Demon.sendFrame(frame);
     }
     /**
      * Builds an ARP Reply frame around an ARP Datagram and sends it
@@ -133,7 +133,7 @@ public class LL2Daemon implements Observer
                 + "CCCC",
                 new ARPDatagram(Constants.LL3P_ADDRESS, true));
 
-        lesserDemon.sendFrame(frame);
+        ll1Demon.sendFrame(frame);
     }
 
     /**
@@ -153,7 +153,7 @@ public class LL2Daemon implements Observer
                         + "CCCC",
                         lrpPacket);
 
-        lesserDemon.sendFrame(frame);
+        ll1Demon.sendFrame(frame);
     }
     //Interface Implementation
     /**
@@ -165,7 +165,8 @@ public class LL2Daemon implements Observer
     public void update(Observable observer, Object object)
     {
         uiManager = UIManager.getInstance();
-        lesserDemon = LL1Daemon.getInstance();
+        ll1Demon = LL1Daemon.getInstance();
         arpDemon = ARPDaemon.getInstance();
+        lrpDaemon = LRPDaemon.getInstance();
     }
 }

@@ -44,7 +44,7 @@ public class TableUI implements Runnable, Observer
      */
     @Override public void run()
     {
-        adjacencyTableUI.updateView();//TODO: Is this necessary?
+        //adjacencyTableUI.updateView();//TODO: Is this necessary?
         arpTableUI.updateView();
         routingTableUI.updateView();
         forwardingTableUI.updateView();

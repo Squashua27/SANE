@@ -11,6 +11,7 @@ import com.sane.router.network.daemons.LL2Daemon;
 import com.sane.router.network.daemons.LRPDaemon;
 import com.sane.router.network.daemons.Scheduler;
 import com.sane.router.network.datagram.LL2PFrame;
+import com.sane.router.network.datagram.LRPPacket;
 import com.sane.router.network.table.RoutingTable;
 import com.sane.router.network.table.Table;
 import com.sane.router.network.tableRecords.AdjacencyRecord;
@@ -222,7 +223,10 @@ public class BootLoader extends Observable
         routingTable.clear();
 //Now all forwarding table routes go through next hop: 4
 */
-
         LL1Daemon.getInstance().addAdjacency(Constants.LL2P_ADDRESS, Constants.IP_ADDRESS);
+
+
+        LRPDaemon.getInstance().receiveNewLRP("0f0f141212131314141515".getBytes(),100);
+        //LRPDaemon.getInstance().processLRPPacket(new LRPPacket("0905010111121314"));
     }
 }

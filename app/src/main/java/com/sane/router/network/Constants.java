@@ -33,8 +33,8 @@ public class Constants
     public static final int UI_UPDATE_INTERVAL = 1;
     public static final int ARP_UPDATE_INTERVAL = 5;
     public static final int LRP_UPDATE_INTERVAL = 10;
-    public static final int ARP_RECORD_TTL = 100;
-    public static final int LRP_RECORD_TTL = 300;
+    public static final int ARP_RECORD_TTL = 10;
+    public static final int LRP_RECORD_TTL = 30;
 
     //Datagram Constants (lengths and offsets in bytes)
     //Lengths (in bytes)
@@ -101,6 +101,12 @@ public class Constants
     public static final int RECORD = 0;
     public static final int ADJACENCY_RECORD = 1;
     public static final int ARP_RECORD = 2;
+
+
+
+
+
+    public static int NETWORK_DISTANCE_PAIR_LENGTH = 2;
 
     /**
      * the following code snippet by Corbin Young,

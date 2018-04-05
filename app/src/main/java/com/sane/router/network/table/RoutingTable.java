@@ -23,10 +23,9 @@ public class RoutingTable extends TimedTable
     {
         synchronized (table)
         {
-
             Log.i(Constants.LOG_TAG, " \n \nAdding RoutingTable Record, checking for key... \n \n");
             removeItem(newRoute);
-            table.add(newRoute); //add new record to ARP table
+            table.add(newRoute); //add new record to Routing Table
             Log.i(Constants.LOG_TAG, "Record added to table: "
                     + newRoute.toString() + " \n \n");
         }
@@ -234,6 +233,7 @@ public class RoutingTable extends TimedTable
                     removeItem(route.getKey());
                 }
             addNewRoute(newRoute);
+            touch(newRoute.getKey());
         }
     }
 }

@@ -71,7 +71,6 @@ public class Table extends Observable implements TableInterface
             if (!table.add(recordToAdd))
                 new LabException("Failed to perform Record.addItem(recordToAdd)");
             updateDisplay();
-
             return recordToAdd;
         }
     }
@@ -187,6 +186,7 @@ public class Table extends Observable implements TableInterface
         synchronized (table)
         {
             table.clear();
+            updateDisplay();
         }
     }
 }

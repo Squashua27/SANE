@@ -29,10 +29,10 @@ public class RoutingRecord extends Record
                 (Constants.NETWORK_DISTANCE_PAIR,
                 Utilities.padHexString
                 (Integer.toHexString(netNum),
-                Constants.LL3P_ADDRESS_NETWORK_LENGTH)
+                2*Constants.LL3P_ADDRESS_NETWORK_LENGTH)
                 +Utilities.padHexString
                 (Integer.toHexString(dist),
-                Constants.LL3P_DISTANCE_LENGTH));
+                2*Constants.LL3P_DISTANCE_LENGTH));
 
         nextHop = nxtHop;
 

@@ -83,7 +83,7 @@ public class LRPDaemon extends Observable implements Observer, Runnable
         List<RoutingRecord> routes = Collections.synchronizedList(new ArrayList<RoutingRecord>());
 
         for(NetworkDistancePair pair: packet.getRoutes())
-            routes.add(new RoutingRecord(pair.getNetwork(), pair.getDistance(), arpDaemon.getMacAddress(packet.getSourceLL3P().getLL3PAddress())));
+            routes.add(new RoutingRecord(pair.getNetwork(), pair.getDistance()+1, arpDaemon.getMacAddress(packet.getSourceLL3P().getLL3PAddress())));
 
         routingTable.addRoutes(routes);
         forwardingTable.addOrReplaceRoutes(routes);
@@ -126,6 +126,8 @@ public class LRPDaemon extends Observable implements Observer, Runnable
             }
             ll2Daemon.sendLRPUpdate(new LRPPacket(lrpUpdate), ll3p); //send an LRP update
         }
+
+
     }
 
     //Interface Implementation

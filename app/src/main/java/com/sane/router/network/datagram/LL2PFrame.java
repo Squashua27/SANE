@@ -104,11 +104,11 @@ public class LL2PFrame implements Datagram
         if (type.toTransmissionString().equalsIgnoreCase(Constants.LL2P_TYPE_ARP_REQUEST_HEX)
                 || type.toTransmissionString().equalsIgnoreCase(Constants.LL2P_TYPE_ARP_REPLY_HEX))
             payload = HeaderFieldFactory.getInstance().getItem(Constants.LL3P_SOURCE_DATAGRAM_PAYLOAD_FIELD,data);
-        else //TODO:if (type.toTransmissionString().equalsIgnoreCase(Constants.LL2P_TYPE_LRP_HEX))????????
-            payload = HeaderFieldFactory.getInstance().getItem(type.getType(), data);
-            //payload = HeaderFieldFactory.getInstance().getItem(Constants.LL2P_TEXT_PAYLOAD_FIELD,data);
-
-
+        else if (type.toTransmissionString().equalsIgnoreCase(Constants.LL2P_TYPE_LRP_HEX))
+            payload = new DatagramPayloadField(new LRPPacket(data));
+            //payload = HeaderFieldFactory.getInstance().getItem(Constants.LL3P_SOURCE_DATAGRAM_PAYLOAD_FIELD,data;
+        else
+            payload = HeaderFieldFactory.getInstance().getItem(type.getType(),data);
 
         return payload;
     }

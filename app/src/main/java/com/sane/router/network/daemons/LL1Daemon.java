@@ -32,7 +32,7 @@ public class LL1Daemon extends Observable implements Observer
     private IPAddressGetter ipAddressGetter;//private reference to a singleton
     private UIManager uiManager;//private reference to a singleton
     private TableRecordFactory factory;//private singleton factory reference
-    private LL2Daemon greaterDemon;//private reference to upper layer's daemon singleton
+    private LL2Daemon ll2Demon;//private reference to upper layer's daemon singleton
 
     //Singleton Implementation
     private static final LL1Daemon ourInstance = new LL1Daemon();
@@ -60,7 +60,7 @@ public class LL1Daemon extends Observable implements Observer
             ipAddressGetter = IPAddressGetter.getInstance();
             factory = TableRecordFactory.getInstance();
             uiManager = UIManager.getInstance();
-            greaterDemon = LL2Daemon.getInstance();
+            ll2Demon = LL2Daemon.getInstance();
 
             new ReceiveLayer1Frame().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
@@ -92,7 +92,7 @@ public class LL1Daemon extends Observable implements Observer
 
         adjacencyTable.addItem(newRecord); //add record to adjacency table
 
-        greaterDemon.sendARPRequest(Integer.valueOf(ll2p,16));
+        ll2Demon.sendARPRequest(Integer.valueOf(ll2p,16));
 
         setChanged();//notify observers of change to the adjacency list
         notifyObservers(newRecord);
@@ -171,9 +171,14 @@ public class LL1Daemon extends Observable implements Observer
         setChanged();
         notifyObservers(ll2pFrame);
 
-        Log.i(Constants.LOG_TAG, " \n \n<<<<<<<<<Received frame: \n"
-                + ll2pFrame.toProtocolExplanationString() + " \n \n");
-
-        greaterDemon.processLL2PFrame(ll2pFrame);
+        try {
+            Log.i(Constants.LOG_TAG, " \n \n<<<<<<<<<Received frame: \n"
+                    + ll2pFrame.toProtocolExplanationString() + " \n \n");
+        }catch (Exception e)
+        {
+            Log.e(Constants.LOG_TAG, " \n \n...Failed to process L1 Frame. \n \n");
+            e.printStackTrace();
+        }
+        ll2Demon.processLL2PFrame(ll2pFrame);
     }
 }
