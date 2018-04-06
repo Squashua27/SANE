@@ -68,7 +68,7 @@ public class TimedTable extends Table
         }
         //If no record matching the passed key is found, throw exception:
         new LabException("Failed to perform TimedTable.touch(key)");
-        Log.e(Constants.LOG_TAG, "\nRecord touching failure...\n\n");
+        Log.e(Constants.LOG_TAG, " \nRecord touching failure... \n \n");
         return false;
     }
 }

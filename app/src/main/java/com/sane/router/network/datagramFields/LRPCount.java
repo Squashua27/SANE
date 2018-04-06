@@ -16,6 +16,7 @@ public class LRPCount implements HeaderField
     {
         count = Integer.valueOf(string,16);
     }//Constructor
+    public int getCount(){return count;}
 
     //Interface Implementation
     @Override public String toTransmissionString()

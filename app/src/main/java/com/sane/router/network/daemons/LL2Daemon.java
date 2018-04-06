@@ -9,6 +9,7 @@ import com.sane.router.network.datagram.LL2PFrame;
 import com.sane.router.network.datagram.LRPPacket;
 import com.sane.router.network.datagramFields.LL2PAddressField;
 import com.sane.router.network.datagramFields.LL2PTypeField;
+import com.sane.router.support.Utilities;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -146,7 +147,7 @@ public class LL2Daemon implements Observer
     {
         Log.i(Constants.LOG_TAG, " \n \nSending LRP Update frame to address: 0x"+Integer.toHexString(ll2p)+"... \n \n");
         LL2PFrame frame = new LL2PFrame
-                (Integer.toHexString(ll2p)
+                (Utilities.padHexString(Integer.toHexString(ll2p),Constants.LL2P_ADDRESS_LENGTH)
                         + Constants.LL2P_ADDRESS
                         + Constants.LL2P_TYPE_LRP_HEX
                         + Constants.LL3P_ADDRESS

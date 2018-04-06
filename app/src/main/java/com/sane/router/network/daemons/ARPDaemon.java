@@ -50,13 +50,11 @@ public class ARPDaemon extends Observable implements Observer, Runnable
     {
         for (Record arpRecord : arpTable.getTableAsList())
         {
-            if (((ARPRecord)arpRecord).getLL3PAddress()==ll3p)
-            {
-                arpTable.touch(arpRecord.getKey());
-                return ((ARPRecord)arpRecord).getLL3PAddress();
-            }
+            if (arpTable.touch(arpRecord.getKey()))
+                return ((ARPRecord)arpRecord).getLL2PAddress();
         }
-        return -1;
+        Log.e(Constants.LOG_TAG, " \n \nARP Daemon: Failed to get MAC Address \n \n");
+        return 0;
     }
     public Table getARPTable(){return  arpTable;}//standard getter
     public List<Record> getArpTableAsList(){return arpTable.getTableAsList();}//standard getter

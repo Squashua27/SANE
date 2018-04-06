@@ -54,24 +54,15 @@ public class LRPPacket implements Datagram
                 data.substring(2*Constants.LL3P_SEQ_AND_COUNT_OFFSET+1,
                 2*Constants.LL3P_SEQ_AND_COUNT_OFFSET+2));
 
-        int length = data.length() - 2*Constants.LL3P_LIST_OFFSET;
-        int pairCount = length/4;
-
-        for (int pairIndex = 0; pairIndex < pairCount; pairIndex++)
+        routes = new ArrayList<>();
+        for (int pairIndex = 0; pairIndex < count.getCount(); pairIndex++)
         {
-            routes = Collections.synchronizedList(new ArrayList<NetworkDistancePair>());
-
-            NetworkDistancePair daPair = (NetworkDistancePair) factory.getItem
+            NetworkDistancePair pairToAdd = factory.getItem
                     (Constants.NETWORK_DISTANCE_PAIR,
-                            data.substring(2*Constants.LL3P_LIST_OFFSET+2*pairIndex*Constants.LL3P_ADDRESS_LENGTH,
-                                    2*Constants.LL3P_LIST_OFFSET+2*pairIndex*Constants.LL3P_ADDRESS_LENGTH+2*Constants.NETWORK_DISTANCE_PAIR_LENGTH));
+                    data.substring(2*Constants.LL3P_LIST_OFFSET+2*pairIndex*Constants.LL3P_ADDRESS_LENGTH,
+                    2*Constants.LL3P_LIST_OFFSET+2*pairIndex*Constants.LL3P_ADDRESS_LENGTH+2*Constants.NETWORK_DISTANCE_PAIR_LENGTH));
 
-            routes.add(daPair);
-
-            //routes.add( (NetworkDistancePair) factory.getItem
-            //        (Constants.NETWORK_DISTANCE_PAIR,
-            //        data.substring(2*Constants.LL3P_LIST_OFFSET+2*pairIndex*Constants.LL3P_ADDRESS_LENGTH,
-            //        2*Constants.LL3P_LIST_OFFSET+2*pairIndex*Constants.LL3P_ADDRESS_LENGTH+2*Constants.NETWORK_DISTANCE_PAIR_LENGTH)));
+            routes.add(pairToAdd);
         }
     }
     public LRPPacket(int ll3p, int seqNum, int cnt, List<NetworkDistancePair> pairs)
