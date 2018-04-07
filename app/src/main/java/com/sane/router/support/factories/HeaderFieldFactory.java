@@ -59,6 +59,8 @@ public class HeaderFieldFactory implements Factory<HeaderField, String>
             return (U) new LRPSequenceNumber(data);
         else if (type == Constants.NETWORK_DISTANCE_PAIR)
             return (U) new NetworkDistancePair(data);
+
+
         else if (type == Constants.LL3P_DEST_DATAGRAM_PAYLOAD_FIELD)
             return (U) new DatagramPayloadField(new ARPDatagram(data, false));
         else if (type == Constants.LL3P_SOURCE_DATAGRAM_PAYLOAD_FIELD)
@@ -69,12 +71,12 @@ public class HeaderFieldFactory implements Factory<HeaderField, String>
             return (U) new DatagramPayloadField(new TextDatagram(data));
         else if (type == Constants.LL2P_TYPE_ECHO_REPLY)
             return (U) new DatagramPayloadField(new TextDatagram(data));
-
-        //else if (type == Constants.LL2P_TYPE_ARP_REQUEST)
-        //    return (U) new DatagramPayloadField(new ARPDatagram(data, true));
+        else if (type == Constants.LL2P_TYPE_ARP_REQUEST)
+            return (U) new ARPDatagram(data, true);
+        else if (type == Constants.LL2P_TYPE_ARP_REPLY)
+            return (U) new ARPDatagram(data, false);
 
         Log.e(Constants.LOG_TAG, "Error creating HeaderField");
-
-        return null;
+        return (U) new DatagramPayloadField(data);
     }
 }

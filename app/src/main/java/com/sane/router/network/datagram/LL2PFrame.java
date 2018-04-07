@@ -154,11 +154,14 @@ public class LL2PFrame implements Datagram
     }
     public String toProtocolExplanationString()
     {
-        return " " + destinationAddress.explainSelf() + "\n "
-                + sourceAddress.explainSelf() + "\n "
-                + type.explainSelf() + "\n "
-                + payload.explainSelf() + "\n "
-                + crc.explainSelf();
+        try
+        {
+            return " " + destinationAddress.explainSelf() + "\n "
+                    + sourceAddress.explainSelf() + "\n "
+                    + type.explainSelf() + "\n "
+                    + payload.explainSelf() + "\n "
+                    + crc.explainSelf();
+        }catch(Exception e){return "Invalid LL2P frame payload of type: "+type.toHexString();}
     }
     public String toSummaryString()
     {

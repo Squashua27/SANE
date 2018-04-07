@@ -67,8 +67,11 @@ public class SnifferUI implements Observer
                     + " - Displaying frame on Sniffer UI: \n"
                     + frameToShow.toProtocolExplanationString() + " \n \n");
 
-            protocolTextView.setText(frameToShow.toProtocolExplanationString());
-            byteDumpTextView.setText(Utilities.eightBytesPerLine(frameToShow.toHexString()));
+            try{protocolTextView.setText(frameToShow.toProtocolExplanationString());}
+            catch(Exception e){protocolTextView.setText("Invalid LL2P frame");}
+
+            try{byteDumpTextView.setText(Utilities.eightBytesPerLine(frameToShow.toHexString()));}
+            catch(Exception e){protocolTextView.setText("Failed to display eight bytes per line");}
         }
     };
 

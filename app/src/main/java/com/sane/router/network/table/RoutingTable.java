@@ -53,7 +53,7 @@ public class RoutingTable extends TimedTable
         {
             for (Record record : table)
             {
-                if (network.equals(((RoutingRecord)record).getNetworkNumber()))
+                if (network == ((RoutingRecord)record).getNetworkNumber())
                 {
                     Log.i(Constants.LOG_TAG, "Matching network found,"
                             + " returning next hop of record: "
@@ -78,7 +78,7 @@ public class RoutingTable extends TimedTable
             Log.i(Constants.LOG_TAG, "\n \nGetting routes excluding: " + ll3p + "...\n \n");
 
             for (Record record : table)
-                if (ll3p.equals(((RoutingRecord) record).getNetworkNumber()))
+                if (ll3p ==((RoutingRecord) record).getNetworkNumber())
                     routes.add((RoutingRecord) record);
             return routes;
         }
@@ -153,7 +153,7 @@ public class RoutingTable extends TimedTable
         synchronized (table)
         {
             for (Record record : table)
-                if (((RoutingRecord) record).getNetworkNumber().equals(network))
+                if (((RoutingRecord) record).getNetworkNumber() == network )
                     if (((RoutingRecord) record).getDistance() < bestRouteDistance)
                     {
                         bestRoute = (RoutingRecord) record;
@@ -183,7 +183,7 @@ public class RoutingTable extends TimedTable
             {
                 for( Record record : table )//Iterate Old Routes
                 {
-                    if (route.getNetworkNumber().equals(((RoutingRecord) record).getNetworkNumber()))//Check if new route already known
+                    if (route.getNetworkNumber() == ((RoutingRecord) record).getNetworkNumber())//Check if new route already known
                     {
                         touchKey = (record).getKey();
                         if (route.getDistance() < ((RoutingRecord) record).getDistance())//check if new route is better
@@ -229,9 +229,8 @@ public class RoutingTable extends TimedTable
         {
             for( Record route : table )//Iterate Old Routes
                 if (newRoute.getNetworkNumber() == ((RoutingRecord)route).getNetworkNumber())//Check if already have route from network
-                {
-                    removeItem(route.getKey());
-                }
+                    if (newRoute.getNextHop() == ((RoutingRecord)route).getNetworkNumber())
+                        removeItem(route.getKey());
             addNewRoute(newRoute);
             touch(newRoute.getKey());
         }

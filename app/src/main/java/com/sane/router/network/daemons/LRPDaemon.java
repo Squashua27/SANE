@@ -58,7 +58,6 @@ public class LRPDaemon extends Observable implements Observer, Runnable
     {
         return (ArrayList<Record>) forwardingTable.getTableAsList();
     }
-
     /**
      * Called when an LRP Packet is received by the L2 Daemon, touches ARP entry to keep
      * Layer 2 addresses current, Processes LRP packet to update Routing&Forwarding tables
@@ -140,7 +139,7 @@ public class LRPDaemon extends Observable implements Observer, Runnable
         {
             ll2Daemon = LL2Daemon.getInstance();
             arpDaemon = ARPDaemon.getInstance();
-            arpDaemon.addObserver(this); //adds self as ARPDaemon observer (to watch ARP table)
+            arpDaemon.addObserver(this); //adds self as
         }
         else if (object instanceof List)//Removes outdated routes when triggered by ARPDaemon
         {

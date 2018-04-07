@@ -38,7 +38,7 @@ public class RoutingRecord extends Record
 
         key = netNum*256*256 + nextHop;
     }
-    public Integer getNetworkNumber(){return networkDistancePair.getNetwork();}
+    public int getNetworkNumber(){return networkDistancePair.getNetwork();}
     public Integer getDistance(){return networkDistancePair.getDistance();}
     public Integer getNextHop(){return nextHop;}
     @Override public String toString()
