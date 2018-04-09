@@ -226,7 +226,7 @@ public class BootLoader extends Observable
 //        LL1Daemon.getInstance().addAdjacency(Constants.LL2P_ADDRESS, Constants.IP_ADDRESS);
 
 
-        LRPDaemon.getInstance().receiveNewLRP("09011205010900".getBytes(),100);
+//        LRPDaemon.getInstance().receiveNewLRP("09011205010900".getBytes(),100);
         //LRPDaemon.getInstance().processLRPPacket(new LRPPacket("0905010111121314"));
     }
 }

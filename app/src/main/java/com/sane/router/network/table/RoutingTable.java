@@ -19,24 +19,20 @@ public class RoutingTable extends TimedTable
      *
      * @param newRoute - new route to be added (or touched)
      */
-    public void addNewRoute(RoutingRecord newRoute)
+    public synchronized void addNewRoute(RoutingRecord newRoute)
     {
-        synchronized (table)
-        {
-            Log.i(Constants.LOG_TAG, " \n \nAdding RoutingTable Record, checking for key... \n \n");
-            removeItem(newRoute);
-            table.add(newRoute); //add new record to Routing Table
-            Log.i(Constants.LOG_TAG, "Record added to table: "
-                    + newRoute.toString() + " \n \n");
-        }
-        updateDisplay();
+        Log.i(Constants.LOG_TAG, " \n \nAdding RoutingTable Record, checking for key... \n \n");
+        removeItem(newRoute);
+        addItem(newRoute); //add new record to Routing Table
+        Log.i(Constants.LOG_TAG, "Record added to table: "
+                + newRoute.toString() + " \n \n");
     }
     /**
      * Removes a Routing Record from the Routing Table
      *
      * @param recordToRemove - the Routing Record to remove
      */
-    public void removeItem(Record recordToRemove)
+    public synchronized void removeItem(Record recordToRemove)
     {
         removeItem(recordToRemove.getKey());
     }
@@ -45,21 +41,17 @@ public class RoutingTable extends TimedTable
      *
      * @param network - the network to retrieve the next hop of
      */
-    public Integer getNextHop(Integer network)
+    public synchronized Integer getNextHop(Integer network)
     {
-        Log.i(Constants.LOG_TAG, "\n\nGetting next hop, checking for key...\n\n");
-
-        synchronized (table)
+        Log.i(Constants.LOG_TAG, " \n \nGetting next hop, checking for key... \n \n");
+        for (Record record : table)
         {
-            for (Record record : table)
+            if (network == ((RoutingRecord)record).getNetworkNumber())
             {
-                if (network == ((RoutingRecord)record).getNetworkNumber())
-                {
-                    Log.i(Constants.LOG_TAG, "Matching network found,"
-                            + " returning next hop of record: "
-                            + record.toString() + "\n\n");
-                    return ((RoutingRecord) record).getNextHop();
-                }
+                Log.i(Constants.LOG_TAG, "Matching network found,"
+                        + " returning next hop of record: "
+                        + record.toString() + "\n\n");
+                return ((RoutingRecord) record).getNextHop();
             }
         }
         return -1;
@@ -70,18 +62,18 @@ public class RoutingTable extends TimedTable
      * @param ll3p - the address not to return records from
      * @return List - the returned list of RoutingRecords
      */
-    public List<RoutingRecord> getRoutesExcluding(Integer ll3p)//
+    public synchronized List<RoutingRecord> getRoutesExcluding(Integer ll3p)//
     {
-        synchronized (table)
-        {
-            List<RoutingRecord> routes = new ArrayList<RoutingRecord>();
-            Log.i(Constants.LOG_TAG, "\n \nGetting routes excluding: " + ll3p + "...\n \n");
+        List<RoutingRecord> routes = new ArrayList<RoutingRecord>();
+        Log.i(Constants.LOG_TAG, "\n \nGetting routes excluding: " + ll3p + "...\n \n");
 
-            for (Record record : table)
-                if (ll3p ==((RoutingRecord) record).getNetworkNumber())
-                    routes.add((RoutingRecord) record);
-            return routes;
-        }
+        for (Record record : table)
+            if (ll3p ==((RoutingRecord) record).getNetworkNumber())
+                routes.add((RoutingRecord) record);
+
+        updateDisplay();
+
+        return routes;
     }
 
     /**
@@ -89,21 +81,17 @@ public class RoutingTable extends TimedTable
      *
      * @param ll3p - the LL3P address of the dead none
      */
-    public void removeRoutesFrom(Integer ll3p)
+    public synchronized void removeRoutesFrom(Integer ll3p)
     {
-        synchronized (table)
-        {
-            List<RoutingRecord> routesToRemove = new ArrayList<RoutingRecord>();
-            Log.i(Constants.LOG_TAG, "\n \nRemoving routes from LL3P Address: " + ll3p + "...\n \n");
+        List<RoutingRecord> routesToRemove = new ArrayList<RoutingRecord>();
+        Log.i(Constants.LOG_TAG, " \n \nRemoving routes from LL3P Address: " + ll3p + "... \n \n");
 
-            for (Record record : table)
-                if (((int) ll3p) == ((int) (((RoutingRecord) record).getNetworkNumber())))
-                    routesToRemove.add((RoutingRecord) record);
+        for (Record record : table)
+            if (((int) ll3p) == ((int) (((RoutingRecord) record).getNetworkNumber())))
+                routesToRemove.add((RoutingRecord) record);
 
-            for (RoutingRecord route : routesToRemove)
-                table.remove(route);
-        }
-        updateDisplay();
+        for (RoutingRecord route : routesToRemove)
+            removeItem(route);
     }
 
     /**
@@ -111,7 +99,7 @@ public class RoutingTable extends TimedTable
      *
      * @return bestRoutes - the set of best routes (least distance)
      */
-    public List<RoutingRecord> getBestRoutes()
+    public synchronized List<RoutingRecord> getBestRoutes()
     {
         Log.i(Constants.LOG_TAG, "\n \nGetting best routes... \n \n");
         List<RoutingRecord> bestRoutes = new ArrayList<RoutingRecord>();
@@ -119,6 +107,8 @@ public class RoutingTable extends TimedTable
 
         for (Integer network : networks)
             bestRoutes.add(getBestRoute(network));
+
+        updateDisplay();
 
         return bestRoutes;
     }
@@ -128,15 +118,15 @@ public class RoutingTable extends TimedTable
      *
      * @return networks - the list of network numbers
      */
-    private List<Integer> getAllNetworks()
+    private synchronized List<Integer> getAllNetworks()
     {
+        Log.i(Constants.LOG_TAG, "\n \nGetting all networks... \n \n");
+
         List<Integer> networks = new ArrayList<Integer>();
-        synchronized (table)
-        {
-            for (Record record : table)
-                if (!networks.contains(((RoutingRecord) record).getNetworkNumber()))
-                    networks.add(((RoutingRecord) record).getNetworkNumber());
-        }
+        for (Record record : table)
+            if (!networks.contains(((RoutingRecord) record).getNetworkNumber()))
+                networks.add(((RoutingRecord) record).getNetworkNumber());
+
         return networks;
     }
     /**
@@ -145,23 +135,21 @@ public class RoutingTable extends TimedTable
      * @param network - The network to find the best route to
      * @return bestRoute - A record holding the best route to the given network
      */
-    public RoutingRecord getBestRoute(Integer network)
+    public synchronized RoutingRecord getBestRoute(Integer network)
     {
         int bestRouteDistance = 999;
         RoutingRecord bestRoute = new RoutingRecord(0,0,0);
 
-        synchronized (table)
-        {
-            for (Record record : table)
-                if (((RoutingRecord) record).getNetworkNumber() == network )
-                    if (((RoutingRecord) record).getDistance() < bestRouteDistance)
-                    {
-                        bestRoute = (RoutingRecord) record;
-                        bestRouteDistance = ((RoutingRecord) record).getDistance();
-                    }
-        }
+        for (Record record : table)
+            if (((RoutingRecord) record).getNetworkNumber() == network )
+                if (((RoutingRecord) record).getDistance() < bestRouteDistance)
+                {
+                    bestRoute = (RoutingRecord) record;
+                    bestRouteDistance = ((RoutingRecord) record).getDistance();
+                }
+
         if (bestRouteDistance == 999)
-            new LabException("Failed to perform RoutingTable.getBestRoute(network)");
+            Log.i(Constants.LOG_TAG, "Failed to get best route...");
         return bestRoute;
     }
 
@@ -171,7 +159,7 @@ public class RoutingTable extends TimedTable
      *
      * @param newRoutes - The List of new Routes with which to update table
      */
-    public void addRoutes(List<RoutingRecord> newRoutes)
+    public synchronized void addRoutes(List<RoutingRecord> newRoutes)
     {
         int removalKey;
         int touchKey;
@@ -179,19 +167,18 @@ public class RoutingTable extends TimedTable
         {
             removalKey = 0;
             touchKey = 0;
-            synchronized (table)
+
+            for( Record record : table )//Iterate Old Routes
             {
-                for( Record record : table )//Iterate Old Routes
+                if (route.getNetworkNumber() == ((RoutingRecord) record).getNetworkNumber())//Check if new route already known
                 {
-                    if (route.getNetworkNumber() == ((RoutingRecord) record).getNetworkNumber())//Check if new route already known
+                    touchKey = (record).getKey();
+                    if (route.getDistance() < ((RoutingRecord) record).getDistance())//check if new route is better
                     {
-                        touchKey = (record).getKey();
-                        if (route.getDistance() < ((RoutingRecord) record).getDistance())//check if new route is better
-                        {
-                            removalKey = record.getKey();
-                        }
+                        removalKey = record.getKey();
                     }
                 }
+
                 if (touchKey != 0)//There is an old record
                     if(removalKey != 0)//The new record is better than an old
                     {
@@ -204,7 +191,6 @@ public class RoutingTable extends TimedTable
                     addNewRoute(route);
             }
         }
-        updateDisplay();
     }
     /**
      * Adds each new Route if none exists, replacing an old record if it exists,
@@ -212,7 +198,7 @@ public class RoutingTable extends TimedTable
      *
      * @param newRoutes - The new Routing Records to be added
      */
-    public void addOrReplaceRoutes(List<RoutingRecord> newRoutes)
+    public synchronized void addOrReplaceRoutes(List<RoutingRecord> newRoutes)
     {
         for(RoutingRecord newRoute : newRoutes)//Iterate New Routes
             addOrReplace(newRoute);
@@ -223,16 +209,14 @@ public class RoutingTable extends TimedTable
      *
      * @param newRoute - The new Routing Record to be added
      */
-    public void addOrReplace(RoutingRecord newRoute)
+    public synchronized void addOrReplace(RoutingRecord newRoute)
     {
-        synchronized (table)
-        {
-            for( Record route : table )//Iterate Old Routes
-                if (newRoute.getNetworkNumber() == ((RoutingRecord)route).getNetworkNumber())//Check if already have route from network
-                    if (newRoute.getNextHop() == ((RoutingRecord)route).getNetworkNumber())
-                        removeItem(route.getKey());
-            addNewRoute(newRoute);
-            touch(newRoute.getKey());
-        }
+        for( Record route : table )//Iterate Old Routes
+            if (newRoute.getNetworkNumber() == ((RoutingRecord)route).getNetworkNumber())//Check if already have route from network
+                if (newRoute.getNextHop() == ((RoutingRecord)route).getNetworkNumber())
+                    removeItem(route.getKey());
+
+        addNewRoute(newRoute);
+        touch(newRoute.getKey());
     }
 }

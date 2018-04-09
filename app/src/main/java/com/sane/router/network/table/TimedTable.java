@@ -28,7 +28,7 @@ public class TimedTable extends Table
      * @param maxAge - max allowable record age in seconds
      * @return removedRecordList - the list of expired, removed records
      */
-    public List<Record> expireRecords(int maxAge)
+    public synchronized List<Record> expireRecords(int maxAge)
     {
         List<Record> removedRecordList = Collections.synchronizedList(new ArrayList<Record>());
         Record targetRecord;
@@ -52,7 +52,7 @@ public class TimedTable extends Table
      *
      * @param key - table element identifier, LL2P address for ARP Records
      */
-    public boolean touch(Integer key)
+    public synchronized boolean touch(Integer key)
     {
         Iterator<Record> recordIterator = table.iterator();
         Record targetRecord;
@@ -62,13 +62,14 @@ public class TimedTable extends Table
             if (key == targetRecord.getKey())
             {
                 targetRecord.updateTime();//touches the record
-                Log.i(Constants.LOG_TAG, "\nRecord found and touched...\n\n");
+                Log.i(Constants.LOG_TAG, " \nRecord found and touched... \n \n");
+                updateDisplay();
                 return true;//record appropriately touched, exit loop and method
             }
         }
         //If no record matching the passed key is found, throw exception:
-        new LabException("Failed to perform TimedTable.touch(key)");
-        Log.e(Constants.LOG_TAG, " \nRecord touching failure... \n \n");
+        Log.i(Constants.LOG_TAG, " \nFailed to touch record... \n \n");
+        updateDisplay();
         return false;
     }
 }
