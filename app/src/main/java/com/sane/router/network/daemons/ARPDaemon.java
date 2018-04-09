@@ -83,8 +83,8 @@ public class ARPDaemon extends Observable implements Observer, Runnable
             Log.i(Constants.LOG_TAG, "Record added to table: "
                     + newRecord.explainSelf() + "\n\n\n");
         }
-        setChanged();//notify observers of change to the adjacency list
-        notifyObservers();
+        //setChanged();//notify observers of change to the adjacency list
+        //notifyObservers();
     }
     /**
      * Returns the list of attached layer 3 addresses

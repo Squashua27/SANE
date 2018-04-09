@@ -39,13 +39,13 @@ public class RoutingRecord extends Record
         key = netNum*256*256 + nextHop;
     }
     public int getNetworkNumber(){return networkDistancePair.getNetwork();}
-    public Integer getDistance(){return networkDistancePair.getDistance();}
+    public int getDistance(){return networkDistancePair.getDistance();}
     public Integer getNextHop(){return nextHop;}
     @Override public String toString()
     {
-        return "Network: " + Integer.toHexString(networkDistancePair.getNetwork())
-                + " |  Distance: " + Integer.toHexString(networkDistancePair.getDistance())
-                + " |  Next hop: " + Integer.toHexString(nextHop)
+        return "Network: " + Utilities.padHexString(networkDistancePair.getNetwork().toString(), Constants.LL3P_NETWORK_LENGTH)
+                + " |  Distance: " + networkDistancePair.getDistance()
+                + " |  Next hop: " + Utilities.padHexString(Integer.toHexString(nextHop),2*Constants.LL3P_NETWORK_LENGTH)
                 + " |  Age: " + getAgeInSeconds();
     }
 

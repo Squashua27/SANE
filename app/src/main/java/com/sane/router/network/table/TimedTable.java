@@ -28,7 +28,7 @@ public class TimedTable extends Table
      * @param maxAge - max allowable record age in seconds
      * @return removedRecordList - the list of expired, removed records
      */
-    public synchronized List<Record> expireRecords(int maxAge)
+    public List<Record> expireRecords(int maxAge)
     {
         List<Record> removedRecordList = Collections.synchronizedList(new ArrayList<Record>());
         Record targetRecord;
@@ -52,7 +52,7 @@ public class TimedTable extends Table
      *
      * @param key - table element identifier, LL2P address for ARP Records
      */
-    public synchronized boolean touch(Integer key)
+    public boolean touch(Integer key)
     {
         Iterator<Record> recordIterator = table.iterator();
         Record targetRecord;

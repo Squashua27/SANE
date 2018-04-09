@@ -7,13 +7,14 @@ import com.sane.router.network.Constants;
 import com.sane.router.network.datagram.LRPPacket;
 import com.sane.router.network.datagramFields.NetworkDistancePair;
 import com.sane.router.network.table.RoutingTable;
+import com.sane.router.network.table.TimedTable;
 import com.sane.router.network.tableRecords.Record;
 import com.sane.router.network.tableRecords.RoutingRecord;
 import com.sane.router.support.BootLoader;
+import com.sane.router.support.ParentActivity;
 import com.sane.router.support.Utilities;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -47,7 +48,6 @@ public class LRPDaemon extends Observable implements Observer, Runnable
     }
 
     //Methods
-
     public RoutingTable getRoutingTable() {return routingTable;}
     public ArrayList<Record> getRoutingTableAsList()
     {
@@ -68,26 +68,31 @@ public class LRPDaemon extends Observable implements Observer, Runnable
     public void receiveNewLRP(byte[] lrpPacket, Integer ll2pSource)
     {
         Log.i(Constants.LOG_TAG," \n \n LRP Daemon receiving new packet... \n \n");
-        //TODO: touch ARP Entry with matching LL2P? I think I did this in my addRecord methods
         String packetData = new String(lrpPacket);
         LRPPacket packet = new LRPPacket(packetData);
 
-        processLRPPacket(packet);
+        processLRPPacket(packet, ll2pSource);
     }
-
-    public void processLRPPacket(LRPPacket packet)
+    /**
+     * Processes a received LRP Packet, making updates to Routing and Forwarding tables
+     *
+     * @param packet - The packet to process
+     * @param ll2pSource - The source of the packet to process
+     */
+    public void processLRPPacket(LRPPacket packet, int ll2pSource)
     {
         Log.d(Constants.LOG_TAG," \n \n LRP Daemon processing packet... \n \n");
+
+        ((TimedTable)arpDaemon.getARPTable()).touch(ll2pSource);
 
         List<RoutingRecord> routes = new ArrayList<>();
 
         for(NetworkDistancePair pair: packet.getRoutes())
-            routes.add(new RoutingRecord(pair.getNetwork(), pair.getDistance()+1, arpDaemon.getMacAddress(packet.getSourceLL3P().getLL3PAddress())));
+            routes.add(new RoutingRecord(pair.getNetwork(), pair.getDistance()+1, packet.getSourceLL3P().getLL3PAddress()));
 
         routingTable.addRoutes(routes);
-        forwardingTable.addOrReplaceRoutes(routes);
+        forwardingTable.addRoutes(routingTable.getBestRoutes());
     }
-
     /**
      * Expires old records, adds self and adjacent nodes to Routing Table, updates forwarding table,
      * and sends the best routes for each network to all neighbor nodes
@@ -107,12 +112,6 @@ public class LRPDaemon extends Observable implements Observer, Runnable
         for( Integer ll3p: arpDaemon.getAttachedNodes())
             routes.add(new RoutingRecord(ll3p/256, 1, ll3p));
 
-        routingTable.addRoutes(routes); //TODO: Don't touch in update - Only when recieving update from neighbor
-
-        forwardingTable.addRoutes(routingTable.getBestRoutes());
-
-        //LRPPacket(int ll3p, int seqNum, int cnt, List<NetworkDistancePair> pairs)
-
         String lrpUpdate;
         for( Integer ll3p: arpDaemon.getAttachedNodes())
         {   //prepare to get unique list /adjacency:
@@ -127,7 +126,6 @@ public class LRPDaemon extends Observable implements Observer, Runnable
             ll2Daemon.sendLRPUpdate(new LRPPacket(lrpUpdate), ll3p); //send an LRP update
         }
     }
-
     //Interface Implementation
     /**
      * Definitive method of the Observer Interface, boots self at the BootLoader's signal,
@@ -141,13 +139,14 @@ public class LRPDaemon extends Observable implements Observer, Runnable
             arpDaemon = ARPDaemon.getInstance();
             arpDaemon.addObserver(this); //adds self as
         }
-        else if (object instanceof List)//Removes outdated routes when triggered by ARPDaemon
+        else if (observable instanceof ARPDaemon)//Removes outdated routes when triggered by ARPDaemon
         {
-            for(Record record : (List<Record>) object)
-            {
-                routingTable.removeRoutesFrom(((RoutingRecord)record).getNetworkNumber());
-                forwardingTable.removeRoutesFrom(((RoutingRecord)record).getNetworkNumber());
-            }
+            if (object != null)
+                for(Record record : (List<Record>) object)
+                {
+                    routingTable.removeRoutesFrom(((RoutingRecord)record).getNetworkNumber());
+                    forwardingTable.removeRoutesFrom(((RoutingRecord)record).getNetworkNumber());
+                }
         }
     }
     /**
@@ -157,6 +156,11 @@ public class LRPDaemon extends Observable implements Observer, Runnable
      */
     @Override public void run()
     {
-        updateRoutes();
+        ParentActivity.getParentActivity().runOnUiThread(new Runnable() {
+            @Override public void run()
+            {
+                updateRoutes();
+            }
+        });
     }
 }

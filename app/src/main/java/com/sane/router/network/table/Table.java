@@ -32,7 +32,7 @@ public class Table extends Observable implements TableInterface
     {
         table = Collections.synchronizedList(new ArrayList<Record>());
     }
-    @Override public synchronized String toString()
+    @Override public String toString()
     {
         Iterator<Record> recordIterator = table.iterator();
         String returnString = new String();
@@ -46,7 +46,7 @@ public class Table extends Observable implements TableInterface
     /**
      * Notifies observers of a change, called by all methods that touch the table
      */
-    public synchronized void updateDisplay()
+    public void updateDisplay()
     {
         setChanged();//notify Java of change
         notifyObservers();//trigger update method in observers
@@ -56,7 +56,7 @@ public class Table extends Observable implements TableInterface
      *
      * @return List<Record> - a list of table records
      */
-    public synchronized List<Record> getTableAsList()
+    public List<Record> getTableAsList()
     {
         return table;
     }
@@ -67,7 +67,7 @@ public class Table extends Observable implements TableInterface
      *
      * @return TableRecord - the TableRecord added
      */
-    public synchronized Record addItem(Record recordToAdd)
+    public Record addItem(Record recordToAdd)
     {
         table.add(recordToAdd);
         updateDisplay();
@@ -80,7 +80,7 @@ public class Table extends Observable implements TableInterface
      *
      * @return Record - the found TableRecord to be returned
      */
-    public synchronized Record getItem(Record recordToGet)
+    public Record getItem(Record recordToGet)
     {
         Iterator<Record> recordIterator = table.iterator();
         Record targetRecord;
@@ -102,7 +102,7 @@ public class Table extends Observable implements TableInterface
      *
      * @return Record - the gotten Record
      */
-    public synchronized Record getItem(Integer recordKey)
+    public Record getItem(Integer recordKey)
     {
         Iterator<Record> recordIterator = table.iterator();
         Record targetRecord;
@@ -125,7 +125,7 @@ public class Table extends Observable implements TableInterface
      *
      * @return Record -  the removed record, null if key not found
      */
-    public synchronized Record removeItem(Integer recordKey)
+    public Record removeItem(Integer recordKey)
     {
         Iterator<Record> recordIterator = table.iterator();
         Record targetRecord;
@@ -149,7 +149,7 @@ public class Table extends Observable implements TableInterface
      *
      * @return Record -  the removed record, null if Record not found
      */
-    public synchronized Record removeItem(TableRecord recordToRemove)
+    public Record removeItem(TableRecord recordToRemove)
     {
             Iterator<Record> recordIterator = table.iterator();
             Record targetRecord;
