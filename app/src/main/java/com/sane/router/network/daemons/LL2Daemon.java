@@ -145,7 +145,7 @@ public class LL2Daemon implements Observer
      */
     public void sendLRPUpdate(LRPPacket lrpPacket, int ll2p)
     {
-        Log.i(Constants.LOG_TAG, " \n \nSending LRP Update frame to address: 0x"+Integer.toHexString(ll2p)+"... \n \n");
+        Log.i(Constants.LOG_TAG, " \n \nSending LRP Update frame to address: 0x"+Utilities.padHexString(Integer.toHexString(ll2p), Constants.LL2P_ADDRESS_LENGTH)+"... \n \n");
         LL2PFrame frame = new LL2PFrame
                 (Utilities.padHexString(Integer.toHexString(ll2p),Constants.LL2P_ADDRESS_LENGTH)
                         + Constants.LL2P_ADDRESS

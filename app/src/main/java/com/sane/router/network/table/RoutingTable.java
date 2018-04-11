@@ -85,18 +85,19 @@ public class RoutingTable extends TimedTable
      * @param ll3p - the address not to return records from
      * @return List - the returned list of RoutingRecords
      */
-    public List<RoutingRecord> getRoutesExcluding(Integer ll3p)//
+    public List<RoutingRecord> getRoutesExcluding(int ll3p)//
     {
         List<RoutingRecord> routes = new ArrayList<RoutingRecord>();
         Log.i(Constants.LOG_TAG, "\n \nGetting routes excluding: " + ll3p + "...\n \n");
 
         for (Record record : table)
-            if (ll3p ==((RoutingRecord) record).getNetworkNumber())
+        {
+            Log.i(Constants.LOG_TAG, " \n \n compared LL3P: " + Integer.toHexString(ll3p));
+            Log.i(Constants.LOG_TAG, " \n Next hop: " + Integer.toHexString(((RoutingRecord) record).getNextHop()));
+            if (ll3p != ((RoutingRecord) record).getNextHop())
                 routes.add((RoutingRecord) record);
-
-        updateDisplay();
-
-        return routes;
+        }
+            return routes;
     }
 
     /**

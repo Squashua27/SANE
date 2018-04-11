@@ -1,5 +1,8 @@
 package com.sane.router.network.tableRecords;
 
+import android.util.Log;
+
+import com.sane.router.network.Constants;
 import com.sane.router.support.Utilities;
 
 /**
@@ -45,6 +48,7 @@ public class Record implements TableRecord
     //Interface Implementation (see interface for method documentation)
     public int getKey()
     {
+        Log.e(Constants.LOG_TAG,"Error: Defaulted to ");
         return 0;
     }
     public int getAgeInSeconds()

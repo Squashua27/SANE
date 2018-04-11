@@ -129,7 +129,7 @@ public class LL1Daemon extends Observable implements Observer
      */
     public void sendFrame(LL2PFrame ll2pFrame)
     {
-        Log.i(Constants.LOG_TAG, "\n\nSending Frame...\n\n");
+        Log.i(Constants.LOG_TAG, " \n \nSending Frame: "+ ll2pFrame.toTransmissionString()+" \n \n");
         //Construct the DatagramPacket Type object to be sent by argument
         byte[] packet = ll2pFrame.toTransmissionString().getBytes();
         int packetLength = ll2pFrame.toTransmissionString().length();

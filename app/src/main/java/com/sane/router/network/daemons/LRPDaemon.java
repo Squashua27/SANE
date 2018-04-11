@@ -8,6 +8,7 @@ import com.sane.router.network.datagram.LRPPacket;
 import com.sane.router.network.datagramFields.NetworkDistancePair;
 import com.sane.router.network.table.RoutingTable;
 import com.sane.router.network.table.TimedTable;
+import com.sane.router.network.tableRecords.ARPRecord;
 import com.sane.router.network.tableRecords.Record;
 import com.sane.router.network.tableRecords.RoutingRecord;
 import com.sane.router.support.BootLoader;
@@ -81,9 +82,12 @@ public class LRPDaemon extends Observable implements Observer, Runnable
      */
     public void processLRPPacket(LRPPacket packet, int ll2pSource)
     {
+
+
         Log.d(Constants.LOG_TAG," \n \n LRP Daemon processing packet... \n \n");
 
-        ((TimedTable)arpDaemon.getARPTable()).touch(ll2pSource);
+        if (!((TimedTable)arpDaemon.getARPTable()).touch(ll2pSource))//TODO: see that addition works
+            arpDaemon.getARPTable().addItem(new ARPRecord(ll2pSource, packet.getSourceLL3P().getLL3PAddress()));
 
         List<RoutingRecord> routes = new ArrayList<>();
 
@@ -108,22 +112,23 @@ public class LRPDaemon extends Observable implements Observer, Runnable
 
         routingTable.addNewRoute(myRoute);
 
-        List<RoutingRecord> routes = new ArrayList<>();
-        for( Integer ll3p: arpDaemon.getAttachedNodes())
-            routes.add(new RoutingRecord(ll3p/256, 1, ll3p));
-
         String lrpUpdate;
         for( Integer ll3p: arpDaemon.getAttachedNodes())
         {   //prepare to get unique list /adjacency:
             lrpUpdate = Constants.LL3P_ADDRESS
-                    + Utilities.padHexString(Integer.toString(sequenceNumber),1)
-                    + Utilities.padHexString(Integer.toString(arpDaemon.getAttachedNodes().size()),1);
+                    + Integer.toHexString(sequenceNumber)
+                    + Integer.toHexString(forwardingTable.getRoutesExcluding(ll3p).size());
+            Log.d(Constants.LOG_TAG, " \n1) Building LRP Packet: " + lrpUpdate + " \n");
             for (RoutingRecord route : forwardingTable.getRoutesExcluding(ll3p))
             {   //add each network-distance pair as a string
                 lrpUpdate += Utilities.padHexString(Integer.toHexString(route.getNetworkNumber()), Constants.LL3P_NETWORK_LENGTH);
                 lrpUpdate += Utilities.padHexString(Integer.toHexString(route.getDistance()), Constants.LL3P_DISTANCE_LENGTH);
             }
-            ll2Daemon.sendLRPUpdate(new LRPPacket(lrpUpdate), ll3p); //send an LRP update
+            Log.d(Constants.LOG_TAG, " \n2) Building LRP Packet: " + lrpUpdate + " \n");
+            ll2Daemon.sendLRPUpdate(new LRPPacket(lrpUpdate), arpDaemon.getMacAddress(ll3p)); //send an LRP update
+            sequenceNumber++;
+            if (sequenceNumber>15)
+                sequenceNumber = 0;
         }
     }
     //Interface Implementation

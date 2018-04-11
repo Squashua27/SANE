@@ -55,5 +55,5 @@ public class ARPRecord extends Record
         return "\nLL2P Address:  " + getLL2PAsString()
                 + "\nLL3P Address:  " + getLL3PAsString()+"\n";
     }
-    public int getKey(){return ll2pAddress;}//typical getter
+    @Override public int getKey(){return ll2pAddress;}//typical getter
 }

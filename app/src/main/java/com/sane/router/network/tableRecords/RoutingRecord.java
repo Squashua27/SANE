@@ -40,7 +40,7 @@ public class RoutingRecord extends Record
     }
     public int getNetworkNumber(){return networkDistancePair.getNetwork();}
     public int getDistance(){return networkDistancePair.getDistance();}
-    public Integer getNextHop(){return nextHop;}
+    public int getNextHop(){return nextHop;}
     @Override public String toString()
     {
         return "Network: " + Utilities.padHexString(networkDistancePair.getNetwork().toString(), Constants.LL3P_NETWORK_LENGTH)
