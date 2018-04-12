@@ -75,6 +75,8 @@ public class HeaderFieldFactory implements Factory<HeaderField, String>
             return (U) new ARPDatagram(data, true);
         else if (type == Constants.LL2P_TYPE_ARP_REPLY)
             return (U) new ARPDatagram(data, false);
+        else if (type == Constants.LL2P_TYPE_LL3P)
+            return (U) new DatagramPayloadField(new TextDatagram(data));
 
         Log.e(Constants.LOG_TAG, "Error creating HeaderField");
         return (U) new DatagramPayloadField(data);

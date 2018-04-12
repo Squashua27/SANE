@@ -4,6 +4,7 @@ import com.sane.router.network.Constants;
 import com.sane.router.network.datagramFields.DatagramPayloadField;
 import com.sane.router.network.datagramFields.LL3PAddressField;
 import com.sane.router.support.Utilities;
+import com.sane.router.support.factories.HeaderFieldFactory;
 
 /**
  * The Lab Layer 3 Protocol Datagram Class
@@ -28,14 +29,48 @@ public class LL3PDatagram implements Datagram
     private int identifier;                 //contains an identifier, value 0-65, 535
     private int ttl;                       //Time To Live, single byte, value 0-15
     private DatagramPayloadField payload; //the datagram's payload
-    private String checkSum;             //place-holder, 4 hex chars (2 bytes)
+    private String checksum;             //place-holder, 4 hex chars (2 bytes)
 
     //Methods
+    public LL3PDatagram(String data)
+    {
+        HeaderFieldFactory factory = HeaderFieldFactory.getInstance(); //ref for field construction
+
+        source = factory.getItem
+                (Constants.LL3P_SOURCE_ADDRESS_FIELD,
+                data.substring(2*Constants.LL3P_SOURCE_ADDRESS_OFFSET,
+                2*(Constants.LL3P_SOURCE_ADDRESS_OFFSET + Constants.LL3P_ADDRESS_LENGTH)));
+
+        destination = factory.getItem
+                (Constants.LL3P_DEST_ADDRESS_FIELD,
+                data.substring(2*Constants.LL3P_DEST_ADDRESS_OFFSET,
+                2*(Constants.LL3P_DEST_ADDRESS_OFFSET + Constants.LL3P_ADDRESS_LENGTH)));
+
+        type = Integer.valueOf(data.substring(2*Constants.LL3P_TYPE_FIELD_OFFSET,
+                2*(Constants.LL3P_TYPE_FIELD_OFFSET + Constants.LL3P_TYPE_FIELD_LENGTH)),16);
+
+        identifier = Integer.valueOf(data.substring(2*Constants.LL3P_ID_FIELD_OFFSET,
+                2*(Constants.LL3P_ID_FIELD_OFFSET + Constants.LL3P_ID_FIELD_LENGTH)),16);
+
+        ttl = Integer.valueOf(data.substring(2*Constants.LL3P_TTL_FIELD_OFFSET,
+                2*(Constants.LL3P_TTL_FIELD_OFFSET + Constants.LL3P_TTL_FIELD_LENGTH)),16);
+
+        payload = factory.getItem
+                (type, data.substring(2*Constants.LL3P_PAYLOAD_FIELD_OFFSET,
+                data.length() - 2*Constants.LL3P_CHECKSUM_FIELD_LENGTH));
+
+        checksum = data.substring(data.length() - 2*Constants.LL3P_CHECKSUM_FIELD_LENGTH);
+    }
+
+
     /**
      * increments datagram TTL by 1
      */
     public void incrementTTL() {
         this.ttl++;
+    }
+    public boolean isExpired(){
+        return (ttl > 15);
     }
 
     //Getters
@@ -60,8 +95,8 @@ public class LL3PDatagram implements Datagram
     public Datagram getPayload() {
         return payload.getPayload();
     }
-    public String getCheckSum() {
-        return checkSum;
+    public String getChecksum() {
+        return checksum;
     }
 
     //To-String Methods
@@ -72,19 +107,19 @@ public class LL3PDatagram implements Datagram
         return destination.toTransmissionString();
     }
     private String typeToTransmissionString(){
-        return Utilities.padHexString(Integer.toHexString(type), Constants.LL3P_TYPE_LENGTH);
+        return Utilities.padHexString(Integer.toHexString(type), Constants.LL3P_TYPE_FIELD_LENGTH);
 }
     private String identifierToTransmissionString(){
-        return Utilities.padHexString(Integer.toHexString(identifier), Constants.LL3P_ID_LENGTH);
+        return Utilities.padHexString(Integer.toHexString(identifier), Constants.LL3P_ID_FIELD_LENGTH);
     }
     private String ttlToTransmissionString(){
-        return Utilities.padHexString(Integer.toHexString(ttl), Constants.LL3P_TTL_LENGTH);
+        return Utilities.padHexString(Integer.toHexString(ttl), Constants.LL3P_TTL_FIELD_LENGTH);
     }
     private String payloadToTransmissionString(){
         return payload.toTransmissionString();
     }
-    private String checkSumToTransmissionString(){
-        return Utilities.padHexString(checkSum, Constants.LL3P_CHECKSUM_LENGTH);
+    private String checksumToTransmissionString(){
+        return Utilities.padHexString(checksum, Constants.LL3P_CHECKSUM_FIELD_LENGTH);
     }
 
     //Interface Implementation
@@ -94,26 +129,28 @@ public class LL3PDatagram implements Datagram
     }
     @Override public String toProtocolExplanationString()
     {
-        return "LL3P Source: " +
-                + 1
-                + 1
-                + 1
-                + 1
-                + 1
-                + 1
-                + 1
-                + 1
-                + 1
-                + 1
-                + 1
-                + 1;
+        return "LL3P Source: 0x" + sourceToTransmissionString().toUpperCase() + " \n"
+                + "LL3P Dest: 0x" + destinationToTransmissionString().toUpperCase() + " \n"
+                + "Type: 0x" + typeToTransmissionString() + " \n"
+                + "ID: " + identifierToTransmissionString() + " \n"
+                + "TTL: " + ttl + " \n"
+                + "Payload: \n" + payloadToTransmissionString() + " \n"
+                + "Checksum: " + checksumToTransmissionString().toUpperCase();
     }
     @Override public String toSummaryString()
     {
-        return null;
+        return    " Type: 0x" + typeToTransmissionString()
+                + "   Source: 0x" + sourceToTransmissionString().toUpperCase()
+                + "   Dest: 0x" + destinationToTransmissionString().toUpperCase();
     }
     @Override public String toTransmissionString()
     {
-        return null;
+        return sourceToTransmissionString()
+                + destinationToTransmissionString()
+                + typeToTransmissionString()
+                + identifierToTransmissionString()
+                + ttlToTransmissionString()
+                + payloadToTransmissionString()
+                + checksumToTransmissionString();
     }
 }
