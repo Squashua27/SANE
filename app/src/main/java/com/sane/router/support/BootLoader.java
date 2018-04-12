@@ -11,6 +11,7 @@ import com.sane.router.network.daemons.LL2Daemon;
 import com.sane.router.network.daemons.LRPDaemon;
 import com.sane.router.network.daemons.Scheduler;
 import com.sane.router.network.datagram.LL2PFrame;
+import com.sane.router.network.datagram.LL3PDatagram;
 import com.sane.router.network.datagram.LRPPacket;
 import com.sane.router.network.table.RoutingTable;
 import com.sane.router.network.table.Table;
@@ -228,5 +229,11 @@ public class BootLoader extends Observable
 
         //LRPDaemon.getInstance().receiveNewLRP("09011205010900".getBytes(),100);
         //LRPDaemon.getInstance().processLRPPacket(new LRPPacket("0905010111121314"), 127);
+
+        //Test: LL3PDatagram
+        LL3PDatagram testPacket = new LL3PDatagram("0901"+"0a01"+"8001"+"AAAA"+"07"+"01234567"+"CCCC");
+        Log.i(Constants.LOG_TAG," \n \nProtocol explanation: \n" + testPacket.toProtocolExplanationString());
+        Log.i(Constants.LOG_TAG," \n \nPacket Summary: \n" + testPacket.toSummaryString());
+        Log.i(Constants.LOG_TAG," \n \nTransmission String: \n" + testPacket.toTransmissionString());
     }
 }

@@ -107,6 +107,7 @@ public class Constants
     public static final int LRP_COUNT = 9;
     public static final int LRP_SEQUENCE_NUMBER = 10;
     public static final int NETWORK_DISTANCE_PAIR = 11;
+    //public static final int LL3P_PAYLOAD_FIELD = 12;
 
     //Table Record Factory:
     public static final int RECORD = 0;

@@ -62,12 +62,11 @@ public class LL3PDatagram implements Datagram
         checksum = data.substring(data.length() - 2*Constants.LL3P_CHECKSUM_FIELD_LENGTH);
     }
 
-
     /**
      * increments datagram TTL by 1
      */
     public void incrementTTL() {
-        this.ttl++;
+        ttl++;
     }
     public boolean isExpired(){
         return (ttl > 15);
