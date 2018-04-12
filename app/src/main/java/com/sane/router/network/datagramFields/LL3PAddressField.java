@@ -18,8 +18,8 @@ public class LL3PAddressField implements HeaderField
 {
     //Fields
     private Integer address;    //The LL3P address
-    private Integer networkID; //LL3P address network component
-    private Integer hostID;   //LL3P address host component
+    private Integer networkAddress; //LL3P address network component
+    private Integer hostAddress;   //LL3P address host component
     private Boolean isSource;//Whether LL3P is a source address
 
     //Methods
@@ -29,16 +29,19 @@ public class LL3PAddressField implements HeaderField
 
         address = Integer.parseInt(ll3p,16);
 
-        networkID = Integer.parseInt(ll3p.substring
+        networkAddress = Integer.parseInt(ll3p.substring
                 (2*Constants.LL3P_ADDRESS_NETWORK_OFFSET,
                         2*Constants.LL3P_ADDRESS_NETWORK_LENGTH),16);
 
-        hostID = Integer.parseInt(ll3p.substring
+        hostAddress = Integer.parseInt(ll3p.substring
                 (2*Constants.LL3P_ADDRESS_HOST_OFFSET),16);
 
         isSource = source;
     }
     public int getLL3PAddress(){return address;}//Standard getter
+    public int getNetworkAddress(){
+        return networkAddress;
+    }
 
     //Interface Implementation
     @Override public String toTransmissionString()
@@ -47,11 +50,11 @@ public class LL3PAddressField implements HeaderField
     }
     public String networkToHex()
     {
-        return Utilities.padHexString(Integer.toHexString(hostID), Constants.LL3P_ADDRESS_HOST_LENGTH);
+        return Utilities.padHexString(Integer.toHexString(hostAddress), Constants.LL3P_ADDRESS_HOST_LENGTH);
     }
     public String hostToHex()
     {
-        return Utilities.padHexString(Integer.toHexString(networkID), Constants.LL3P_ADDRESS_NETWORK_LENGTH);
+        return Utilities.padHexString(Integer.toHexString(networkAddress), Constants.LL3P_ADDRESS_NETWORK_LENGTH);
     }
     @Override public String toHexString()
     {

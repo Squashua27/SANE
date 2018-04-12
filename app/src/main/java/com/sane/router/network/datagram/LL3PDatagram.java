@@ -79,6 +79,9 @@ public class LL3PDatagram implements Datagram
     public int getDestination() {
         return destination.getLL3PAddress();
     }
+    public int getDestinationNetwork(){
+        return destination.getNetworkAddress();
+    }
     public int getType() {
         return type;
     }

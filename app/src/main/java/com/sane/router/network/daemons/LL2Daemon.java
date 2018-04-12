@@ -156,6 +156,8 @@ public class LL2Daemon implements Observer
 
         ll1Demon.sendFrame(frame);
     }
+    public void methodToSendLL3PSHIT
+
     //Interface Implementation
     /**
      * Required method of Observer classes, triggered by bootLoader, constructs self

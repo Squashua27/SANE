@@ -1,5 +1,9 @@
 package com.sane.router.network.daemons;
 
+import android.util.Log;
+
+import com.sane.router.network.Constants;
+import com.sane.router.network.datagram.LL3PDatagram;
 import com.sane.router.support.BootLoader;
 
 import java.util.Observable;
@@ -22,6 +26,23 @@ public class LL3Daemon implements Observer
         return ourInstance;
     }
     private LL3Daemon() {} //(empty constructor)
+
+    //Methods
+    public void sendLL3PToNextHop(LL3PDatagram packet)
+    {
+        try
+        {
+            int ll3Destination = packet.getDestinationNetwork(); //TODO: Is this where I grab the "network" section?
+            int nextHop = lrpDemon.getForwardingTable().getBestRoute(ll3Destination).getNextHop();
+            int ll2Destination = arpDemon.getMacAddress(nextHop);
+            ll2Demon.methodToSendLL3PSHIT
+        }
+        catch (Exception e)
+        {
+            Log.e(Constants.LOG_TAG," \nFailed to send LL3P packet to next hop... \n");
+            e.printStackTrace();
+        }
+    }
 
     //Interface Implementation
     /**
