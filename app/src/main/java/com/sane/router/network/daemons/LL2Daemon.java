@@ -25,7 +25,7 @@ public class LL2Daemon implements Observer
     private UIManager uiManager; //reference used to interface manager
     private LL1Daemon ll1Demon; //the less experienced daemon
     private ARPDaemon arpDemon; //reference to help manage ARP frames
-    private LRPDaemon lrpDaemon; //reference to the manager of routing records and methods
+    private LRPDaemon lrpDemon; //reference to the manager of routing records and methods
 
     //Singleton Implementation
     private static final LL2Daemon ourInstance = new LL2Daemon();//empty constructor
@@ -78,7 +78,7 @@ public class LL2Daemon implements Observer
             if (type.toHexString().equalsIgnoreCase(Constants.LL2P_TYPE_LRP_HEX))
             {
                 Log.i(Constants.LOG_TAG, " \n \nProcessing LL2P LRP Update... \n \n");
-                lrpDaemon.processLRPPacket((LRPPacket) frame.getPayloadField().getPayload(),source.getAddress());
+                lrpDemon.processLRPPacket((LRPPacket) frame.getPayloadField().getPayload(),source.getAddress());
                 //TODO: Maybe recieveNewLRP instead?
             }
         }
@@ -168,6 +168,6 @@ public class LL2Daemon implements Observer
         uiManager = UIManager.getInstance();
         ll1Demon = LL1Daemon.getInstance();
         arpDemon = ARPDaemon.getInstance();
-        lrpDaemon = LRPDaemon.getInstance();
+        lrpDemon = LRPDaemon.getInstance();
     }
 }

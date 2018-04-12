@@ -44,30 +44,6 @@ public class LL1Daemon extends Observable implements Observer
         adjacencyTable = new Table();
     }
 
-    //Observer Implementation
-    /**
-     * Required method of the Observer class,
-     * stalls operation until BootLoader has finished loading,
-     * keeps records (and objects that use them) updated
-     *
-     * @param observable - the observable object triggering an update
-     * @param object - an object passed in by the calling method
-     */
-    public void update(Observable observable, Object object)
-    {
-        if (observable instanceof BootLoader)
-        {
-            ipAddressGetter = IPAddressGetter.getInstance();
-            factory = TableRecordFactory.getInstance();
-            uiManager = UIManager.getInstance();
-            ll2Demon = LL2Daemon.getInstance();
-
-            new ReceiveLayer1Frame().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
-            addObserver(FrameLogger.getInstance());
-            addObserver(UIManager.getInstance());
-        }
-    }
     //Methods
     /**
      * Basic getter method, returns the adjacency table
@@ -180,5 +156,30 @@ public class LL1Daemon extends Observable implements Observer
             e.printStackTrace();
         }
         ll2Demon.processLL2PFrame(ll2pFrame);
+    }
+
+    //Observer Implementation
+    /**
+     * Required method of the Observer class,
+     * stalls operation until BootLoader has finished loading,
+     * keeps records (and objects that use them) updated
+     *
+     * @param observable - the observable object triggering an update
+     * @param object - an object passed in by the calling method
+     */
+    public void update(Observable observable, Object object)
+    {
+        if (observable instanceof BootLoader)
+        {
+            ipAddressGetter = IPAddressGetter.getInstance();
+            factory = TableRecordFactory.getInstance();
+            uiManager = UIManager.getInstance();
+            ll2Demon = LL2Daemon.getInstance();
+
+            new ReceiveLayer1Frame().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+            addObserver(FrameLogger.getInstance());
+            addObserver(UIManager.getInstance());
+        }
     }
 }

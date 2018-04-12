@@ -8,6 +8,7 @@ import com.sane.router.network.Constants;
 import com.sane.router.network.daemons.ARPDaemon;
 import com.sane.router.network.daemons.LL1Daemon;
 import com.sane.router.network.daemons.LL2Daemon;
+import com.sane.router.network.daemons.LL3Daemon;
 import com.sane.router.network.daemons.LRPDaemon;
 import com.sane.router.network.daemons.Scheduler;
 import com.sane.router.network.datagram.LL2PFrame;
@@ -54,6 +55,7 @@ public class BootLoader extends Observable
         addObserver(FrameLogger.getInstance());
         addObserver(LL1Daemon.getInstance());
         addObserver(LL2Daemon.getInstance());
+        addObserver(LL3Daemon.getInstance());
         addObserver(ARPDaemon.getInstance());
         addObserver(LRPDaemon.getInstance());
         addObserver(uiManager.getTableUI());
