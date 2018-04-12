@@ -49,6 +49,10 @@ public class Constants
     public static final int LL3P_SEQ_AND_COUNT_LENGTH = 1;
     public static final int LL3P_PAIR_LENGTH = 2;
     public static final int LL3P_NETWORK_LENGTH = 1;
+    public static final int LL3P_TYPE_LENGTH = 2;
+    public static final int LL3P_ID_LENGTH = 2;
+    public static final int LL3P_TTL_LENGTH = 1;
+    public static final int LL3P_CHECKSUM_LENGTH = 2;
 
     //Offsets (in bytes)
     public static final int LL2P_DEST_ADDRESS_OFFSET = 0;
@@ -59,9 +63,16 @@ public class Constants
     public static final int LL3P_ADDRESS_NETWORK_OFFSET = 0;
     public static final int LL3P_ADDRESS_HOST_OFFSET = 1;
 
+    public static final int LRP_SOURCE_OFFSET = 0;
+    public static final int LRP_SEQ_AND_COUNT_OFFSET = 2;
+    public static final int LRP_LIST_OFFSET = 3;
+
     public static final int LL3P_SOURCE_OFFSET = 0;
-    public static final int LL3P_SEQ_AND_COUNT_OFFSET = 2;
-    public static final int LL3P_LIST_OFFSET = 3;
+    public static final int LL3P_DEST_OFFSET = 2;
+    public static final int LL3P_TYPE_OFFSET = 4;
+    public static final int LL3P_ID_OFFSET = 6;
+    public static final int LL3P_TTL_OFFSET = 8;
+    public static final int LL3P_PAYLOAD_OFFSET = 9;
 
     //LL2P Type Designations
     public static final int LL2P_TYPE_LL3P = 0x8001;

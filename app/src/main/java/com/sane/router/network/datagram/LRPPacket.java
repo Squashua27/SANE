@@ -5,7 +5,6 @@ import com.sane.router.network.datagramFields.LL3PAddressField;
 import com.sane.router.network.datagramFields.LRPCount;
 import com.sane.router.network.datagramFields.LRPSequenceNumber;
 import com.sane.router.network.datagramFields.NetworkDistancePair;
-import com.sane.router.network.tableRecords.Record;
 import com.sane.router.support.factories.HeaderFieldFactory;
 
 import java.util.ArrayList;
@@ -41,26 +40,26 @@ public class LRPPacket implements Datagram
 
         sourceLL3P = factory.getItem
                 (Constants.LL3P_SOURCE_ADDRESS_FIELD,
-                data.substring(2*Constants.LL3P_SOURCE_OFFSET,
+                data.substring(2*Constants.LRP_SOURCE_OFFSET,
                 2*Constants.LL3P_ADDRESS_LENGTH));
 
         sequenceNumber = factory.getItem
                 (Constants.LRP_SEQUENCE_NUMBER,
-                data.substring(2*Constants.LL3P_SEQ_AND_COUNT_OFFSET,
-                2*Constants.LL3P_SEQ_AND_COUNT_OFFSET+1));
+                data.substring(2*Constants.LRP_SEQ_AND_COUNT_OFFSET,
+                2*Constants.LRP_SEQ_AND_COUNT_OFFSET +1));
 
         count = factory.getItem
                 (Constants.LRP_COUNT,
-                data.substring(2*Constants.LL3P_SEQ_AND_COUNT_OFFSET+1,
-                2*Constants.LL3P_SEQ_AND_COUNT_OFFSET+2));
+                data.substring(2*Constants.LRP_SEQ_AND_COUNT_OFFSET +1,
+                2*Constants.LRP_SEQ_AND_COUNT_OFFSET +2));
 
         routes = new ArrayList<>();
         for (int pairIndex = 0; pairIndex < count.getCount(); pairIndex++)
         {
             NetworkDistancePair pairToAdd = factory.getItem
                     (Constants.NETWORK_DISTANCE_PAIR,
-                    data.substring(2*Constants.LL3P_LIST_OFFSET+2*pairIndex*Constants.LL3P_ADDRESS_LENGTH,
-                    2*Constants.LL3P_LIST_OFFSET+2*pairIndex*Constants.LL3P_ADDRESS_LENGTH+2*Constants.NETWORK_DISTANCE_PAIR_LENGTH));
+                    data.substring(2*Constants.LRP_LIST_OFFSET +2*pairIndex*Constants.LL3P_ADDRESS_LENGTH,
+                    2*Constants.LRP_LIST_OFFSET +2*pairIndex*Constants.LL3P_ADDRESS_LENGTH+2*Constants.NETWORK_DISTANCE_PAIR_LENGTH));
 
             routes.add(pairToAdd);
         }
