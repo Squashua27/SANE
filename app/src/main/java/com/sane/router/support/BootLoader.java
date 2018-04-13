@@ -234,5 +234,12 @@ public class BootLoader extends Observable
 
         //Test: LL3 (and LL2) Daemon
         LL3Daemon.getInstance().sendToNextHop(testPacket);
+
+        LL3Daemon.getInstance().sendMessage("Taxation is theft.", Integer.valueOf("0101", 16));
+
+        //Test: Receiving an LL3 Datagram
+        LL3PDatagram packetNotForMe = new LL3PDatagram("0901"+"0101"+"8001"+"AAAA"+"07"+"This packet does not belong to me."+"CCCC");
+        LL3PDatagram packetForMe = new LL3PDatagram("0101"+"0901"+"8001"+"AAAA"+"07"+"Packet GET!"+"CCCC");
+
     }
 }

@@ -35,6 +35,7 @@ public class Constants
     public static final int LRP_UPDATE_INTERVAL = 15;
     public static final int ARP_RECORD_TTL = 60;
     public static final int LRP_RECORD_TTL = 30;
+    public static final int LL3P_DATAGRAM_TTL = 15;
 
     //Datagram Constants (lengths and offsets in bytes)
     //Lengths (in bytes)
@@ -107,6 +108,7 @@ public class Constants
     public static final int LRP_COUNT = 9;
     public static final int LRP_SEQUENCE_NUMBER = 10;
     public static final int NETWORK_DISTANCE_PAIR = 11;
+    public static final int LL3P_MESSAGE = 12;
     //public static final int LL3P_PAYLOAD_FIELD = 12;
 
     //Table Record Factory:

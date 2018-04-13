@@ -88,7 +88,7 @@ public class RoutingTable extends TimedTable
     public List<RoutingRecord> getRoutesExcluding(int ll3p)//
     {
         List<RoutingRecord> routes = new ArrayList<RoutingRecord>();
-        Log.i(Constants.LOG_TAG, "\n \nGetting routes excluding: " + ll3p + "...\n \n");
+        Log.i(Constants.LOG_TAG, "\n \nGetting routes excluding: " + Integer.toHexString(ll3p) + "...\n \n");
 
         for (Record record : table)
         {

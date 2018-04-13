@@ -54,6 +54,7 @@ public class TimedTable extends Table
      */
     public boolean touch(Integer key)
     {
+        Log.i(Constants.LOG_TAG, " \nTouching record with key: " + key + "... \n \n");
         Iterator<Record> recordIterator = table.iterator();
         Record targetRecord;
         while (recordIterator.hasNext())
@@ -62,13 +63,13 @@ public class TimedTable extends Table
             if (key == targetRecord.getKey())
             {
                 targetRecord.updateTime();//touches the record
-                Log.i(Constants.LOG_TAG, " \nRecord found and touched... \n \n");
+                Log.i(Constants.LOG_TAG, " \n...Record found and touched \n \n");
                 updateDisplay();
                 return true;//record appropriately touched, exit loop and method
             }
         }
         //If no record matching the passed key is found, throw exception:
-        Log.i(Constants.LOG_TAG, " \nFailed to touch record... \n \n");
+        Log.i(Constants.LOG_TAG, " \n...Failed to touch record \n \n");
         updateDisplay();
         return false;
     }

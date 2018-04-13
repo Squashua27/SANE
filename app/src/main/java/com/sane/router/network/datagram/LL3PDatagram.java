@@ -65,31 +65,27 @@ public class LL3PDatagram implements Datagram
     {
         HeaderFieldFactory factory = HeaderFieldFactory.getInstance(); //ref for field construction
 
-        source = factory.getItem(Constants.LL3P_SOURCE_ADDRESS_FIELD, Constants.LL3P_ADDRESS)
+        source = factory.getItem(Constants.LL3P_SOURCE_ADDRESS_FIELD, Constants.LL3P_ADDRESS);
 
         destination = factory.getItem
                 (Constants.LL3P_DEST_ADDRESS_FIELD, Utilities.padHexString
                 (Integer.toHexString(dest),Constants.LL3P_ADDRESS_LENGTH));
 
-        type = Constants.LL2P_TYPE_LL3P; //TODO: Is this the correct type?
+        type = Constants.LL2P_TYPE_LL3P;
 
-        identifier = Integer.valueOf(data.substring(2*Constants.LL3P_ID_FIELD_OFFSET,
-                2*(Constants.LL3P_ID_FIELD_OFFSET + Constants.LL3P_ID_FIELD_LENGTH)),16);
+        identifier = 0xAAAA;
 
-        ttl = Integer.valueOf(data.substring(2*Constants.LL3P_TTL_FIELD_OFFSET,
-                2*(Constants.LL3P_TTL_FIELD_OFFSET + Constants.LL3P_TTL_FIELD_LENGTH)),16);
+        ttl = Constants.LL3P_DATAGRAM_TTL;
 
-        payload = factory.getItem
-                (type, data.substring(2*Constants.LL3P_PAYLOAD_FIELD_OFFSET,
-                        data.length() - 2*Constants.LL3P_CHECKSUM_FIELD_LENGTH));
+        payload = factory.getItem(type, message);
 
-        checksum = data.substring(data.length() - 2*Constants.LL3P_CHECKSUM_FIELD_LENGTH);
+        checksum = "CCCC";
     }
 
     /**
      * increments datagram TTL by 1
      */
-    public void incrementTTL() {
+    public void decrementTTL() {
         ttl++;
     }
     public boolean isExpired(){

@@ -2,9 +2,10 @@ package com.sane.router.network.daemons;
 
 import android.util.Log;
 
+import com.sane.router.UI.UIManager;
 import com.sane.router.network.Constants;
 import com.sane.router.network.datagram.LL3PDatagram;
-import com.sane.router.support.BootLoader;
+import com.sane.router.network.table.TimedTable;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -49,11 +50,34 @@ public class LL3Daemon implements Observer
             e.printStackTrace();
         }
     }
+
+    /**
+     * Sends a given message to the given Layer 3 destination
+     *
+     * @param message - The message to send
+     * @param dest - the LL3 destination address
+     */
     public void sendMessage(String message, int dest)
     {
-
+        LL3PDatagram messagePacket = new LL3PDatagram(message, dest);
+        sendToNextHop(messagePacket);
     }
 
+    public void processLL3Packet(LL3PDatagram packet, int ll2Source)
+    {
+        if (packet.isExpired())
+            return;
+        ((TimedTable)arpDemon.getARPTable()).touch(ll2Source);
+            //arpDemon.getARPTable().addItem(new ARPRecord(ll2Source, packet.getSource()));
+
+        if (packet.getDestination() == Constants.LL3P_ADDRESS_HEX)
+            UIManager.getInstance().displayMessage(packet.getPayload().toString());
+        else
+        {
+            packet.decrementTTL();
+            sendToNextHop(packet);
+        }
+    }
 
     //Interface Implementation
     /**
