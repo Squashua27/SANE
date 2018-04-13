@@ -28,14 +28,20 @@ public class LL3Daemon implements Observer
     private LL3Daemon() {} //(empty constructor)
 
     //Methods
-    public void sendLL3PToNextHop(LL3PDatagram packet)
+
+    /**
+     * Sends an LL3P Datagram to the Layer 2 daemon for transmission
+     *
+     * @param packet - the packet to be sent
+     */
+    public void sendToNextHop(LL3PDatagram packet)
     {
         try
         {
             int ll3Destination = packet.getDestinationNetwork(); //TODO: Is this where I grab the "network" section?
             int nextHop = lrpDemon.getForwardingTable().getBestRoute(ll3Destination).getNextHop();
             int ll2Destination = arpDemon.getMacAddress(nextHop);
-            ll2Demon.methodToSendLL3PSHIT
+            ll2Demon.sendLL3PDatagram(packet, ll2Destination);
         }
         catch (Exception e)
         {
@@ -43,6 +49,11 @@ public class LL3Daemon implements Observer
             e.printStackTrace();
         }
     }
+    public void sendMessage(String message, int dest)
+    {
+
+    }
+
 
     //Interface Implementation
     /**

@@ -6,6 +6,7 @@ import com.sane.router.UI.UIManager;
 import com.sane.router.network.Constants;
 import com.sane.router.network.datagram.ARPDatagram;
 import com.sane.router.network.datagram.LL2PFrame;
+import com.sane.router.network.datagram.LL3PDatagram;
 import com.sane.router.network.datagram.LRPPacket;
 import com.sane.router.network.datagramFields.LL2PAddressField;
 import com.sane.router.network.datagramFields.LL2PTypeField;
@@ -141,22 +142,42 @@ public class LL2Daemon implements Observer
      * Frames and sends an LRP update
      *
      * @param lrpPacket - the packet to send
-     * @param ll2p - the Layer 2 Address of the packet to send
+     * @param dest - the Layer 2 destination address of the packet to send
      */
-    public void sendLRPUpdate(LRPPacket lrpPacket, int ll2p)
+    public void sendLRPUpdate(LRPPacket lrpPacket, int dest)
     {
-        Log.i(Constants.LOG_TAG, " \n \nSending LRP Update frame to address: 0x"+Utilities.padHexString(Integer.toHexString(ll2p), Constants.LL2P_ADDRESS_LENGTH)+"... \n \n");
+        Log.i(Constants.LOG_TAG, " \n \nSending LRP Update frame to address: 0x"+Utilities.padHexString(Integer.toHexString(dest), Constants.LL2P_ADDRESS_LENGTH)+"... \n \n");
         LL2PFrame frame = new LL2PFrame
-                (Utilities.padHexString(Integer.toHexString(ll2p),Constants.LL2P_ADDRESS_LENGTH)
-                        + Constants.LL2P_ADDRESS
-                        + Constants.LL2P_TYPE_LRP_HEX
-                        + Constants.LL3P_ADDRESS
-                        + "CCCC",
-                        lrpPacket);
+                (Utilities.padHexString
+                (Integer.toHexString(dest),Constants.LL2P_ADDRESS_LENGTH)
+                + Constants.LL2P_ADDRESS
+                + Constants.LL2P_TYPE_LRP_HEX
+                + Constants.LL3P_ADDRESS
+                + "CCCC",
+                lrpPacket);
 
         ll1Demon.sendFrame(frame);
     }
-    public void methodToSendLL3PSHIT
+    /**
+     * Frames and sends an LL3P packet
+     *
+     * @param packet - the packet to send
+     * @param dest - the Layer 2 destination address of the packet to send
+     */
+    public void sendLL3PDatagram(LL3PDatagram packet, int dest)
+    {
+        Log.i(Constants.LOG_TAG, " \n \nSending framed LL3P packet to address: 0x"+Utilities.padHexString(Integer.toHexString(dest), Constants.LL2P_ADDRESS_LENGTH)+"... \n \n");
+        LL2PFrame frame = new LL2PFrame
+                (Utilities.padHexString
+                (Integer.toHexString(dest),Constants.LL2P_ADDRESS_LENGTH)
+                + Constants.LL2P_ADDRESS
+                + Constants.LL2P_TYPE_LL3P_HEX
+                + Constants.LL3P_ADDRESS
+                + "CCCC",
+                packet);
+
+        ll1Demon.sendFrame(frame);
+    }
 
     //Interface Implementation
     /**

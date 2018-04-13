@@ -11,14 +11,8 @@ import com.sane.router.network.daemons.LL2Daemon;
 import com.sane.router.network.daemons.LL3Daemon;
 import com.sane.router.network.daemons.LRPDaemon;
 import com.sane.router.network.daemons.Scheduler;
-import com.sane.router.network.datagram.LL2PFrame;
 import com.sane.router.network.datagram.LL3PDatagram;
 import com.sane.router.network.datagram.LRPPacket;
-import com.sane.router.network.table.RoutingTable;
-import com.sane.router.network.table.Table;
-import com.sane.router.network.tableRecords.AdjacencyRecord;
-import com.sane.router.network.tableRecords.RoutingRecord;
-import com.sane.router.support.factories.TableRecordFactory;
 
 import java.util.Observable;
 
@@ -227,15 +221,18 @@ public class BootLoader extends Observable
 //Now all forwarding table routes go through next hop: 4
 */
         //LL1Daemon.getInstance().addAdjacency(Constants.LL2P_ADDRESS, Constants.IP_ADDRESS);
-        //LL1Daemon.getInstance().addAdjacency("f00d1e", "10.30.11.11");
+        LL1Daemon.getInstance().addAdjacency("f00d1e", "10.30.11.11");
 
         //LRPDaemon.getInstance().receiveNewLRP("09011205010900".getBytes(),100);
-        //LRPDaemon.getInstance().processLRPPacket(new LRPPacket("0905010111121314"), 127);
+        LRPDaemon.getInstance().processLRPPacket(new LRPPacket("0a01010102"), Integer.valueOf("f00d1e",16));
 
         //Test: LL3PDatagram
-        LL3PDatagram testPacket = new LL3PDatagram("0901"+"0a01"+"8001"+"AAAA"+"07"+"01234567"+"CCCC");
+        LL3PDatagram testPacket = new LL3PDatagram("0901"+"0101"+"8001"+"AAAA"+"07"+"01234567"+"CCCC");
         Log.i(Constants.LOG_TAG," \n \nProtocol explanation: \n" + testPacket.toProtocolExplanationString());
         Log.i(Constants.LOG_TAG," \n \nPacket Summary: \n" + testPacket.toSummaryString());
         Log.i(Constants.LOG_TAG," \n \nTransmission String: \n" + testPacket.toTransmissionString());
+
+        //Test: LL3 (and LL2) Daemon
+        LL3Daemon.getInstance().sendToNextHop(testPacket);
     }
 }

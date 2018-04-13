@@ -82,8 +82,6 @@ public class LRPDaemon extends Observable implements Observer, Runnable
      */
     public void processLRPPacket(LRPPacket packet, int ll2pSource)
     {
-
-
         Log.d(Constants.LOG_TAG," \n \n LRP Daemon processing packet... \n \n");
 
         if (!((TimedTable)arpDaemon.getARPTable()).touch(ll2pSource))//TODO: see that addition works

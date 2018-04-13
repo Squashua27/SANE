@@ -61,6 +61,30 @@ public class LL3PDatagram implements Datagram
 
         checksum = data.substring(data.length() - 2*Constants.LL3P_CHECKSUM_FIELD_LENGTH);
     }
+    public LL3PDatagram(String message, int dest)
+    {
+        HeaderFieldFactory factory = HeaderFieldFactory.getInstance(); //ref for field construction
+
+        source = factory.getItem(Constants.LL3P_SOURCE_ADDRESS_FIELD, Constants.LL3P_ADDRESS)
+
+        destination = factory.getItem
+                (Constants.LL3P_DEST_ADDRESS_FIELD, Utilities.padHexString
+                (Integer.toHexString(dest),Constants.LL3P_ADDRESS_LENGTH));
+
+        type = Constants.LL2P_TYPE_LL3P; //TODO: Is this the correct type?
+
+        identifier = Integer.valueOf(data.substring(2*Constants.LL3P_ID_FIELD_OFFSET,
+                2*(Constants.LL3P_ID_FIELD_OFFSET + Constants.LL3P_ID_FIELD_LENGTH)),16);
+
+        ttl = Integer.valueOf(data.substring(2*Constants.LL3P_TTL_FIELD_OFFSET,
+                2*(Constants.LL3P_TTL_FIELD_OFFSET + Constants.LL3P_TTL_FIELD_LENGTH)),16);
+
+        payload = factory.getItem
+                (type, data.substring(2*Constants.LL3P_PAYLOAD_FIELD_OFFSET,
+                        data.length() - 2*Constants.LL3P_CHECKSUM_FIELD_LENGTH));
+
+        checksum = data.substring(data.length() - 2*Constants.LL3P_CHECKSUM_FIELD_LENGTH);
+    }
 
     /**
      * increments datagram TTL by 1
