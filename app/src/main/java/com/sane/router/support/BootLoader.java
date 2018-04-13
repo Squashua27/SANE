@@ -11,6 +11,7 @@ import com.sane.router.network.daemons.LL2Daemon;
 import com.sane.router.network.daemons.LL3Daemon;
 import com.sane.router.network.daemons.LRPDaemon;
 import com.sane.router.network.daemons.Scheduler;
+import com.sane.router.network.datagram.LL2PFrame;
 import com.sane.router.network.datagram.LL3PDatagram;
 import com.sane.router.network.datagram.LRPPacket;
 
@@ -220,6 +221,9 @@ public class BootLoader extends Observable
         routingTable.clear();
 //Now all forwarding table routes go through next hop: 4
 */
+
+        /**
+        //LAB_11_TESTING______________________________
         //LL1Daemon.getInstance().addAdjacency(Constants.LL2P_ADDRESS, Constants.IP_ADDRESS);
         LL1Daemon.getInstance().addAdjacency("f00d1e", "10.30.11.11");
 
@@ -241,5 +245,10 @@ public class BootLoader extends Observable
         LL3PDatagram packetNotForMe = new LL3PDatagram("0901"+"0101"+"8001"+"AAAA"+"07"+"This packet does not belong to me."+"CCCC");
         LL3PDatagram packetForMe = new LL3PDatagram("0101"+"0901"+"8001"+"AAAA"+"07"+"Packet GET!"+"CCCC");
 
+        //LL2PFrame frameNotForMe = LL2Daemon.getInstance().processLL2PFrame(packetNotForMe);
+
+        LL3Daemon.getInstance().sendToNextHop(packetNotForMe);
+        LL3Daemon.getInstance().sendToNextHop(packetForMe);
+        */
     }
 }
