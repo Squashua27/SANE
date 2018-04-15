@@ -39,7 +39,7 @@ public class LL3Daemon implements Observer
     {
         try
         {
-            int ll3Destination = packet.getDestinationNetwork(); //TODO: Is this where I grab the "network" section?
+            int ll3Destination = packet.getDestinationNetwork();
             int nextHop = lrpDemon.getForwardingTable().getBestRoute(ll3Destination).getNextHop();
             int ll2Destination = arpDemon.getMacAddress(nextHop);
             ll2Demon.sendLL3PDatagram(packet, ll2Destination);

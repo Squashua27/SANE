@@ -84,7 +84,7 @@ public class LRPDaemon extends Observable implements Observer, Runnable
     {
         Log.d(Constants.LOG_TAG," \n \n LRP Daemon processing packet... \n \n");
 
-        if (!((TimedTable)arpDaemon.getARPTable()).touch(ll2pSource))//TODO: see that addition works
+        if (!((TimedTable)arpDaemon.getARPTable()).touch(ll2pSource))
             arpDaemon.getARPTable().addItem(new ARPRecord(ll2pSource, packet.getSourceLL3P().getLL3PAddress()));
 
         List<RoutingRecord> routes = new ArrayList<>();
@@ -109,6 +109,7 @@ public class LRPDaemon extends Observable implements Observer, Runnable
         RoutingRecord myRoute = new RoutingRecord(Constants.LL3P_NETWORK,0,Constants.LL3P_ADDRESS_HEX);
 
         routingTable.addNewRoute(myRoute);
+        forwardingTable.addNewRoute(myRoute);
 
         String lrpUpdate;
         for( Integer ll3p: arpDaemon.getAttachedNodes())

@@ -96,7 +96,7 @@ public class LL2PFrame implements Datagram
      * @return DatagramPayloadField - the payload of a datagram
      */
     private DatagramPayloadField makePayloadField(String frame)
-    {//TODO: Keep this section to date...
+    {
         String data = frame.substring
                 (2*Constants.LL2P_PAYLOAD_OFFSET,
                 frame.length() - 2*Constants.LL2P_CRC_FIELD_LENGTH);
@@ -104,8 +104,8 @@ public class LL2PFrame implements Datagram
         if (type.toTransmissionString().equalsIgnoreCase(Constants.LL2P_TYPE_ARP_REQUEST_HEX)
                 || type.toTransmissionString().equalsIgnoreCase(Constants.LL2P_TYPE_ARP_REPLY_HEX))
             payload = HeaderFieldFactory.getInstance().getItem(Constants.LL3P_SOURCE_DATAGRAM_PAYLOAD_FIELD,data);
-        else if (type.toTransmissionString().equalsIgnoreCase(Constants.LL2P_TYPE_LRP_HEX))
-            payload = new DatagramPayloadField(new LRPPacket(data));
+        //else if (type.toTransmissionString().equalsIgnoreCase(Constants.LL2P_TYPE_LRP_HEX))
+        //    payload = new DatagramPayloadField(new LRPPacket(data));
             //payload = HeaderFieldFactory.getInstance().getItem(Constants.LL3P_SOURCE_DATAGRAM_PAYLOAD_FIELD,data;
         else
             payload = HeaderFieldFactory.getInstance().getItem(type.getType(),data);

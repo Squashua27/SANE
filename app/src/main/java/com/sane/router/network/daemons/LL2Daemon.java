@@ -8,6 +8,7 @@ import com.sane.router.network.datagram.ARPDatagram;
 import com.sane.router.network.datagram.LL2PFrame;
 import com.sane.router.network.datagram.LL3PDatagram;
 import com.sane.router.network.datagram.LRPPacket;
+import com.sane.router.network.datagram.TextDatagram;
 import com.sane.router.network.datagramFields.LL2PAddressField;
 import com.sane.router.network.datagramFields.LL2PTypeField;
 import com.sane.router.support.Utilities;
@@ -69,7 +70,7 @@ public class LL2Daemon implements Observer
                 Log.i(Constants.LOG_TAG, " \n \nProcessing ARP Request frame... \n \n");
                 arpDemon.processARPRequest(source.getAddress(),
                         ((ARPDatagram) (frame.getPayloadField().getPayload())));
-                //sendARPReply(source.getAddress());
+                sendARPReply(source.getAddress());
             }
             if (type.toHexString().equalsIgnoreCase(Constants.LL2P_TYPE_ARP_REPLY_HEX))
             {
@@ -85,7 +86,9 @@ public class LL2Daemon implements Observer
             if (type.toHexString().equalsIgnoreCase(Constants.LL2P_TYPE_LL3P_HEX))
             {
                 Log.i(Constants.LOG_TAG, " \n \nProcessing LL3P frame... \n \n");
-                ll3Demon.processLL3Packet((LL3PDatagram) frame.getPayloadField().getPayload(), source.getAddress());
+                String packetText = (frame.getPayloadField().getPayload().toTransmissionString());
+                LL3PDatagram packet = new LL3PDatagram(packetText);
+                ll3Demon.processLL3Packet(packet, source.getAddress());
             }
         }
     }

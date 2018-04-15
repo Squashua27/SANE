@@ -9,10 +9,6 @@ import com.sane.router.network.Constants;
 import com.sane.router.network.daemons.ARPDaemon;
 import com.sane.router.network.daemons.LL1Daemon;
 import com.sane.router.network.daemons.LRPDaemon;
-import com.sane.router.network.table.RoutingTable;
-import com.sane.router.network.table.TableInterface;
-import com.sane.router.network.table.TimedTable;
-import com.sane.router.network.tableRecords.RoutingRecord;
 import com.sane.router.support.BootLoader;
 import com.sane.router.support.ParentActivity;
 
@@ -44,7 +40,7 @@ public class TableUI implements Runnable, Observer
      */
     @Override public void run()
     {
-        //adjacencyTableUI.updateView();//TODO: Is this necessary?
+        //adjacencyTableUI.updateView();
         arpTableUI.updateView();
         routingTableUI.updateView();
         forwardingTableUI.updateView();
