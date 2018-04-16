@@ -2,6 +2,7 @@ package com.sane.router.network.daemons;
 
 import android.util.Log;
 
+import com.sane.router.UI.Messenger;
 import com.sane.router.UI.UIManager;
 import com.sane.router.network.Constants;
 import com.sane.router.network.datagram.LL3PDatagram;
@@ -20,6 +21,7 @@ public class LL3Daemon implements Observer
     private ARPDaemon arpDemon; //reference to interact with Address Resolution Protocol
     private LL2Daemon ll2Demon; //reference to Layer 2 for transmission of packets
     private LRPDaemon lrpDemon; //reference to obtain next hop for forwarding
+    private Messenger messenger;//reference to the Messenger application object
 
     //Singleton Implementation
     private static final LL3Daemon ourInstance = new LL3Daemon();
@@ -71,7 +73,8 @@ public class LL3Daemon implements Observer
             //arpDemon.getARPTable().addItem(new ARPRecord(ll2Source, packet.getSource()));
 
         if (packet.getDestination() == Constants.LL3P_ADDRESS_HEX)
-            UIManager.getInstance().displayMessage(packet.getPayload().toString());
+            messenger.receiveMessage(packet.getSource(), packet.getPayload().toString());//TODO:Does this work?
+            //UIManager.getInstance().displayMessage(packet.getPayload().toString());
         else
         {
             packet.decrementTTL();
@@ -91,5 +94,6 @@ public class LL3Daemon implements Observer
         arpDemon = ARPDaemon.getInstance();
         ll2Demon = LL2Daemon.getInstance();
         lrpDemon = LRPDaemon.getInstance();
+        messenger= UIManager.getInstance().getMessenger();
     }
 }

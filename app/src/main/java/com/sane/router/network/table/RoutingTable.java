@@ -173,7 +173,7 @@ public class RoutingTable extends TimedTable
                 }
 
         if (bestRouteDistance == 999)
-            Log.i(Constants.LOG_TAG, "Failed to get best route...");
+            Log.e(Constants.LOG_TAG, "Failed to get best route...");
         return bestRoute;
     }
 

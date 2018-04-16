@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.sane.router.support.BootLoader;
 import com.sane.router.support.ParentActivity;
+import com.sane.router.UI.Messenger;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -22,6 +23,7 @@ public class UIManager implements Observer
     private SnifferUI snifferUI;//instance of the Sniffer User Interface
     private Activity parentActivity;//activity reference allowing context-dependent operations
     private Context context;//holds context for context-dependent operations
+    private Messenger messenger;//instance of the messenger class application
 
     //Singleton_Implementation____________________
     private static final UIManager uiManager = new UIManager();//creates single instance
@@ -30,12 +32,22 @@ public class UIManager implements Observer
     {
         tableUI = new TableUI();
         snifferUI = new SnifferUI();
+        messenger = new Messenger();
     }
+
     //Methods____________________
     public TableUI getTableUI(){return tableUI;} //Standard getter
     public SnifferUI getSnifferUI(){return snifferUI;}//Standard getter
+    public Messenger getMessenger(){return messenger;}//Standard getter
     /**
-     * displays a message
+     * This UI method is called by a menu item.  It calls the Messenger class
+     * method of the same name.
+     */
+    public void openMessengerWindow() {
+        messenger.openMessengerWindow();
+    }
+    /**
+     * Displays a message
      *
      * @param message - the message to be displayed, as a string
      */
@@ -44,7 +56,7 @@ public class UIManager implements Observer
         displayMessage(message, Toast.LENGTH_LONG);
     }
     /**
-     * displays a message for a duration
+     * Displays a message for a duration
      *
      * @param message the message to be displayed, as a string
      * @param duration duration of message to be displayed, int
@@ -57,6 +69,7 @@ public class UIManager implements Observer
      * allows use of widgets, currently a place holder
      */
     private void setUpWidgets(){}
+
     //Interface Implementation
     /**
      * necessary method of Observer class, sets up UI operations after notified to do so
@@ -71,6 +84,7 @@ public class UIManager implements Observer
             parentActivity = ParentActivity.getParentActivity();
             context = parentActivity.getBaseContext();
             setUpWidgets();
+            messenger.finishCreatingMessenger();
         }
     }
 }

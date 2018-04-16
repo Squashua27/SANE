@@ -12,4 +12,7 @@
 
     <string name="IP_menu_item">Show IP Address</string>
     <string name="add_adjacency">Add Adjacency Record</string>
+    <string name="open_messenger">Open Messenger Window</string>
+
+    <string name="name_prompt">Send to?</string>
 </resources>

@@ -51,6 +51,10 @@ public class MainActivity extends AppCompatActivity implements AddAdjacencyDialo
             AddAdjacencyDialog dialog = new AddAdjacencyDialog();
             dialog.show(getFragmentManager(), "add_adjacency");
         }
+        else if (item.getItemId() == R.id.openMessengerWindow)
+        {
+            UIManager.getInstance().openMessengerWindow();
+        }
         return super.onOptionsItemSelected(item);
     }
     public void onFinishedEditDialog(String string1, String string2){}
