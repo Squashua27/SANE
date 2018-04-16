@@ -31,20 +31,25 @@ public class LL3PDatagram implements Datagram
     private DatagramPayloadField payload; //the datagram's payload
     private String checksum;             //place-holder, 4 hex chars (2 bytes)
 
-    //Methods
-    public LL3PDatagram(String data)
+    //Constructors
+    /**
+     * the default factory constructor using a string, used when receiving a datagram
+     *
+     * @param data - the packet in string form
+     */
+    public LL3PDatagram(String data) //
     {
         HeaderFieldFactory factory = HeaderFieldFactory.getInstance(); //ref for field construction
 
         source = factory.getItem
                 (Constants.LL3P_SOURCE_ADDRESS_FIELD,
-                data.substring(2*Constants.LL3P_SOURCE_ADDRESS_OFFSET,
-                2*(Constants.LL3P_SOURCE_ADDRESS_OFFSET + Constants.LL3P_ADDRESS_LENGTH)));
+                        data.substring(2*Constants.LL3P_SOURCE_ADDRESS_OFFSET,
+                                2*(Constants.LL3P_SOURCE_ADDRESS_OFFSET + Constants.LL3P_ADDRESS_LENGTH)));
 
         destination = factory.getItem
                 (Constants.LL3P_DEST_ADDRESS_FIELD,
-                data.substring(2*Constants.LL3P_DEST_ADDRESS_OFFSET,
-                2*(Constants.LL3P_DEST_ADDRESS_OFFSET + Constants.LL3P_ADDRESS_LENGTH)));
+                        data.substring(2*Constants.LL3P_DEST_ADDRESS_OFFSET,
+                                2*(Constants.LL3P_DEST_ADDRESS_OFFSET + Constants.LL3P_ADDRESS_LENGTH)));
 
         type = Integer.valueOf(data.substring(2*Constants.LL3P_TYPE_FIELD_OFFSET,
                 2*(Constants.LL3P_TYPE_FIELD_OFFSET + Constants.LL3P_TYPE_FIELD_LENGTH)),16);
@@ -57,10 +62,16 @@ public class LL3PDatagram implements Datagram
 
         payload = factory.getItem
                 (type, data.substring(2*Constants.LL3P_PAYLOAD_FIELD_OFFSET,
-                data.length() - 2*Constants.LL3P_CHECKSUM_FIELD_LENGTH));
+                        data.length() - 2*Constants.LL3P_CHECKSUM_FIELD_LENGTH));
 
         checksum = data.substring(data.length() - 2*Constants.LL3P_CHECKSUM_FIELD_LENGTH);
     }
+    /**
+     * a second constructor, called when sending an LL3P message to a given destination
+     *
+     * @param message
+     * @param dest
+     */
     public LL3PDatagram(String message, int dest)
     {
         HeaderFieldFactory factory = HeaderFieldFactory.getInstance(); //ref for field construction
@@ -82,14 +93,20 @@ public class LL3PDatagram implements Datagram
         checksum = "CCCC";
     }
 
+    //Methods
     /**
      * increments datagram TTL by 1
      */
     public void decrementTTL() {
-        ttl++;
+        ttl--;
     }
+    /**
+     * tells whether the datagram is expired
+     *
+     * @return boolean - true if the datagram is expired
+     */
     public boolean isExpired(){
-        return (ttl > 15);
+        return (ttl < 1);
     }
 
     //Getters

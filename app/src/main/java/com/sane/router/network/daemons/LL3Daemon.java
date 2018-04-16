@@ -12,7 +12,10 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * Created by Joshua Johnston on 4/12/2018.
+ * The Daemon of the routing layer (Lab Layer 3), responsible for the
+ * creation, forwarding and processing of LL3P Datagrams
+ *
+ * @author Joshua Johnston
  */
 
 public class LL3Daemon implements Observer
@@ -31,7 +34,6 @@ public class LL3Daemon implements Observer
     private LL3Daemon() {} //(empty constructor)
 
     //Methods
-
     /**
      * Sends an LL3P Datagram to the Layer 2 daemon for transmission
      *
@@ -65,6 +67,12 @@ public class LL3Daemon implements Observer
         sendToNextHop(messagePacket);
     }
 
+    /**
+     * Processes a LL3 packet
+     *
+     * @param packet - the packet to process
+     * @param ll2Source - the layer 2 address of the packet
+     */
     public void processLL3Packet(LL3PDatagram packet, int ll2Source)
     {
         if (packet.isExpired())
